@@ -1,5 +1,7 @@
 /authentication/__pycache__
 /authentication/migrations
+/user/__pycache__
+/user/migrations
 /faculty/__pycache__
 /faculty/migrations
 /committee/__pycache__

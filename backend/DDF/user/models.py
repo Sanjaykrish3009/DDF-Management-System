@@ -1,5 +1,6 @@
 from django.db import models
 from authentication.models import CustomUser
+import json
 
 class UserProfile(models.Model):
 
@@ -9,9 +10,21 @@ class UserProfile(models.Model):
         ('Hod', 'hod')
     ]
 
-    _user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    _first_name = models.CharField(max_length=20)
-    _last_name = models.CharField(max_length=20)
-    _user_type = models.CharField(max_length=20, choices=USER_TYPE_CHOICES)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=20)
+    last_name = models.CharField(max_length=20)
+    user_type = models.CharField(max_length=20, choices=USER_TYPE_CHOICES)
 
+
+    def get_user_profile(self):
+        profile = {
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "email": self.user.email
+        }
+
+        return profile
+    
+    def get_user_type(self):
+        return self.user_type
     

@@ -1,0 +1,13 @@
+/authentication/__pycache__
+/authentication/migrations
+/faculty/__pycache__
+/faculty/migrations
+/committee/__pycache__
+/committee/migrations
+/hod/__pycache__
+/hod/migrations
+/request/__pycache__
+/request/migrations
+/transaction/__pycache__
+/transaction/migrations
+/DDF/__pycache__

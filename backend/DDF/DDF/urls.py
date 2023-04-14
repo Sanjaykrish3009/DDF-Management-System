@@ -20,5 +20,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('authentication/',include('authentication.urls')),
     path('user/',include('user.urls')),
-    path('request/', include('request.urls')),
+    # path('request/', include('request.urls')),
+    # path('faculty/', include('faculty.urls')),
+    # path('committee/', include('committee.urls')),
+    # path('hod/', include('hod.urls')),
+    # path('transaction/', include('transaction.urls')),
 ]

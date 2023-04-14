@@ -6,6 +6,8 @@ from django.utils.decorators import method_decorator
 from faculty.models import FacultyUser
 from .models import UserProfile
 from authentication.models import CustomUser
+from django.contrib.auth import logout
+
 
 @method_decorator(csrf_protect,name='dispatch')
 class SignupView(APIView):
@@ -47,3 +49,28 @@ class ProfileView(APIView):
             return Response({'profile':profile})
         except:
             return Response({'error':'Something went wrong while retrieving Profile'})
+           
+class ChangePasswordView(APIView):
+    def post(self, request, format=None):
+        data = self.request.data
+        old_password = data['old_password']
+        new_password = data['new_password']
+        re_new_password = data['re_new_password']
+        user = self.request.user
+
+        try:
+            if user.check_password(old_password):
+                if new_password == re_new_password:
+                    if len(new_password) < 6:
+                        return Response({'error': 'Password must be at least 6 characters' })
+                    else:
+                        user.set_password(new_password)
+                        user.save()
+                        logout(request)
+                        return Response({'success': 'Password Changed successfully'})
+                else:
+                    return Response({ 'error': 'Passwords do not match' })
+            else:
+                return Response({ 'error': 'Incorrect Old Password' })
+        except:
+            return Response({'error': 'Something went wrong when changing password'})

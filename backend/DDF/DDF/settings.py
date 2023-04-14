@@ -49,6 +49,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -139,6 +140,8 @@ REST_FRAMEWORK = {
     ],
 }
 
+CORS_ORIGIN_ALLOW_ALL=True
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
@@ -147,3 +150,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'authentication.CustomUser'
 
 AUTHENTICATION_BACKENDS = ['authentication.backends.FacultyUserBackend', 'authentication.backends.CommitteeUserBackend', 'authentication.backends.HodUserBackend', 'django.contrib.auth.backends.ModelBackend', ]
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'ddf.cse.iith@gmail.com'  
+EMAIL_HOST_PASSWORD = 'czfdefueigazdoyp'  

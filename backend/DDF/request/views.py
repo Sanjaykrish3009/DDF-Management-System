@@ -56,3 +56,15 @@ class CreateBudgetRequest(APIView):
             return Response({'success':'Budget Request created successfully'})
         except:
             return Response({'error':'Something went wrong while creating Private Fund Request'})
+
+class RequestDetails(APIView):
+    def get(self, request, format=None):
+        data = self.request.data
+        request_id = data['request_id']
+
+        try:
+            request_obj = FundRequest.objects.get(id=request_id)
+            request_dict = request_obj.get_request_details()
+            return Response({'success':'Fund request viewed successfully', 'data': request_dict})
+        except:
+            return Response({'error':'Something went wrong while viewing fund request'})

@@ -1,3 +1,107 @@
-from django.shortcuts import render
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .models import CommitteeUser
 
-# Create your views here.
+
+class PendingRequests(APIView):
+    def get(self, request, format=None):
+        user = self.request.user
+        email = user.email
+  
+        try:
+            committee_user = CommitteeUser.objects.get(email=email)
+            pending_requests = committee_user.view_pending_requests()
+            return Response({'success':'Pending requests of committee retrieved successfully', 'data':pending_requests})
+        except:
+            return Response({'error':'Something went wrong while retrieving the pending requests of the committee'})
+
+class PreviousRequests(APIView):
+    def get(self, request, format=None):
+        user = self.request.user
+        email = user.email
+  
+        try:
+            committee_user = CommitteeUser.objects.get(email=email)
+            previous_requests = committee_user.view_previous_requests()
+            return Response({'success':'Previous requests of committee retrieved successfully', 'data':previous_requests})
+        except:
+            return Response({'error':'Something went wrong while retrieving the previous requests of the committee'})
+
+class Approval(APIView):
+    def post(self, request, format=None):
+        user = self.request.user
+        email = user.email
+        data = self.request.data
+        request_id = data['request_id']
+        committee_review = data['committee_review']
+
+        try:
+            committee_user = CommitteeUser.objects.get(email=email)
+            if committee_user.approve_request(request_id, committee_review):
+                return Response({'success':'Fund request approved by the committee successfully'})
+            else:
+                return Response({'error': 'Request amount more than remaining budget'})
+        except:
+            return Response({'error':'Something went wrong while approving fund request by the committee'})
+
+class Disapproval(APIView):
+    def post(self, request, format=None):
+        user = self.request.user
+        email = user.email
+        data = self.request.data
+        request_id = data['request_id']
+        committee_review = data['committee_review']
+        try:
+            committee_user = CommitteeUser.objects.get(email=email)
+            committee_user.disapprove_request(request_id,committee_review)
+            return Response({'success':'Fund request disapproved by the committee successfully'})
+        except:
+            return Response({'error':'Something went wrong while disapproving fund request by the committee'})
+
+class AllTransactions(APIView):
+    def get(self, request, format=None):
+        user = self.request.user
+        email = user.email
+  
+        try:
+            committee_user = CommitteeUser.objects.get(email=email)
+            all_transactions = committee_user.view_all_transactions()
+            return Response({'success':'All transactions retrieved successfully by the committee', 'data':all_transactions})
+        except:
+            return Response({'error':'Something went wrong while retrieving all transactions by the committee'})
+        
+class CreditTransactions(APIView):
+    def get(self, request, format=None):
+        user = self.request.user
+        email = user.email
+  
+        try:
+            hod_user = CommitteeUser.objects.get(email=email)
+            credit_transactions = hod_user.view_credit_transactions()
+            return Response({'success':'Credit transactions retrieved successfully by the hod', 'data':credit_transactions})
+        except:
+            return Response({'error':'Something went wrong while retrieving credit transactions'})
+
+class DebitTransactions(APIView):
+    def get(self, request, format=None):
+        user = self.request.user
+        email = user.email
+  
+        try:
+            hod_user = CommitteeUser.objects.get(email=email)
+            debit_transactions = hod_user.view_debit_transactions()
+            return Response({'success':'Debit transactions retrieved successfully by the hod', 'data':debit_transactions})
+        except:
+            return Response({'error':'Something went wrong while retrieving debit transactions'})
+        
+class Balance(APIView):
+    def get(self, request, format=None):
+        user = self.request.user
+        email = user.email
+  
+        try:
+            committee_user = CommitteeUser.objects.get(email=email)
+            balance = committee_user.view_balance()
+            return Response({'success':'Balance viewed successfully', 'data':balance})
+        except:
+            return Response({'error':'Something went wrong while viewing balance'})

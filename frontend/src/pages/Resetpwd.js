@@ -4,8 +4,7 @@ import { Navigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { AuthContext } from "../core";
-import '../css_files/login.css'
-
+import '../css_files/resetpwd.css'
 
 
 const Resetpwd = () => {
@@ -22,8 +21,7 @@ const Resetpwd = () => {
       } else if (newPassword.length < 6) {
         alert("Password should have at least 6 characters.");
       } else {
-        // make API call to update password
-        axios.post(`http://localhost:8000/accounts/resetpassword`,{
+        axios.post(`http://localhost:8000/authentication/resetpassword`,{
         'new_password':newPassword,
         're_new_password':confirmNewPassword,
       }
@@ -55,9 +53,9 @@ const Resetpwd = () => {
     }
   
     return (
-      <div className="login-page">
+      <div className="reset_pwd-page">
           
-      <form onSubmit={handleSubmit}  className="login-form">
+      <form onSubmit={handleSubmit}  className="reset_pwd-form">
           Reset Password
           <div className="password">
             <label>New Password</label>
@@ -76,7 +74,7 @@ const Resetpwd = () => {
             />
           </div>
           <div>
-          <button type="submit" className="signUp">Submit</button>
+          <button type="submit" className="confirm_pwd">Submit</button>
           </div>
         </form>
       </div>

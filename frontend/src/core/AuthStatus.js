@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { AuthContext } from './AuthContext';
 import {Header} from './header';
-import {SignUp} from '../pages';
+import {SignUp, ForgotPassword, OTP, Resetpwd} from '../pages';
 import Loginpage from './Login-page'
 import {Route, Routes} from 'react-router-dom';
 
@@ -38,7 +38,10 @@ const AuthStatus =() => {
       
       <Route path ="/" element={<Loginpage/>}/>
       <Route path ="/signup" element={<SignUp/>}/>
-
+      <Route path ="/forgotpassword" element={<ForgotPassword/>}/>
+      <Route path ="/otpverification" element={<OTP/>}/>
+      <Route path = "/resetpassword" element={<Resetpwd/>}/>
+      
     </Routes>
 )}
     </div>

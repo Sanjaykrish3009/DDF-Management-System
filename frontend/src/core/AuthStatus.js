@@ -1,10 +1,11 @@
 import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { AuthContext } from './AuthContext';
-import {Header} from './header';
-import {SignUp, ForgotPassword, OTP, Resetpwd} from '../pages';
-import Loginpage from './Login-page'
+import {Header, FacultySubheader, CommitteeSubheader, HodSubheader} from './header';
+import {SignUp, ForgotPassword, OTP, Resetpwd, FacultyDashboard, CommitteeDashboard, HodDashboard, Inbox,ChangePassword,CreateRequest,Profile,PublicRequest,PrivateRequest} from '../pages';
+import Loginpage from './Login-page';
 import {Route, Routes} from 'react-router-dom';
+import {FacultyPrivateRoute, CommitteePrivateRoute, HodPrivateRoute} from "../components/PrivateRoute";
 
 const AuthStatus =() => {
   const {isAuthenticated, setIsAuthenticated, setUser_type} = useContext(AuthContext);
@@ -41,6 +42,36 @@ const AuthStatus =() => {
       <Route path ="/forgotpassword" element={<ForgotPassword/>}/>
       <Route path ="/otpverification" element={<OTP/>}/>
       <Route path = "/resetpassword" element={<Resetpwd/>}/>
+
+      <Route path = "/faculty" element= {<FacultySubheader/>}>
+        <Route element={<FacultyPrivateRoute/>}>
+        <Route path = "dashboard" element={<FacultyDashboard/>}/>
+        <Route path = "inbox" element={<Inbox/>}/>
+        <Route path = "makerequest" element = {<CreateRequest/>}/>
+        <Route path = "makerequest/publicrequest" element={<PublicRequest/>}/>
+        <Route path = "makerequest/privaterequest" element={<PrivateRequest/>}/>
+        <Route path = "viewprofile" element = {<Profile/>}/>
+        <Route path = "changepwd" element = {<ChangePassword/>}/>
+        </Route>
+      </Route>
+
+      <Route path = "/committee" element= {<CommitteeSubheader/>}>
+        <Route element={<CommitteePrivateRoute/>}>
+        <Route path = "dashboard" element={<CommitteeDashboard/>}/>
+        <Route path = "inbox" element={<Inbox/>}/>
+        <Route path = "viewprofile" element = {<Profile/>}/>
+        <Route path = "changepwd" element = {<ChangePassword/>}/>
+        </Route>
+      </Route>
+
+      <Route path = "/hod" element= {<HodSubheader/>}>
+          <Route element={<HodPrivateRoute/>}>
+          <Route path = "dashboard" element={<HodDashboard/>}/>
+          <Route path = "inbox" element={<Inbox/>}/>
+          <Route path = "viewprofile" element = {<Profile/>}/>
+          <Route path = "changepwd" element = {<ChangePassword/>}/>
+          </Route>
+      </Route>
       
     </Routes>
 )}

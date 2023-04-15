@@ -24,6 +24,25 @@ export default function LoginPage() {
     }
   };
 
+  if(isAuthenticated)
+  {
+    if(user_type==="faculty")
+    {
+      return <Navigate to = '/faculty/dashboard'/>
+    }
+    else if(user_type==="committee")
+    {
+      return <Navigate to = '/committee/dashboard'/>
+    }
+    else if(user_type==="hod")
+    {
+      return <Navigate to = '/hod/dashboard'/>
+    }
+    else{
+      console.log("Unknown User");
+    }
+  }
+
   return (
     <div className="login-page">
       <form onSubmit={handleSubmit} className="login-form">
@@ -49,7 +68,7 @@ export default function LoginPage() {
           <Link to='/forgotpassword'> Forgot Password?</Link>
         </div>
         <div>
-          <button type="submit" className="signin" >Sign in</button>
+          <button type="submit" className="submit" >Sign in</button>
         </div>
         <div className="error-message">{errorMessage}</div> 
         

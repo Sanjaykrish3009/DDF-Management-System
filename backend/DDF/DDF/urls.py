@@ -22,6 +22,7 @@ urlpatterns = [
     path('authentication/',include('authentication.urls')),
     path('user/',include('user.urls')),
     path('request/', include('request.urls')),
+    path('faculty/', include('faculty.urls'))
 ]
 
 urlpatterns += [re_path(r'^.*',TemplateView.as_view(template_name='index.html'))]

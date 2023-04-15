@@ -19,10 +19,10 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="login-page">
-      <form onSubmit={handleSubmit} className="login-form">
+    <div className="signup-page">
+      <form onSubmit={handleSubmit} className="signup-form">
           <h1>Register</h1> 
-        <div className="register2">
+        <div className="signup-details">
           <label htmlFor="firstname"  >First Name: </label>
           <input
             type="text"
@@ -30,7 +30,7 @@ export default function LoginPage() {
             onChange={(e) => setFirstname(e.target.value)} className="details"
           />
         </div>
-        <div className="register2">
+        <div className="signup-details">
           <label htmlFor="lastname" >Last Name: </label>
           <input
             type="text"
@@ -38,7 +38,7 @@ export default function LoginPage() {
             onChange={(e) => setLastname(e.target.value)} className="details"
           />
         </div>
-        <div className="register2">
+        <div className="signup-details">
           <label htmlFor="email" >Email: </label>
           <input
             type="email"
@@ -46,7 +46,7 @@ export default function LoginPage() {
             onChange={(e) => setEmail(e.target.value)} className="details"
           />
         </div>
-        <div className="register2">
+        <div className="signup-details">
           <label htmlFor="password" >Password: </label>
           <input
             type="password"
@@ -54,7 +54,7 @@ export default function LoginPage() {
             onChange={(e) => setPassw(e.target.value)} className="details"
           />
         </div>
-        <div className="register2">
+        <div className="signup-details">
           <label htmlFor="password" >Confirm Password: </label>
           <input
             type="password"
@@ -63,7 +63,7 @@ export default function LoginPage() {
           />
         </div>
         <CSRFToken/>
-          <button type="submit" className="signUp3" >Register</button>
+          <button type="submit" className="register-button" >Register</button>
       </form>
     </div>
   );

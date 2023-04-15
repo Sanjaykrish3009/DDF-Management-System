@@ -49,7 +49,7 @@ export default function LoginPage() {
           <Link to='/forgotpassword'> Forgot Password?</Link>
         </div>
         <div>
-          <button type="submit" className="submit" >Sign in</button>
+          <button type="submit" className="signin" >Sign in</button>
         </div>
         <div className="error-message">{errorMessage}</div> 
         

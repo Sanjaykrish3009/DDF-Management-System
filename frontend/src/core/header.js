@@ -24,6 +24,74 @@ const Header= () => {
   )
 };
 
+
+const FacultySubheader=()=>{
+   const [menuopen,setmenuOpen]=useState(false);
+   const menuRef=useRef();
+   const dropdownRef=useRef();
+   const [islogout,setLogout]=useState(false);
+   const [showProfile,setShowProfile] = useState(false);
+   const { setUser, logout } = useContext(AuthContext);
+   window.addEventListener('click',(e)=>{
+      if(e.target!==menuRef.current&&e.target!==dropdownRef.current)
+      {
+         setmenuOpen(false);
+      }
+   });
+
+   const Loggingout = () => {
+      axios.post(`http://localhost:8000/authentication/logout`,{
+         'withCredentials':true
+      },
+      {
+      headers:{
+        'X-CSRFToken' :Cookies.get('csrftoken')
+      }
+    })
+      .then(response =>{
+        console.log(response.data);
+        setLogout(true);
+        logout();
+
+      })
+      .catch(error =>{
+        console.log(error.response.data);
+      });
+
+   }
+
+   if(islogout)
+   {
+      return <Navigate to = '/'/>
+   }
+    return (
+        <div >
+            {}
+            <div className="subheader">
+               <Link to ='/faculty/dashboard' className='link'> <FaHome/> Dashboard </Link>
+               <Link to='/faculty/inbox' className='link'> <FaMailBulk/> Inbox </Link>
+               <Link to='/faculty/history' className='link'> <FaHistory/> Public Requests </Link>
+               <Link to='/faculty/makerequest' className='link'> <FaPlusCircle/> Create Fund Request </Link>
+               <div className='dropdown'>
+                  <button ref={dropdownRef} className='link'  onClick={()=>setmenuOpen(!menuopen)}> <CgProfile/> MyAccount <RiIcons.RiArrowDropDownFill/></button>
+                  {
+                     menuopen && (<div ref={menuRef} className='dropdown-menu'>
+                     <Link to ='/faculty/viewprofile' className='droplink'>Profile</Link>
+                     <Link to ='/faculty/changepwd' className='droplink'>change password</Link>
+                     <button className='droplink' onClick={Loggingout}>Logout</button>     
+                  </div>) 
+                  }
+                  
+               </div>
+               
+            </div>
+            <Outlet/>
+            {}
+        </div>
+     )
+};
+
+
 const CommitteeSubheader=()=>{
    const [menuopen,setmenuOpen]=useState(false);
    const menuRef=useRef();
@@ -158,72 +226,6 @@ const HodSubheader=()=>{
      )
 };
 
-
-const FacultySubheader=()=>{
-   const [menuopen,setmenuOpen]=useState(false);
-   const menuRef=useRef();
-   const dropdownRef=useRef();
-   const [islogout,setLogout]=useState(false);
-   const [showProfile,setShowProfile] = useState(false);
-   const { setUser, logout } = useContext(AuthContext);
-   window.addEventListener('click',(e)=>{
-      if(e.target!==menuRef.current&&e.target!==dropdownRef.current)
-      {
-         setmenuOpen(false);
-      }
-   });
-
-   const Loggingout = () => {
-      axios.post(`http://localhost:8000/authentication/logout`,{
-         'withCredentials':true
-      },
-      {
-      headers:{
-        'X-CSRFToken' :Cookies.get('csrftoken')
-      }
-    })
-      .then(response =>{
-        console.log(response.data);
-        setLogout(true);
-        logout();
-
-      })
-      .catch(error =>{
-        console.log(error.response.data);
-      });
-
-   }
-
-   if(islogout)
-   {
-      return <Navigate to = '/'/>
-   }
-    return (
-        <div >
-            {}
-            <div className="subheader">
-               <Link to ='/faculty/dashboard' className='link'> <FaHome/> Dashboard </Link>
-               <Link to='/faculty/inbox' className='link'> <FaMailBulk/> Inbox </Link>
-               <Link to='/faculty/history' className='link'> <FaHistory/> Public Requests </Link>
-               <Link to='/faculty/makerequest' className='link'> <FaPlusCircle/> Create Fund Request </Link>
-               <div className='dropdown'>
-                  <button ref={dropdownRef} className='link'  onClick={()=>setmenuOpen(!menuopen)}> <CgProfile/> MyAccount <RiIcons.RiArrowDropDownFill/></button>
-                  {
-                     menuopen && (<div ref={menuRef} className='dropdown-menu'>
-                     <Link to ='/faculty/viewprofile' className='droplink'>Profile</Link>
-                     <Link to ='/faculty/changepwd' className='droplink'>change password</Link>
-                     <button className='droplink' onClick={Loggingout}>Logout</button>     
-                  </div>) 
-                  }
-                  
-               </div>
-               
-            </div>
-            <Outlet/>
-            {}
-        </div>
-     )
-};
 
 
 export {Header,FacultySubheader,CommitteeSubheader, HodSubheader};

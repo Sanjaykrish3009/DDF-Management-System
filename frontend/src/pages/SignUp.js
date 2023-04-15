@@ -1,6 +1,7 @@
 import '../css_files/signUp.css'
 
 import React, { useState,useContext} from "react";
+import { Link, Navigate } from "react-router-dom";
 import { CSRFToken } from "../components";
 import { AuthContext } from "../core";
 
@@ -17,6 +18,16 @@ export default function LoginPage() {
     event.preventDefault();
     signingUp({firstname,lastname,email,password,re_password,setAccountCreated});
   };
+
+  if(isAuthenticated)
+  {
+    return <Navigate to = '/dashboard'/>
+  }
+  else if(accountCreated)
+  {
+    return <Navigate to = "/"/>
+
+  }
 
   return (
     <div className="signup-page">

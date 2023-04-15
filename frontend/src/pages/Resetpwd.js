@@ -4,7 +4,6 @@ import { Navigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { AuthContext } from "../core";
-import '../css_files/resetpwd.css'
 
 
 const Resetpwd = () => {
@@ -53,9 +52,9 @@ const Resetpwd = () => {
     }
   
     return (
-      <div className="reset_pwd-page">
+      <div className="login-page">
           
-      <form onSubmit={handleSubmit}  className="reset_pwd-form">
+      <form onSubmit={handleSubmit}  className="login-form">
           Reset Password
           <div className="password">
             <label>New Password</label>
@@ -74,7 +73,7 @@ const Resetpwd = () => {
             />
           </div>
           <div>
-          <button type="submit" className="confirm_pwd">Submit</button>
+          <button type="submit" className="signUp">Submit</button>
           </div>
         </form>
       </div>

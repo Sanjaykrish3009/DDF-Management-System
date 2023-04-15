@@ -1,8 +1,5 @@
 import React, { useContext, useState } from 'react';
 import { Navigate } from 'react-router-dom';
-
-import '../css_files/otp.css'
-
 import axios from "axios";
 import Cookies from "js-cookie";
 import { AuthContext } from '../core';

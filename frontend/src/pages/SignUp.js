@@ -1,7 +1,5 @@
 import '../css_files/signUp.css'
 
-import '../css_files/signUp.css'
-
 import React, { useState,useContext} from "react";
 import { Link, Navigate } from "react-router-dom";
 import { CSRFToken } from "../components";

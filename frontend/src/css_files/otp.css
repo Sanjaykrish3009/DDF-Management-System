@@ -1,0 +1,90 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .otp_login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    background-image: linear-gradient(to right top,#b0e8f9,#c8e9f5,#d0f5f2,#e0efe3,#f9f9f8);
+    background-repeat: repeat;
+    background-size: 100% 100%;
+  }
+  
+  .otp_login-form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 20px;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+    padding: 18px;
+    background-color: #bbb6b6;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  }
+
+  .otp{
+    font-size: 20px;
+  }
+  
+  .otp_email {
+    margin-bottom: 10px;
+    width: 100%;
+  }
+  
+  label {
+    display: flex;
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  input[type="text"] {
+    width: 6cm;
+    height: 5mm;
+    border: none;
+    border-bottom: 2px solid #333;
+    font-size: 20px;
+    margin-right: 10px;
+    text-align: center;
+    letter-spacing: 10px;
+    margin-bottom: 10px;
+  }
+  
+  input[type="text"]:focus {
+    outline: none;
+    border-bottom: 2px solid #05a4ee;
+  }
+  
+  .otp_buttons {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .otp_submit {
+    background-color: #10a5a4;
+    border-radius: 5px;
+    padding: 7px;
+    font-size: 16px;
+    cursor: pointer;
+    border: 2px solid #1d201d;
+    margin-left: 10px;
+  }
+  
+  .otp_signUp {
+    background-color: #3c9540;
+    border-radius: 7px;
+    padding: 7px;
+    margin-right: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: 2px solid #1d201d;
+  }
+  

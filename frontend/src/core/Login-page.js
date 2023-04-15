@@ -1,3 +1,5 @@
+import "../css_files/login.css"
+
 import React, { useState,useContext } from "react";
 import { Link, Navigate,useNavigate } from "react-router-dom";
 import { CSRFToken } from "../components";
@@ -25,7 +27,7 @@ export default function LoginPage() {
   return (
     <div className="login-page">
       <form onSubmit={handleSubmit} className="login-form">
-          Login
+          Sign in
         <div className="email">
           <label htmlFor="email" >Email: </label>
           <input
@@ -46,12 +48,12 @@ export default function LoginPage() {
         <div className="login_forgot-Password">
           <Link to='/forgotpassword'> Forgot Password?</Link>
         </div>
-        <div >
-          <button type="submit" className="submit" >Login</button>
+        <div>
+          <button type="submit" className="submit" >Sign in</button>
         </div>
         <div className="error-message">{errorMessage}</div> 
         
-        <div className="signUp3"> 
+        <div className="register"> 
           <Link to='/SignUp'> Register or SignUp</Link>
         </div>
       </form>

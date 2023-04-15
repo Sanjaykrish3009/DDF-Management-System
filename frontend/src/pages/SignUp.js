@@ -1,5 +1,6 @@
+import '../css_files/signUp.css'
+
 import React, { useState,useContext} from "react";
-import { Navigate } from "react-router-dom";
 import { CSRFToken } from "../components";
 import { AuthContext } from "../core";
 
@@ -21,7 +22,7 @@ export default function LoginPage() {
     <div className="login-page">
       <form onSubmit={handleSubmit} className="login-form">
           <h1>Register</h1> 
-        <div className="register">
+        <div className="register2">
           <label htmlFor="firstname"  >First Name: </label>
           <input
             type="text"
@@ -29,7 +30,7 @@ export default function LoginPage() {
             onChange={(e) => setFirstname(e.target.value)} className="details"
           />
         </div>
-        <div className="register">
+        <div className="register2">
           <label htmlFor="lastname" >Last Name: </label>
           <input
             type="text"
@@ -37,7 +38,7 @@ export default function LoginPage() {
             onChange={(e) => setLastname(e.target.value)} className="details"
           />
         </div>
-        <div className="register">
+        <div className="register2">
           <label htmlFor="email" >Email: </label>
           <input
             type="email"
@@ -45,7 +46,7 @@ export default function LoginPage() {
             onChange={(e) => setEmail(e.target.value)} className="details"
           />
         </div>
-        <div className="register">
+        <div className="register2">
           <label htmlFor="password" >Password: </label>
           <input
             type="password"
@@ -53,7 +54,7 @@ export default function LoginPage() {
             onChange={(e) => setPassw(e.target.value)} className="details"
           />
         </div>
-        <div className="register">
+        <div className="register2">
           <label htmlFor="password" >Confirm Password: </label>
           <input
             type="password"

@@ -4,6 +4,8 @@ import { FacultyContext } from '../core';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
+import '../css_files/publicrequest.css';
+
 
 function PublicRequest() {
   const [title, setTitle] = useState("");

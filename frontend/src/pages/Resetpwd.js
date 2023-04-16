@@ -5,6 +5,8 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { AuthContext } from "../core";
 
+import '../css_files/resetpwd.css';
+
 
 const Resetpwd = () => {
 

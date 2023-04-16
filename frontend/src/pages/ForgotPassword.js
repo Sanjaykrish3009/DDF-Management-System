@@ -6,6 +6,9 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { AuthContext } from "../core";
 
+import '../css_files/ForgotPassword.css';
+
+
 const ForgotPassword = () => {
   const [otpverify, setOtpVerify] = useState(false);
   const [email,setEmail] =useState("");

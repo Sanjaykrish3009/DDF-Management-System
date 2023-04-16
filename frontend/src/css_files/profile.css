@@ -1,0 +1,36 @@
+.profile-section {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #160a0a;
+    border-radius: 5px;
+    background-color: #bbb6b6;
+    font-size: 18px;
+    margin-top: 200px;
+  }
+  
+  .profile-section h2 {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .user-details {
+    margin-top: 30px;
+  }
+  
+  .user-details p {
+    margin-bottom: 10px;
+  }
+  
+  .loading-message {
+    text-align: center;
+    font-size: 18px;
+    margin-top: 30px;
+  }
+  
+  .loading-message p {
+    margin-bottom: 10px;
+  }
+  

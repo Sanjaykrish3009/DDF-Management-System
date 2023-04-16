@@ -23,8 +23,9 @@ urlpatterns = [
     path('user/',include('user.urls')),
     path('request/', include('request.urls')),
     path('faculty/', include('faculty.urls')),
-    path('committee', include('committee.urls')),
-    path('transaction', include('transaction.urls'))
+    path('committee/', include('committee.urls')),
+    path('hod/',include('hod.urls')),
+    path('transaction/', include('transaction.urls'))
 ]
 
 urlpatterns += [re_path(r'^.*',TemplateView.as_view(template_name='index.html'))]

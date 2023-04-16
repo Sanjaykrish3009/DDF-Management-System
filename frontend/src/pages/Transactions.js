@@ -1,22 +1,27 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import {Card} from '../components';
-import '../css_files/dashboard.css';
+import axios from 'axios';
+import { AuthContext } from '../core';
 
+const Transactions = () => {
+  const [selectedCard, setSelectedCard] = useState(null);
 
-const CommitteeDashboard = () => {
+  const handleViewDetails = (request_id) => {
+    setSelectedCard(request_id);
+    
+  };
 
   const [data, setData] = useState([]);
-
+  const {user_type}=useContext(AuthContext);
   useEffect(() => {
-    axios.get('http://localhost:8000/committee/pendingrequests')
+    axios.get('http://localhost:8000/faculty/publicrequests')
       .then(response => setData(response.data.data))
       .catch(error => console.log(error));
   }, []);
 
   return (
-    <div className='dashboard'>
+    <div className='publicrequests'>
       {data ? (
         <div classname="dash"> 
         { data.length===0?(
@@ -36,4 +41,9 @@ const CommitteeDashboard = () => {
   );
 };
 
-export default CommitteeDashboard;
+export default Transactions;
+      
+      
+      
+      
+  

@@ -34,6 +34,9 @@ class FundRequest(models.Model):
     hod_review_date = models.DateTimeField(auto_now_add=False, blank=True, null=True)
     upload = models.FileField(upload_to ='uploads/')
 
+    def get_request_amount(self):
+        return self.request_amount
+
     def set_committee_approval(self, committee_review):
         self.committee_approval_status = 'Approved'
         self.committee_review = committee_review

@@ -11,13 +11,8 @@ class CommitteeUser(CustomUser):
 
     def approve_request(self, request_id, committee_review):
         request_obj = FundRequest.objects.get(id=request_id)
-        request_amount = request_obj.request_amount
-        
-        if Transaction.objects.exists():
-            latest_transaction = Transaction.objects.latest('transaction_date')
-            remaining_budget =  latest_transaction.get_remaining_budget()
-        else:
-            remaining_budget = 0.00
+        request_amount = request_obj.get_request_amount()
+        remaining_budget = self.view_balance()
         
         if remaining_budget >= request_amount:
             request_obj.set_committee_approval(committee_review)

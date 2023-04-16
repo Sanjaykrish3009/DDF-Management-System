@@ -30,7 +30,7 @@ class CheckAuthenticatedView(APIView):
             user_profile = UserProfile.objects.get(user=user)
             type = user_profile.get_user_type()
             if isAuthenticated:
-                return Response({'isAuthenticated':'success', 'user_type': type})
+                return Response({'isAuthenticated':'success', 'type': type})
             else:
                 return Response({'isAuthenticated':'error'})
         except:

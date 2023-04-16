@@ -6,7 +6,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { AuthContext } from "../core";
 
-import '../css_files/ForgotPassword.css';
+import '../css_files/forgotPassword.css';
 
 
 const ForgotPassword = () => {

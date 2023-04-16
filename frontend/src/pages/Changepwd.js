@@ -3,6 +3,7 @@ import { Navigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { AuthContext } from "../core";
+import '../css_files/login.css'
 
 
 function ChangePassword() {

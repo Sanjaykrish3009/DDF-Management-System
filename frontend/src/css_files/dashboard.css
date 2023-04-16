@@ -1,0 +1,13 @@
+h3{
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+}
+
+.request{
+    background: grey;
+    margin: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+

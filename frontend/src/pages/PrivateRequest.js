@@ -3,6 +3,8 @@ import { Navigate } from 'react-router';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
+import '../css_files/publicrequest.css';
+
 function PrivateRequest() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");

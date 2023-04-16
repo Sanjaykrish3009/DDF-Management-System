@@ -1,13 +1,34 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { useState, useEffect } from 'react';
-import { AuthContext } from '../core';
+import {Card} from '../components';
+import '../css_files/dashboard.css';
+
 
 const FacultyDashboard = () => {
-  const {user_type}=useContext(AuthContext);
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    axios.get('http://localhost:8000/faculty/pendingrequests')
+      .then(response => setData(response.data.data))
+      .catch(error => console.log(error));
+  }, []);
 
   return (
     <div className='dashboard'>
-      <h3>No pending Requests</h3>
+      {data ? (
+        <div classname="dash"> 
+        { data.length===0?(
+        <h3>No pending Requests</h3>
+        ):(
+          <div>
+            {data.map((item, index,user_type)=> ( !item.status &&
+                <Card key={item.id} url={'requests/'+item.id} data={item}/>
+            ))}
+          </div>
+        )}
+        </div>
+      ) : (
+        <p>Loading...</p>
+      )}
     </div>
   );
 };

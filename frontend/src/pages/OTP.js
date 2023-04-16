@@ -4,6 +4,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { AuthContext } from '../core';
 
+import '../css_files/otp.css';
 
 
 const OTP = () => {

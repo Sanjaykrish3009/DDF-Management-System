@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import '../css_files/CreateRequest.css';
 
 function CreateRequest() {
   const [showButtons, setShowButtons] = useState(false);

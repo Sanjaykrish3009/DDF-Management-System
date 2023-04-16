@@ -1,6 +1,7 @@
 import React,{useContext,useEffect} from 'react'
 import { AuthContext } from '../core';
 import axios from 'axios';
+import '../css_files/profile.css';
 
 
 const Profile = () => {

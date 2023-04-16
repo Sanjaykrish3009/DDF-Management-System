@@ -2,7 +2,6 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import CommitteeUser
 
-
 class PendingRequests(APIView):
     def get(self, request, format=None):
         user = self.request.user
@@ -76,8 +75,8 @@ class CreditTransactions(APIView):
         email = user.email
   
         try:
-            hod_user = CommitteeUser.objects.get(email=email)
-            credit_transactions = hod_user.view_credit_transactions()
+            committee_user = CommitteeUser.objects.get(email=email)
+            credit_transactions = committee_user.view_credit_transactions()
             return Response({'success':'Credit transactions retrieved successfully by the hod', 'data':credit_transactions})
         except:
             return Response({'error':'Something went wrong while retrieving credit transactions'})
@@ -88,8 +87,8 @@ class DebitTransactions(APIView):
         email = user.email
   
         try:
-            hod_user = CommitteeUser.objects.get(email=email)
-            debit_transactions = hod_user.view_debit_transactions()
+            committee_user = CommitteeUser.objects.get(email=email)
+            debit_transactions = committee_user.view_debit_transactions()
             return Response({'success':'Debit transactions retrieved successfully by the hod', 'data':debit_transactions})
         except:
             return Response({'error':'Something went wrong while retrieving debit transactions'})

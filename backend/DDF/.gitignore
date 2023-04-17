@@ -10,6 +10,8 @@
 /hod/migrations
 /request/__pycache__
 /request/migrations
+/request/viewrequests/__pycache__
 /transaction/__pycache__
 /transaction/migrations
+/transaction/viewtransactions/__pycache__
 /DDF/__pycache__

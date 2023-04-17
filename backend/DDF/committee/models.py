@@ -3,6 +3,8 @@ from authentication.models import CustomUser
 from request.models import FundRequest
 from transaction.models import Transaction
 from django.db.models import Q 
+from transaction.viewtransactions.committee_strategy import ViewTransactions
+
 
 class CommitteeUser(CustomUser):
     committee_id = models.CharField(max_length=30)
@@ -46,15 +48,15 @@ class CommitteeUser(CustomUser):
         return self.fetch_requests_data(previous_requests)
 
     def view_all_transactions(self):
-        all_transactions = Transaction.objects.all()
+        all_transactions = ViewTransactions.view_all_transactions()
         return self.fetch_transactions_data(all_transactions)
     
     def view_credit_transactions(self):
-        credit_transactions = Transaction.objects.filter(request__transaction_type = 'Credit')
+        credit_transactions = ViewTransactions.view_credit_transactions()
         return self.fetch_transactions_data(credit_transactions)
     
     def view_debit_transactions(self):
-        debit_transactions = Transaction.objects.filter(request__transaction_type = 'Debit')
+        debit_transactions = ViewTransactions.view_debit_transactions()
         return self.fetch_transactions_data(debit_transactions)
     
     def fetch_requests_data(self,requests):

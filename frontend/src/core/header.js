@@ -1,10 +1,10 @@
 import "../css_files/header.css"
 
-import React,{useState,useRef,useContext,useEffect} from 'react'
+import React,{useState,useRef,useContext} from 'react'
 import { Link, Outlet, Navigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { FaHome, FaMailBulk, FaHistory, FaPlusCircle } from "react-icons/fa";
-import { CgProfile, CgSidebar } from "react-icons/cg";
+import { CgProfile} from "react-icons/cg";
 import { AuthContext } from "./AuthContext";
 import * as RiIcons from 'react-icons/ri';
 import axios from 'axios';
@@ -77,7 +77,7 @@ const FacultySubheader=()=>{
                   {
                      menuopen && (<div ref={menuRef} className='dropdown-menu'>
                      <Link to ='/faculty/viewprofile' className='droplink'>Profile</Link>
-                     <Link to ='/faculty/changepwd' className='droplink'>change password</Link>
+                     <Link to ='/faculty/changepassword' className='droplink'>change password</Link>
                      <button className='droplink' onClick={Loggingout}>Logout</button>     
                   </div>) 
                   }
@@ -145,7 +145,7 @@ const CommitteeSubheader=()=>{
                   {
                      menuopen && (<div ref={menuRef} className='dropdown-menu'>
                      <Link to ='/committee/viewprofile' className='link'>Profile</Link>
-                     <Link to ='/committee/changepwd' className='link'>change password</Link>
+                     <Link to ='/committee/changepassword' className='link'>change password</Link>
                      <button className='link' onClick={Loggingout}>Logout</button>     
                   </div>) 
                   }
@@ -212,7 +212,7 @@ const HodSubheader=()=>{
                   {
                      menuopen && (<div ref={menuRef} className='dropdown-menu'>
                      <Link to ='/hod/viewprofile' className='link'>Profile</Link>
-                     <Link to ='/hod/changepwd' className='link'>change password</Link>
+                     <Link to ='/hod/changepassword' className='link'>Change password</Link>
                      <button className='link' onClick={Loggingout}>Logout</button>     
                   </div>) 
                   }

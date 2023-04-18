@@ -18,8 +18,8 @@ class UserProfile(models.Model):
 
     def get_user_profile(self):
         profile = {
-            "first_name": self.first_name,
-            "last_name": self.last_name,
+            "firstname": self.first_name,
+            "lastname": self.last_name,
             "email": self.user.email
         }
 

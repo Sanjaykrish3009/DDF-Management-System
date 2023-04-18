@@ -72,7 +72,7 @@ export default function LoginPage() {
         </div>
         <div className="error-message">{errorMessage}</div> 
         
-        <div className="register"> 
+        <div className="signUp3"> 
           <Link to='/SignUp'> Register or SignUp</Link>
         </div>
       </form>

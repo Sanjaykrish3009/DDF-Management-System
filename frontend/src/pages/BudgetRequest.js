@@ -2,19 +2,18 @@ import React,{useState} from 'react'
 import { Navigate } from 'react-router';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import "../css_files/publicrequest.css"
 
-import '../css_files/publicrequest.css';
-
-
-function PublicRequest() {
+function BudgetRequest() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [fundAmount, setFundAmount] = useState("");
   const [redirect, setRedirect] = useState(false);
 
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    axios.post(`http://localhost:8000/request/createpublicrequest`,{
+    axios.post(`http://localhost:8000/request/createbudgetrequest`,{
       'request_title':title,
       'request_description':description,
       'request_amount':fundAmount,
@@ -31,7 +30,7 @@ function PublicRequest() {
         setRedirect(true);
       }
       else{
-        console.log("Creating Public Fund Request Failed");
+        console.log("Adding Budget Request Failed");
       }
     })
     .catch(error =>{
@@ -40,35 +39,36 @@ function PublicRequest() {
     
   };
 
+
   if (redirect) {
-        return <Navigate to="/faculty/dashboard" />;
+        return <Navigate to="/committee/dashboard" />;
   }
 
   return (
     <div className="request-page">
       <form onSubmit={handleSubmit} className="request-form">
-          Public Request
-        <div className="pr_title">
+          Add Budget
+        <div className="title">
           <label htmlFor="title">Title *</label>
           <input
-            type="Text"
+            type="text"
             id="title"
             value={title}
             onChange={(event) => setTitle(event.target.value)}
             required
           />
         </div>
-        <div className="pr_title">
+        <div className="title">
           <label htmlFor="reason">Description *</label>
           <textarea
-            type="Text"
+            type="text"
             id="reason"
             value={description}
             onChange={(event) => setDescription(event.target.value)}
             required
           />
         </div>
-        <div className="pr_title">
+        <div className="title">
           <label htmlFor="fundAmount">Fund amount *</label>
           <input
             type="number"
@@ -85,4 +85,9 @@ function PublicRequest() {
 }
 
 
-export default PublicRequest
+
+
+
+
+
+export default BudgetRequest

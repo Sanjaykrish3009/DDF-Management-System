@@ -5,7 +5,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { AuthContext } from "../core";
 
-import '../css_files/resetpwd.css';
+import '../css_files/login.css';
 
 
 const Resetpwd = () => {
@@ -75,7 +75,7 @@ const Resetpwd = () => {
             />
           </div>
           <div>
-          <button type="submit" className="signUp">Submit</button>
+          <button type="submit" className="submit">Submit</button>
           </div>
         </form>
       </div>

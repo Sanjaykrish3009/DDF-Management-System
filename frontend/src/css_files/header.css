@@ -2,7 +2,7 @@
   padding: None;
 }
 .header {
-  background-color: #aab5b9;
+  background-color: #25c0f8;
   color: rgb(8, 7, 7);
   font-size: 20px;
   font-weight: bold;
@@ -17,7 +17,7 @@
 }
 
 .subheader {
-  background-color: #F8F8F8;
+  background-image: linear-gradient(to right top,#b0e8f9,#c8e9f5,#d0f5f2,#e0efe3,#f9f9f8);
   border-bottom: 1px solid #ccc;
   height: 60px;
   display: flex;

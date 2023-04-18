@@ -47,15 +47,15 @@ class HodUser(CustomUser):
         return self.fetch_requests_data(previous_requests)
     
     def view_all_transactions(self):
-        all_transactions = ViewTransactions.view_all_transactions()
+        all_transactions = Transaction.objects.all()
         return self.fetch_transactions_data(all_transactions)
     
     def view_credit_transactions(self):
-        credit_transactions = ViewTransactions.view_credit_transactions()
+        credit_transactions = Transaction.objects.filter(request__transaction_type = 'Credit')
         return self.fetch_transactions_data(credit_transactions)
     
     def view_debit_transactions(self):
-        debit_transactions = ViewTransactions.view_debit_transactions()
+        debit_transactions = Transaction.objects.filter(request__transaction_type = 'Debit')
         return self.fetch_transactions_data(debit_transactions)
     
     def view_balance(self):

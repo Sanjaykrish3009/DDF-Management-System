@@ -44,19 +44,19 @@ class CommitteeUser(CustomUser):
         return self.fetch_requests_data(pending_requests)
     
     def view_previous_requests(self):
-        previous_requests = FundRequest.objects.exclude(committee_approval_status = 'Pending')
+        previous_requests = FundRequest.objects.exclude(Q(committee_approval_status = 'Pending') | Q(user=self, hod_approval_status = 'Pending'))
         return self.fetch_requests_data(previous_requests)
 
     def view_all_transactions(self):
-        all_transactions = ViewTransactions.view_all_transactions()
+        all_transactions = Transaction.objects.all()
         return self.fetch_transactions_data(all_transactions)
     
     def view_credit_transactions(self):
-        credit_transactions = ViewTransactions.view_credit_transactions()
+        credit_transactions = Transaction.objects.filter(request__transaction_type = 'Credit')
         return self.fetch_transactions_data(credit_transactions)
     
     def view_debit_transactions(self):
-        debit_transactions = ViewTransactions.view_debit_transactions()
+        debit_transactions = Transaction.objects.filter(request__transaction_type = 'Debit')
         return self.fetch_transactions_data(debit_transactions)
     
     def fetch_requests_data(self,requests):

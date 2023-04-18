@@ -13,7 +13,7 @@ function BudgetRequest() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    axios.post(`http://localhost:8000/request/addbudgetrequest`,{
+    axios.post(`http://localhost:8000/request/createbudgetrequest`,{
       'request_title':title,
       'request_description':description,
       'request_amount':fundAmount,

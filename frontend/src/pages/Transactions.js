@@ -3,17 +3,11 @@ import { useState, useEffect } from 'react';
 import {Card} from '../components';
 import axios from 'axios';
 import { AuthContext } from '../core';
+import "../css_files/RequestDetails.css"
+
 
 const Transactions = () => {
-  const [selectedCard, setSelectedCard] = useState(null);
-
-  const handleViewDetails = (request_id) => {
-    setSelectedCard(request_id);
-    
-  };
-
   const [data, setData] = useState([]);
-  const {user_type}=useContext(AuthContext);
   useEffect(() => {
     axios.get('http://localhost:8000/faculty/publicrequests')
       .then(response => setData(response.data.data))

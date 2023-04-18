@@ -4,9 +4,9 @@ import axios from 'axios';
 import { Navigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { AuthContext } from '../core';
+import "../css_files/RequestDetails.css"
 
 const CommitteeRequestDetails = () => {
-  const {id}=useParams();
   const location=useLocation();
   const data=location.state;
   const [remarks,setRemarks]=useState('');

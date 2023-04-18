@@ -4,10 +4,10 @@ import axios from 'axios';
 import { Navigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { AuthContext } from '../core';
+import "../css_files/RequestDetails.css"
 
 
 const HodRequestDetails = () => {
-  const {id}=useParams();
   const location=useLocation();
   const data=location.state;
   const [remarks,setRemarks]=useState('');
@@ -17,7 +17,7 @@ const HodRequestDetails = () => {
     setRemarks(event.target.value);
   };
   const ApproveRequest = (id)=>{
-    axios.post('http://localhost:8000/'+user_type+'approve',{
+    axios.post('http://localhost:8000/'+user_type+'/approve',{
       'request_id':id,
        'hod_review':remarks,
      

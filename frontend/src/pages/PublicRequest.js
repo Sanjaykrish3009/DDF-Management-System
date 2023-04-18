@@ -1,6 +1,5 @@
-import React,{useContext, useState} from 'react'
+import React,{useState} from 'react'
 import { Navigate } from 'react-router';
-import { FacultyContext } from '../core';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
@@ -15,7 +14,7 @@ function PublicRequest() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    axios.post(`http://localhost:8000/faculty/createpublicfundrequest`,{
+    axios.post(`http://localhost:8000/request/createpublicrequest`,{
       'request_title':title,
       'request_description':description,
       'request_amount':fundAmount,

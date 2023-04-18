@@ -4,6 +4,8 @@ from rest_framework.response import Response
 from django.views.decorators.csrf import csrf_protect
 from django.utils.decorators import method_decorator
 from faculty.models import FacultyUser
+from committee.models import CommitteeUser
+from hod.models import HodUser
 from .models import UserProfile
 from authentication.models import CustomUser
 from django.contrib.auth import logout
@@ -24,14 +26,14 @@ class SignupView(APIView):
 
         try:
             if password == re_password:
-                if FacultyUser.objects.filter(email=email).exists():
+                if HodUser.objects.filter(email=email).exists():
                     return Response({ 'error': 'email already exists' })
                 else:
                     if len(password)<6:
                         return Response({'error':'Password must be atleast 6 characters'})
                     else:
-                        faculty_user = FacultyUser.objects.create_user(email, password)
-                        user_profile = UserProfile(user=faculty_user, first_name=first_name, last_name=last_name, user_type='faculty')
+                        faculty_user = HodUser.objects.create_user(email, password)
+                        user_profile = UserProfile(user=faculty_user, first_name=first_name, last_name=last_name, user_type='hod')
                         user_profile.save()                        
                         return Response({'success':'User created successfully'})
             else:

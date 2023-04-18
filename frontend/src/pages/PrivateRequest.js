@@ -14,7 +14,7 @@ function PrivateRequest() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    axios.post(`http://localhost:8000/faculty/createprivatefundrequest`,{
+    axios.post(`http://localhost:8000/request/createprivaterequest`,{
       'request_title':title,
       'request_description':description,
       'request_amount':fundAmount,

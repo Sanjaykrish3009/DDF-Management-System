@@ -64,6 +64,10 @@ body {
     margin-bottom: 15px;
     
   }
+
+  .login_forgot-Password:hover{
+    color: #1047fc;
+  }
   
   .submit{
     padding: 10px 50px;
@@ -74,7 +78,7 @@ body {
     margin-top: 20px;
   }
   
-  .register{
+  .signUp3{
     display: flex;
     margin-top: 10px;
     padding: 7px;
@@ -83,5 +87,13 @@ body {
     margin-bottom: 20px;
     text-decoration: underline;
     text-align: center;
+  }
+
+  .signUp3:hover{
+    color: #1047fc;
+  }
+
+  .submit:hover{
+    color: #1047fc;
   }
   

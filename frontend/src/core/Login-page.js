@@ -46,7 +46,7 @@ export default function LoginPage() {
   return (
     <div className="login-page">
       <form onSubmit={handleSubmit} className="login-form">
-          Sign in
+          Welcome!
         <div className="email">
           <label htmlFor="email" >Email: </label>
           <input
@@ -68,11 +68,11 @@ export default function LoginPage() {
           <Link to='/forgotpassword'> Forgot Password?</Link>
         </div>
         <div>
-          <button type="submit" className="submit" >Sign in</button>
+          <button type="submit" className="submit" >LOG IN</button>
         </div>
         <div className="error-message">{errorMessage}</div> 
         
-        <div className="signUp3"> 
+        <div className="signup-link"> 
           <Link to='/SignUp'> Register or SignUp</Link>
         </div>
       </form>

@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Navigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { AuthContext } from '../core';
-import "../css_files/RequestDetails.css"
+import "../css_files/CommitteeRequestDetails.css"
 
 
 const HodRequestDetails = () => {

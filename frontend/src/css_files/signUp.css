@@ -65,12 +65,11 @@ body {
   .register-button{
     display: flex;
     margin-top: 10px;
-    background-color: #3c9540;
+    background-image: linear-gradient(to right top,#40ebf2,#00d4ff,#00b5ff,#5c89ff,#dab0e3);
     padding: 10px 25px;
     font-size: 16px;
     cursor: pointer;
-    color: #f9f9f8;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     border: 2px solid #1d201d;
     border-radius: 10px;
   }

@@ -1,4 +1,7 @@
+import os
+from django.conf import settings
 from django.db import models
+from django.http import FileResponse, Http404
 from authentication.models import CustomUser
 from django.utils import timezone
 from django.forms.models import model_to_dict
@@ -32,7 +35,7 @@ class FundRequest(models.Model):
     committee_review_date = models.DateTimeField(auto_now_add=False, blank=True, null=True)
     hod_review = models.CharField(max_length=3000, blank=True, null=True)
     hod_review_date = models.DateTimeField(auto_now_add=False, blank=True, null=True)
-    upload = models.FileField(upload_to ='uploads/')
+    upload = models.FileField(upload_to = '', default='')
 
     def get_request_amount(self):
         return self.request_amount
@@ -62,17 +65,17 @@ class FundRequest(models.Model):
         self.save()
 
     def get_request_details(self):
+                
         if self.upload != '':
             request_dict = model_to_dict(self)
-            upload_dict = {
-                'url': request_dict['upload'].url,
-                'path': request_dict['upload'].path
-            }
-            request_dict['upload'] = upload_dict
+            request_dict['upload'] = request_dict['upload'].url
         else:
             request_dict = model_to_dict(self, exclude=['upload'])
-            
+
+    
         request_dict['user'] = model_to_dict(self.user, fields=['email'])
         request_dict['request_date'] = timezone.localtime(self.request_date).strftime('%Y-%m-%d %H:%M:%S')
 
         return request_dict
+    
+       

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useParams,useLocation } from 'react-router-dom';
+import { useParams,useLocation, Link } from 'react-router-dom';
 import "../css_files/RequestDetails.css"
 
 
@@ -21,6 +21,9 @@ const RequestDetails = () => {
           <div>Committee Remarks: {data.committee_review}, Time: {data.committee_review_date}</div>
           <div>HOD Decision Status: {data.hod_approval_status}</div>
           <div>HOD Remarks: {data.hod_review}, Time: {data.hod_review_date}</div>
+          <div>
+              Uploads: <Link to = '/filedetails'> {data.upload} </Link>
+          </div>
         </div>
       </div>
     </div>

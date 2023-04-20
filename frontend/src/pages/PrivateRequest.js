@@ -9,6 +9,7 @@ function PrivateRequest() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [fundAmount, setFundAmount] = useState("");
+  const [documents, setDocuments] = useState([]);
   const [redirect, setRedirect] = useState(false);
 
 
@@ -38,6 +39,11 @@ function PrivateRequest() {
       console.log(error.response.data);
     })
     
+  };
+
+  const handleFileUpload = (event) => {
+    const uploadedFile = event.target.files;
+    setDocuments(uploadedFile);
   };
 
   if (redirect) {
@@ -76,6 +82,16 @@ function PrivateRequest() {
             id="fundAmount"
             value={fundAmount}
             onChange={(event) => setFundAmount(event.target.value)}
+            required
+          />
+        </div>
+        <div className="title">
+          <label htmlFor="documents">Upload Documents *</label>
+          <input
+            type="file"
+            id="documents"
+            multiple
+            onChange={handleFileUpload}
             required
           />
         </div>

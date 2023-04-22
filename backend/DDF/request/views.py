@@ -1,8 +1,11 @@
+import os
+from django.http import FileResponse, Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from DDF.settings import MEDIA_ROOT
 from .models import FundRequest
 
-
+    
 class CreatePrivateFundRequest(APIView):
     def post(self,request,format=None):
         data = self.request.data
@@ -69,3 +72,14 @@ class RequestDetails(APIView):
             return Response({'success':'Fund request viewed successfully', 'data': request_dict})
         except:
             return Response({'error':'Something went wrong while viewing fund request'})
+
+class FileDetails(APIView):
+    def get(self, request, format=None):
+        data = self.request.data
+        file_path = data['file_path']
+        file_path = os.path.join(MEDIA_ROOT, file_path)
+        
+        if os.path.exists(file_path):
+            return FileResponse(open(file_path, 'rb'), content_type='application/pdf')
+        else:
+            raise Http404("File not found")

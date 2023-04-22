@@ -3,6 +3,10 @@ from authentication.models import CustomUser
 from request.models import FundRequest
 from transaction.models import Transaction
 from django.db.models import Q 
+from transaction.viewtransactions.all_transactions_strategy import AllTransactionStrategy
+from transaction.viewtransactions.credit_transactions import CreditTransactionsStrategy
+from transaction.viewtransactions.debit_transactions import DebitTransactionsStrategy
+
 
 class CommitteeUser(CustomUser):
     committee_id = models.CharField(max_length=30)
@@ -41,15 +45,21 @@ class CommitteeUser(CustomUser):
         return self.fetch_requests_data(previous_requests)
 
     def view_all_transactions(self):
-        all_transactions = Transaction.objects.all()
+        AllTransactions = AllTransactionStrategy()
+        all_transactions = AllTransactions.view_transactions()
+        # all_transactions = Transaction.objects.all()
         return self.fetch_transactions_data(all_transactions)
     
     def view_credit_transactions(self):
-        credit_transactions = Transaction.objects.filter(request__transaction_type = 'Credit')
+        CreditTransactions = CreditTransactionsStrategy()
+        credit_transactions = CreditTransactions.view_transactions()
+        # credit_transactions = Transaction.objects.filter(request__transaction_type = 'Credit')
         return self.fetch_transactions_data(credit_transactions)
     
     def view_debit_transactions(self):
-        debit_transactions = Transaction.objects.filter(request__transaction_type = 'Debit')
+        DebitTransactions = DebitTransactionsStrategy()
+        debit_transactions = DebitTransactions.view_transactions()
+        # debit_transactions = Transaction.objects.filter(request__transaction_type = 'Debit')
         return self.fetch_transactions_data(debit_transactions)
     
     def fetch_requests_data(self,requests):

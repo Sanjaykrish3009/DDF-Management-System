@@ -57,8 +57,9 @@ const Resetpwd = () => {
       <div className="login-page">
           
       <form onSubmit={handleSubmit}  className="login-form">
-          Reset Password
-          <div className="password">
+      <div className="login-title">Reset Password </div>
+          
+          <div className="login_details">
             <label>New Password</label>
             <input
               type="password"
@@ -66,7 +67,7 @@ const Resetpwd = () => {
               onChange={(e) => setNewPassword(e.target.value)}
             />
           </div>
-          <div className="password">
+          <div className="login_details">
             <label>Confirm New Password</label>
             <input
               type="password"

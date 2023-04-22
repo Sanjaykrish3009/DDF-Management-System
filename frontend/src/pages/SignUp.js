@@ -16,7 +16,14 @@ export default function LoginPage() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    signingUp({firstname,lastname,email,password,re_password,setAccountCreated});
+    signingUp({firstname,lastname,email,password,re_password,setAccountCreated})
+    .then(() => {
+      console.log('Signup Successful')
+    })
+    .catch((error) => {
+      console.log(error);
+      // setErrorMessage("Invalid email or password"); 
+    });
   };
 
   if(isAuthenticated)
@@ -32,13 +39,13 @@ export default function LoginPage() {
   return (
     <div className="signup-page">
       <form onSubmit={handleSubmit} className="signup-form">
-          <h1>Register</h1> 
+          <h1>Create Account</h1> 
         <div className="signup-details">
           <label htmlFor="firstname"  >First Name: </label>
           <input
             type="text"
             value={firstname}
-            onChange={(e) => setFirstname(e.target.value)} className="details"
+            onChange={(e) => setFirstname(e.target.value)} 
           />
         </div>
         <div className="signup-details">
@@ -46,7 +53,7 @@ export default function LoginPage() {
           <input
             type="text"
             value={lastname}
-            onChange={(e) => setLastname(e.target.value)} className="details"
+            onChange={(e) => setLastname(e.target.value)} 
           />
         </div>
         <div className="signup-details">
@@ -54,7 +61,7 @@ export default function LoginPage() {
           <input
             type="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)} className="details"
+            onChange={(e) => setEmail(e.target.value)} 
           />
         </div>
         <div className="signup-details">
@@ -62,7 +69,7 @@ export default function LoginPage() {
           <input
             type="password"
             value={password}
-            onChange={(e) => setPassw(e.target.value)} className="details"
+            onChange={(e) => setPassw(e.target.value)} 
           />
         </div>
         <div className="signup-details">
@@ -70,7 +77,7 @@ export default function LoginPage() {
           <input
             type="password"
             value={re_password}
-            onChange={(e) => setRePassw(e.target.value)} className="details"
+            onChange={(e) => setRePassw(e.target.value)} 
           />
         </div>
         <CSRFToken/>

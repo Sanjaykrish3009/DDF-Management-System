@@ -3,6 +3,8 @@ import {Card} from '../components';
 import axios from 'axios';
 import { AuthContext } from '../core';
 import React, { useContext } from 'react'
+import { Loader } from "../components";
+
 
 const Inbox = () => {
 
@@ -20,7 +22,7 @@ const Inbox = () => {
       {data ? (
          <div>
           { data.length===0?(
-          <div>No pendingrequests</div>
+          <h3>No pendingrequests</h3>
           ):(
           <div>
             {data.map((item)=> ( !item.status &&
@@ -30,7 +32,9 @@ const Inbox = () => {
           )}
         </div>
       ):(
-        <p>Loading...</p>
+
+          <Loader/>
+
       )}
       </div>
     );

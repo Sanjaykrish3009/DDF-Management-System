@@ -75,10 +75,10 @@ const OTP = () => {
           />
         </div>
         <div className="otp_buttons">
-          <button type="submit" className="otp_signUp">
+          <button type="submit" className="otp_submit">
             Submit OTP
           </button>
-          <button onClick={handleResend} className="otp_submit">
+          <button onClick={handleResend} className="otp_resend">
             Resend OTP
           </button>
         </div>

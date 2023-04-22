@@ -21,7 +21,7 @@ export const AuthContextProvider = ({ children }) => {
 
   const loggingIn = ({email,password}) => {
 
-    axios.post(`http://localhost:8000/authentication/login`,{
+    const response = axios.post(`http://localhost:8000/authentication/login`,{
       'email':email,
       'password':password,
     },{
@@ -43,11 +43,13 @@ export const AuthContextProvider = ({ children }) => {
       .catch(error =>{
         throw error; 
       })
+
+    return response;
   };
 
   const signingUp = ({firstname,lastname,email,password,re_password,setAccountCreated}) => {
       
-    axios.post(`http://localhost:8000/user/register`,{
+    const response = axios.post(`http://localhost:8000/user/register`,{
       'first_name':firstname,
       'last_name':lastname,
       'email':email,
@@ -60,12 +62,23 @@ export const AuthContextProvider = ({ children }) => {
     })
       .then(response =>{
         console.log(response.data);
-        setAccountCreated(true);
+
+        if(response.data.success)
+        {
+          setAccountCreated(true);
+        }
+        else 
+        {
+          throw new Error(response.data.error);
+        }
+        
       })
       .catch(error =>{
-        console.log(error.response.data);
-        
+        // console.log(error.response.data);
+        throw error;
       });
+
+      return response;
   }
   
   

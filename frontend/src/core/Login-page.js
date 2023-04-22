@@ -16,12 +16,15 @@ export default function LoginPage() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    try {
-      loggingIn({ email, password });
-    } catch (error) {
-      console.log("done");
-      setErrorMessage("Invalid email or password"); 
-    }
+
+    loggingIn({ email, password })
+      .then(() => {
+        console.log('Login Successful')
+      })
+      .catch((error) => {
+        console.log(error);
+        setErrorMessage("Invalid email or password"); 
+      });
   };
 
   if(isAuthenticated)
@@ -46,8 +49,10 @@ export default function LoginPage() {
   return (
     <div className="login-page">
       <form onSubmit={handleSubmit} className="login-form">
-          Welcome!
-        <div className="email">
+          <div className="login-title">Welcome! </div>
+          <div className="error-message">{errorMessage}</div> 
+        
+        <div className="login_details">
           <label htmlFor="email" >Email: </label>
           <input
             type="email"
@@ -55,7 +60,7 @@ export default function LoginPage() {
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-        <div className="password">
+        <div className="login_details">
           <label htmlFor="password" >Password: </label>
           <input
             type="password"
@@ -70,8 +75,7 @@ export default function LoginPage() {
         <div>
           <button type="submit" className="submit" >LOG IN</button>
         </div>
-        <div className="error-message">{errorMessage}</div> 
-        
+
         <div className="signup-link"> 
           <Link to='/SignUp'> Register or SignUp</Link>
         </div>

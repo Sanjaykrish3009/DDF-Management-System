@@ -6,6 +6,7 @@ import { CreateRequest, FacultyDashboard, Inbox, Transactions, Profile, ChangePa
 import Loginpage from './Login-page';
 import {Route, Routes} from 'react-router-dom';
 import {FacultyPrivateRoute, CommitteePrivateRoute, HodPrivateRoute} from "../components/PrivateRoute";
+import { Loader } from '../components';
 
 const AuthStatus =() => {
   const {isAuthenticated, setIsAuthenticated, setUser_type} = useContext(AuthContext);
@@ -32,7 +33,8 @@ const AuthStatus =() => {
     <div>    
     <Header/>
     {isLoading ? (
-        <div>Loading...</div>
+        // <div>Loading...</div>
+        <Loader/>
       ) : (
     
     <Routes>
@@ -45,42 +47,42 @@ const AuthStatus =() => {
 
       <Route path = "/faculty" element= {<FacultySubheader/>}>
         <Route element={<FacultyPrivateRoute/>}>
-        <Route path = "dashboard" element={<FacultyDashboard/>}/>
-        <Route path = "inbox" element={<Inbox/>}/>
-        <Route path = "history" element = {<Transactions/>}/>
-        <Route path = "makerequest" element = {<CreateRequest/>}/>
-        <Route path = "viewprofile" element = {<Profile/>}/>
-        <Route path = "changepassword" element = {<ChangePassword/>}/>
-        <Route path = "dashboard/requests/:id" element = {<RequestDetails/>}/>
-        <Route path = "inbox/requests/:id" element = {<RequestDetails/>}/>
-        <Route path = "history/requests/:id" element = {<RequestDetails/>}/>
-        <Route path = "makerequest/publicrequest" element={<PublicRequest/>}/>
-        <Route path = "makerequest/privaterequest" element={<PrivateRequest/>}/>
+          <Route path = "dashboard" element={<FacultyDashboard/>}/>
+          <Route path = "inbox" element={<Inbox/>}/>
+          <Route path = "history" element = {<Transactions/>}/>
+          <Route path = "makerequest" element = {<CreateRequest/>}/>
+          <Route path = "viewprofile" element = {<Profile/>}/>
+          <Route path = "changepassword" element = {<ChangePassword/>}/>
+          <Route path = "dashboard/requests/:id" element = {<RequestDetails/>}/>
+          <Route path = "inbox/requests/:id" element = {<RequestDetails/>}/>
+          <Route path = "history/requests/:id" element = {<RequestDetails/>}/>
+          <Route path = "makerequest/publicrequest" element={<PublicRequest/>}/>
+          <Route path = "makerequest/privaterequest" element={<PrivateRequest/>}/>
         </Route>
       </Route>
 
       <Route path = "/committee" element= {<CommitteeSubheader/>}>
         <Route element={<CommitteePrivateRoute/>}>
-        <Route path = "dashboard" element={<CommitteeDashboard/>}/>
-        <Route path = "inbox" element={<Inbox/>}/>
-        <Route path = "transactions" element = {<BudgetTransactions/>}/>
-        <Route path = "budgetrequest" element = {<BudgetRequest/>}/>
-        <Route path = "viewprofile" element = {<Profile/>}/>
-        <Route path = "changepassword" element = {<ChangePassword/>}/>
-        <Route path = "dashboard/requests/:id" element = {<CommitteeRequestDetails/>}/>
-        <Route path = "inbox/requests/:id" element = {<RequestDetails/>}/>
+          <Route path = "dashboard" element={<CommitteeDashboard/>}/>
+          <Route path = "inbox" element={<Inbox/>}/>
+          <Route path = "transactions" element = {<BudgetTransactions/>}/>
+          <Route path = "budgetrequest" element = {<BudgetRequest/>}/>
+          <Route path = "viewprofile" element = {<Profile/>}/>
+          <Route path = "changepassword" element = {<ChangePassword/>}/>
+          <Route path = "dashboard/requests/:id" element = {<CommitteeRequestDetails/>}/>
+          <Route path = "inbox/requests/:id" element = {<RequestDetails/>}/>
         </Route>
       </Route>
 
       <Route path = "/hod" element= {<HodSubheader/>}>
           <Route element={<HodPrivateRoute/>}>
-          <Route path = "dashboard" element={<HodDashboard/>}/>
-          <Route path = "inbox" element={<Inbox/>}/>
-          <Route path = "transactions" element = {<BudgetTransactions/>}/>
-          <Route path = "viewprofile" element = {<Profile/>}/>
-          <Route path = "changepassword" element = {<ChangePassword/>}/>
-          <Route path = "dashboard/requests/:id" element = {<HodRequestDetails/>}/>
-          <Route path = "inbox/requests/:id" element = {<RequestDetails/>}/>
+            <Route path = "dashboard" element={<HodDashboard/>}/>
+            <Route path = "inbox" element={<Inbox/>}/>
+            <Route path = "transactions" element = {<BudgetTransactions/>}/>
+            <Route path = "viewprofile" element = {<Profile/>}/>
+            <Route path = "changepassword" element = {<ChangePassword/>}/>
+            <Route path = "dashboard/requests/:id" element = {<HodRequestDetails/>}/>
+            <Route path = "inbox/requests/:id" element = {<RequestDetails/>}/>
           </Route>
       </Route>
       

@@ -51,7 +51,7 @@ body {
     width: 100%;
   }
   
-  label {
+  .pr_title label {
     display: flex;
     margin-bottom: 10px;
     font-size: 16px;
@@ -60,9 +60,9 @@ body {
   }
   
   
-  input[type="Text"],
-  input[type="file"],
-  input[type="number"]{
+  .pr_title input[type="Text"],
+  .pr_title input[type="file"],
+  .pr_title input[type="number"]{
     
     padding: 10px;
     border: none;

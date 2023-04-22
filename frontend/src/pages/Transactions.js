@@ -4,6 +4,8 @@ import {Card} from '../components';
 import axios from 'axios';
 import { AuthContext } from '../core';
 import "../css_files/RequestDetails.css"
+import { Loader } from "../components";
+
 
 
 const Transactions = () => {
@@ -29,7 +31,9 @@ const Transactions = () => {
         )}
         </div>
       ) : (
-        <p>Loading...</p>
+
+          <Loader/>
+
       )}
     </div>
   );

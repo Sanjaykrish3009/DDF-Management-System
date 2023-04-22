@@ -3,6 +3,8 @@ import { useState ,useEffect} from 'react';
 import axios from 'axios';
 import { AuthContext } from '../core';
 import React, { useContext } from 'react'
+import { Loader } from "../components";
+
 
 const BudgetTransactions= () => {
   const [data, setData] = useState([]);
@@ -36,7 +38,8 @@ const BudgetTransactions= () => {
         )}
         </div>
       ):(
-        <p>Loading...</p>
+
+          <Loader/>
       )}
       </div>
     );

@@ -2,6 +2,8 @@ import React,{useContext,useEffect} from 'react'
 import { AuthContext } from '../core';
 import axios from 'axios';
 import '../css_files/profile.css';
+import { Loader } from "../components";
+
 
 
 const Profile = () => {
@@ -25,9 +27,12 @@ const Profile = () => {
           </div>
         </div>
       ) : (
-        <div className="loading-message ">
-          <p>Loading user profile...</p>
-        </div>
+        // <div className="loading-message ">
+        //   <p>Loading user profile...</p>
+        // </div>
+
+          <Loader/>
+
         
       )}
     </div>

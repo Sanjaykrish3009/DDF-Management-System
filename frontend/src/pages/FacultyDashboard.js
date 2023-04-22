@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import {Card} from '../components';
 import '../css_files/dashboard.css';
+import { Loader } from "../components";
+
 
 
 const FacultyDashboard = () => {
@@ -28,7 +30,8 @@ const FacultyDashboard = () => {
         )}
         </div>
       ) : (
-        <p>Loading...</p>
+          <Loader/>
+
       )}
     </div>
   );

@@ -8,7 +8,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 80vh;
+    height: 100vh;
     background-image: linear-gradient(to right top,#b0e8f9,#c8e9f5,#d0f5f2,#e0efe3,#f9f9f8);
     background-repeat: repeat;
     background-size: 100% 100%;
@@ -24,6 +24,7 @@ body {
     justify-content: center;
     align-items: center;
     padding: 18px;
+    margin-bottom: 20vh;
     background-color: #bbb6b6;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
@@ -38,39 +39,41 @@ body {
     width: 100%;
   }
   
-  label {
+  .otp_email label {
     display: flex;
-    margin-bottom: 10px;
     font-size: 16px;
+    margin-bottom: 10px;
     font-weight: bold;
     color: #333;
   }
   
-  input[type="text"] {
-    width: 6cm;
-    height: 5mm;
-    border: none;
+  .otp_email input[type="text"]
+  {
+    
     border-bottom: 2px solid #333;
-    font-size: 20px;
     margin-right: 10px;
     text-align: center;
     letter-spacing: 10px;
+    margin-top: 10px;
+    padding: 15px;
+    border: none;
     margin-bottom: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #333;
+    background-color: #f5f5f5;
   }
   
-  input[type="text"]:focus {
-    outline: none;
-    border-bottom: 2px solid #05a4ee;
-  }
+  
   
   .otp_buttons {
     display: flex;
     justify-content: center;
   }
   
-  .otp_submit {
+  .otp_resend {
     background-color: #10a5a4;
-    border-radius: 5px;
+    border-radius: 20px;
     padding: 7px;
     font-size: 16px;
     cursor: pointer;
@@ -78,9 +81,9 @@ body {
     margin-left: 10px;
   }
   
-  .otp_signUp {
-    background-color: #3c9540;
-    border-radius: 7px;
+  .otp_submit {
+    background-image: linear-gradient(to right top,#40ebf2,#00d4ff,#00b5ff,#5c89ff,#dab0e3);
+    border-radius: 20px;
     padding: 7px;
     margin-right: 20px;
     font-size: 16px;

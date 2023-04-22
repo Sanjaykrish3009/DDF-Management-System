@@ -57,8 +57,8 @@ function ChangePassword() {
   return (
     <div className="login-page">
       <form onSubmit={handleSubmit} className="login-form">
-          <h1>Change Password</h1>
-        <div className="email">
+      <div className="login-title">Change Password </div>
+        <div className="login_details">
           <label>Old Password</label>
           <input
             type="password"
@@ -66,7 +66,7 @@ function ChangePassword() {
             onChange={(e) => setOldPassword(e.target.value)}
           />
         </div>
-        <div className="email">
+        <div className="login_details">
           <label>New Password</label>
           <input
             type="password"
@@ -74,7 +74,7 @@ function ChangePassword() {
             onChange={(e) => setNewPassword(e.target.value)}
           />
         </div>
-        <div className="email">
+        <div className="login_details">
           <label>Confirm New Password</label>
           <input
             type="password"
@@ -82,7 +82,7 @@ function ChangePassword() {
             onChange={(e) => setConfirmNewPassword(e.target.value)}
           />
         </div>
-        <button type="submit" className="signUp">Submit</button>
+        <button type="submit" className="submit">Submit</button>
       </form>
     </div>
   );

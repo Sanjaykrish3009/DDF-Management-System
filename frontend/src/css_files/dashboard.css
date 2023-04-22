@@ -3,6 +3,9 @@ h3{
     display: flex;
     justify-content: center;
 }
+.dash{
+    overflow: scroll;
+}
 
 .request{
     background: grey;

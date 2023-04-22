@@ -48,7 +48,7 @@ function BudgetRequest() {
     <div className="request-page">
       <form onSubmit={handleSubmit} className="request-form">
           Add Budget
-        <div className="title">
+        <div className="pr_title">
           <label htmlFor="title">Title *</label>
           <input
             type="text"
@@ -58,7 +58,7 @@ function BudgetRequest() {
             required
           />
         </div>
-        <div className="title">
+        <div className="pr_title">
           <label htmlFor="reason">Description *</label>
           <textarea
             type="text"
@@ -68,7 +68,7 @@ function BudgetRequest() {
             required
           />
         </div>
-        <div className="title">
+        <div className="pr_title">
           <label htmlFor="fundAmount">Fund amount *</label>
           <input
             type="number"

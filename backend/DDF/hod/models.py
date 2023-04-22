@@ -1,16 +1,16 @@
+from decimal import Decimal
 from django.db import models
 from authentication.models import CustomUser
 from request.models import FundRequest
 from transaction.models import Transaction
 from django.db.models import Q 
-from transaction.viewtransactions.hod_strategy import ViewTransactions
 
 class HodUser(CustomUser):
     hod_id = models.CharField(max_length=30)
 
     def approve_request(self, request_id, hod_review):
         request_obj = FundRequest.objects.get(id=request_id)
-        request_amount = request_obj.request_amount
+        request_amount = request_obj.get_request_amount()
         
         if Transaction.objects.exists():
             latest_transaction = Transaction.objects.latest('transaction_date')
@@ -20,9 +20,26 @@ class HodUser(CustomUser):
         
         if  request_obj.transaction_type=='Credit' or remaining_budget >= request_amount:
             request_obj.set_hod_approval(hod_review)
+
+            if Transaction.objects.exists()==False:
+                remaining_budget = Decimal(0.00)
+            else:
+                latest_transaction = Transaction.objects.latest('transaction_date')
+                remaining_budget = latest_transaction.get_remaining_budget()
+            
+            if request_obj.transaction_type == 'Debit':
+                remaining_budget -= request_amount
+            else:
+                remaining_budget += request_amount
+
+            transaction = Transaction(request=request_obj,remaining_budget=remaining_budget)
+            transaction.save()
+            
             return request_obj
         else:
             return None
+        
+
 
     def disapprove_request(self, request_id, hod_review):
         fund_request = FundRequest.objects.get(id=request_id)

@@ -3,8 +3,6 @@ from authentication.models import CustomUser
 from request.models import FundRequest
 from transaction.models import Transaction
 from django.db.models import Q 
-from transaction.viewtransactions.committee_strategy import ViewTransactions
-
 
 class CommitteeUser(CustomUser):
     committee_id = models.CharField(max_length=30)

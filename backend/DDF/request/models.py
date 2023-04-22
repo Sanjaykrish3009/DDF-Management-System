@@ -1,7 +1,4 @@
-import os
-from django.conf import settings
 from django.db import models
-from django.http import FileResponse, Http404
 from authentication.models import CustomUser
 from django.utils import timezone
 from django.forms.models import model_to_dict

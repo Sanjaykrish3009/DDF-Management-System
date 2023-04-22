@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { Navigate } from "react-router-dom";
+import { BeatLoader } from 'react-spinners';
 
 
 import axios from "axios";
@@ -7,7 +8,7 @@ import Cookies from "js-cookie";
 import { AuthContext } from "../core";
 
 import '../css_files/forgotPassword.css';
-
+import { Loader } from "../components";
 
 const ForgotPassword = () => {
   const [otpverify, setOtpVerify] = useState(false);
@@ -49,12 +50,14 @@ const ForgotPassword = () => {
   return (
     <div>
     {isLoading?(
-      <div className="forgot_Loading">Loading...</div>
+      // <div className="forgot_Loading">Loading...</div>
+      <Loader/>
     ):(
     <div className="forgot_login-page">
       <form onSubmit={handleSubmit} className="forgot_login-form">
-        <label htmlFor="email">Email:</label>
+        <label htmlFor="email" className="forgotlogin_email">Forgot Password</label>
         <div className="forgot_email">
+          <label htmlFor="email" >Please Enter Your Registered Email </label>
           <input type="email" id="email" value={email} onChange={(e)=>setEmail(e.target.value)} required />
         </div>
         <button type="submit" className="forgot_signUp">Reset Password</button>

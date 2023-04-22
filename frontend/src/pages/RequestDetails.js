@@ -13,6 +13,7 @@ const RequestDetails = () => {
         <div className='titl'>RequestDetails: </div>
         <div className='bod'>
           <div className='requesttype'>This is a {data.request_type}</div>
+
           <div>Title:{data.request_title}</div>
           <div>Description:{data.request_description}</div>
           <div>Requested Amount: {data.request_amount}</div>

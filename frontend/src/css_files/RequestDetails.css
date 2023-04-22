@@ -27,6 +27,7 @@ body {
     /* background-color: #bbb6b6; */
     border-radius: 10px;
     /* margin-bottom: 10px; */
+    inline-size: min-content;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
@@ -51,4 +52,7 @@ body {
     text-align: center;
     font-size: 18px;
     margin-top: 5px;
+    
+    overflow-y: auto; /* enable vertical scrolling if content exceeds the height */
+    
 }

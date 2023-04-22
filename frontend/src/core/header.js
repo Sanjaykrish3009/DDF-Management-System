@@ -144,9 +144,9 @@ const CommitteeSubheader=()=>{
                   <button ref={dropdownRef} className='link'  onClick={()=>setmenuOpen(!menuopen)}> <CgProfile/> MyAccount <RiIcons.RiArrowDropDownFill/></button>
                   {
                      menuopen && (<div ref={menuRef} className='dropdown-menu'>
-                     <Link to ='/committee/viewprofile' className='link'>Profile</Link>
-                     <Link to ='/committee/changepassword' className='link'>change password</Link>
-                     <button className='link' onClick={Loggingout}>Logout</button>     
+                     <Link to ='/committee/viewprofile' className='droplink'>Profile</Link>
+                     <Link to ='/committee/changepassword' className='droplink'>change password</Link>
+                     <button className='droplink' onClick={Loggingout}>Logout</button>     
                   </div>) 
                   }
                   
@@ -211,9 +211,9 @@ const HodSubheader=()=>{
                   <button ref={dropdownRef} className='link'  onClick={()=>setmenuOpen(!menuopen)}> <CgProfile/> MyAccount <RiIcons.RiArrowDropDownFill/></button>
                   {
                      menuopen && (<div ref={menuRef} className='dropdown-menu'>
-                     <Link to ='/hod/viewprofile' className='link'>Profile</Link>
-                     <Link to ='/hod/changepassword' className='link'>Change password</Link>
-                     <button className='link' onClick={Loggingout}>Logout</button>     
+                     <Link to ='/hod/viewprofile' className='droplink'>Profile</Link>
+                     <Link to ='/hod/changepassword' className='droplink'>change password</Link>
+                     <button className='droplink' onClick={Loggingout}>Logout</button>     
                   </div>) 
                   }
                   

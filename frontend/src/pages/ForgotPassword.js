@@ -1,6 +1,5 @@
 import { useContext, useState } from "react";
 import { Navigate } from "react-router-dom";
-import { BeatLoader } from 'react-spinners';
 
 
 import axios from "axios";

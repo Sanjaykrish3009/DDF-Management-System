@@ -10,12 +10,12 @@ class PendingRequests(APIView):
         user = self.request.user
         email = user.email
 
-        try:
-            faculty_user = FacultyUser.objects.get(email=email)
-            pending_requests = faculty_user.view_pending_requests()
-            return Response({'success':'Pending requests of faculty retrieved successfully', 'data':pending_requests})
-        except:
-            return Response({'error':'Something went wrong while retrieving the pending requests of the faculty'})
+        # try:
+        faculty_user = FacultyUser.objects.get(email=email)
+        pending_requests = faculty_user.view_pending_requests()
+        return Response({'success':'Pending requests of faculty retrieved successfully', 'data':pending_requests})
+        # except:
+        #     return Response({'error':'Something went wrong while retrieving the pending requests of the faculty'})
         
 class PreviousRequests(APIView):
     def get(self, request, format=None):

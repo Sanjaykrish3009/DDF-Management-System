@@ -1,3 +1,4 @@
+import json
 from django.db import models
 from authentication.models import CustomUser
 from django.utils import timezone
@@ -61,8 +62,7 @@ class FundRequest(models.Model):
         self.committee_review_date = timezone.now()
         self.save()
 
-    def get_request_details(self):
-                
+    def get_request_details(self):    
         if self.upload != '':
             request_dict = model_to_dict(self)
             request_dict['upload'] = request_dict['upload'].url
@@ -75,4 +75,8 @@ class FundRequest(models.Model):
 
         return request_dict
     
+    def get_request_data(self):
+        request_dict = model_to_dict(self, fields=['id', 'request_title', 'committee_approval_status', 'hod_approval_status'])    
+        request_dict['request_date'] = timezone.localtime(self.request_date).strftime('%Y-%m-%d %H:%M:%S')   
+        return request_dict
        

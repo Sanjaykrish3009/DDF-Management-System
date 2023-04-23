@@ -9,20 +9,34 @@ function PrivateRequest() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [fundAmount, setFundAmount] = useState("");
-  const [documents, setDocuments] = useState([]);
+  const [documents, setDocuments] = useState(null);
   const [redirect, setRedirect] = useState(false);
 
+ 
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    axios.post(`http://localhost:8000/request/createprivaterequest`,{
-      'request_title':title,
-      'request_description':description,
-      'request_amount':fundAmount,
-     
-    },{
+    const formData = new FormData();
+    const reader = new FileReader();
+    formData.append('request_title',title);
+    formData.append('request_description',description);
+    formData.append('request_amount',fundAmount);  
+    formData.append('file',documents);
+
+    // reader.readAsDataURL(documents);
+    // reader.onload=(readerEvent)=>{
+    //   formData.append("file",readerEvent.target.result);
+    // }
+    console.log(documents);
+    console.log(formData);
+    console.log(formData.get('request_title'));
+
+    axios.post(`http://localhost:8000/request/createprivaterequest`,
+      formData
+    ,{
       headers:{
-        'X-CSRFToken' :Cookies.get('csrftoken')
+        'X-CSRFToken' :Cookies.get('csrftoken'),
+        'Content-Type':'multipart/form-data',
       }
     })
     .then(response =>{
@@ -42,7 +56,7 @@ function PrivateRequest() {
   };
 
   const handleFileUpload = (event) => {
-    const uploadedFile = event.target.files;
+    const uploadedFile = event.target.files[0];
     setDocuments(uploadedFile);
   };
 
@@ -52,7 +66,7 @@ function PrivateRequest() {
 
   return (
     <div className="request-page">
-      <form onSubmit={handleSubmit} className="request-form">
+      <form onSubmit={handleSubmit} className="request-form" encType='multipart/form-data'>
           Public Request
         <div className="title">
           <label htmlFor="title">Title *</label>
@@ -90,7 +104,6 @@ function PrivateRequest() {
           <input
             type="file"
             id="documents"
-            multiple
             onChange={handleFileUpload}
             required
           />

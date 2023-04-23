@@ -70,17 +70,16 @@ class HodUser(CustomUser):
     def view_all_transactions(self):
         AllTransactions = AllTransactionStrategy()
         all_transactions = AllTransactions.view_transactions()
-        # all_transactions = Transaction.objects.all()
         return self.fetch_transactions_data(all_transactions)
     
     def view_credit_transactions(self):
         CreditTransactions = CreditTransactionsStrategy()
         credit_transactions = CreditTransactions.view_transactions()
-        # credit_transactions = Transaction.objects.filter(request__transaction_type = 'Credit')
         return self.fetch_transactions_data(credit_transactions)
     
     def view_debit_transactions(self):
-        debit_transactions = Transaction.objects.filter(request__transaction_type = 'Debit')
+        Debit_transactions = DebitTransactionsStrategy()
+        debit_transactions = Debit_transactions.view_transactions()
         return self.fetch_transactions_data(debit_transactions)
     
     def view_balance(self):
@@ -95,7 +94,7 @@ class HodUser(CustomUser):
         data_list = []
         
         for request_obj in requests:
-            request_dict = request_obj.get_request_details()
+            request_dict = request_obj.get_request_data()
             data_list.append(request_dict)
 
         return data_list

@@ -14,10 +14,10 @@ class CreatePrivateFundRequest(APIView):
         request_title = data['request_title']
         request_description = data['request_description']
         request_amount = data['request_amount']
-
+        file = self.request.FILES.get('file')
         try:
             fund_request = FundRequest(user=user, request_type=request_type, request_title=request_title, 
-                            request_description=request_description, request_amount=request_amount)
+                            request_description=request_description, request_amount=request_amount,upload=file)
             fund_request.save()
             return Response({'success':'Private Fund Request created successfully'})
         except:
@@ -51,18 +51,17 @@ class CreateBudgetRequest(APIView):
         request_description = data['request_description']
         request_amount = data['request_amount']
         transaction_type = "Credit"
-        
 
         try:
             fund_request = FundRequest(user=user, request_type=request_type, request_title=request_title, 
-                            request_description=request_description, request_amount=request_amount, transaction_type=transaction_type,committee_approval_status=True)
+                            request_description=request_description, request_amount=request_amount, transaction_type=transaction_type,committee_approval_status='Approved')
             fund_request.save()
             return Response({'success':'Budget Request created successfully'})
         except:
             return Response({'error':'Something went wrong while creating Private Fund Request'})
 
 class RequestDetails(APIView):
-    def get(self, request, format=None):
+    def post(self, request, format=None):
         data = self.request.data
         request_id = data['request_id']
 

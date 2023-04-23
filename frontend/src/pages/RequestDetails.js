@@ -1,13 +1,42 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useParams,useLocation, Link } from 'react-router-dom';
 import "../css_files/RequestDetails.css"
+import { Loader } from '../components';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 
+import { useEffect } from 'react';
 
 const RequestDetails = () => {
+
+  
   const {id}=useParams();
   const location=useLocation();
-  const data=location.state;
+  // const data=location.state;
+  const [data,setData] = useState(null);
+
+  useEffect(() => {
+    axios.post('http://localhost:8000/request/requestdetails',
+    {
+      'request_id':id,
+    },{
+      headers:{
+        'X-CSRFToken' :Cookies.get('csrftoken')
+      }
+    })
+      .then(response => {
+        
+        if(response.data.success)
+        {
+          setData(response.data.data)
+        }
+      })
+      .catch(error => console.log(error));
+  }, []);
+
   return (
+    <div>
+      {data ? (
     <div className='page'>
       <div className='mainbody'>
         <div className='titl'>RequestDetails: </div>
@@ -28,6 +57,10 @@ const RequestDetails = () => {
         </div>
       </div>
     </div>
+     ) : (
+        <Loader/>
+    )}
+  </div>
   )
 }
 

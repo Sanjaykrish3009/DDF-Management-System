@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.db import models
 from authentication.models import CustomUser
 from request.models import FundRequest
@@ -13,7 +14,7 @@ class HodUser(CustomUser):
 
     def approve_request(self, request_id, hod_review):
         request_obj = FundRequest.objects.get(id=request_id)
-        request_amount = request_obj.request_amount
+        request_amount = request_obj.get_request_amount()
         
         if Transaction.objects.exists():
             latest_transaction = Transaction.objects.latest('transaction_date')
@@ -23,9 +24,26 @@ class HodUser(CustomUser):
         
         if  request_obj.transaction_type=='Credit' or remaining_budget >= request_amount:
             request_obj.set_hod_approval(hod_review)
+
+            if Transaction.objects.exists()==False:
+                remaining_budget = Decimal(0.00)
+            else:
+                latest_transaction = Transaction.objects.latest('transaction_date')
+                remaining_budget = latest_transaction.get_remaining_budget()
+            
+            if request_obj.transaction_type == 'Debit':
+                remaining_budget -= request_amount
+            else:
+                remaining_budget += request_amount
+
+            transaction = Transaction(request=request_obj,remaining_budget=remaining_budget)
+            transaction.save()
+            
             return request_obj
         else:
             return None
+        
+
 
     def disapprove_request(self, request_id, hod_review):
         fund_request = FundRequest.objects.get(id=request_id)
@@ -52,17 +70,16 @@ class HodUser(CustomUser):
     def view_all_transactions(self):
         AllTransactions = AllTransactionStrategy()
         all_transactions = AllTransactions.view_transactions()
-        # all_transactions = Transaction.objects.all()
         return self.fetch_transactions_data(all_transactions)
     
     def view_credit_transactions(self):
         CreditTransactions = CreditTransactionsStrategy()
         credit_transactions = CreditTransactions.view_transactions()
-        # credit_transactions = Transaction.objects.filter(request__transaction_type = 'Credit')
         return self.fetch_transactions_data(credit_transactions)
     
     def view_debit_transactions(self):
-        debit_transactions = Transaction.objects.filter(request__transaction_type = 'Debit')
+        Debit_transactions = DebitTransactionsStrategy()
+        debit_transactions = Debit_transactions.view_transactions()
         return self.fetch_transactions_data(debit_transactions)
     
     def view_balance(self):
@@ -77,7 +94,7 @@ class HodUser(CustomUser):
         data_list = []
         
         for request_obj in requests:
-            request_dict = request_obj.get_request_details()
+            request_dict = request_obj.get_request_data()
             data_list.append(request_dict)
 
         return data_list

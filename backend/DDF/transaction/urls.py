@@ -1,8 +1,7 @@
 from django.urls import path
-from .views import CreateTransaction, TransactionDetails
+from .views import TransactionDetails
 
 urlpatterns = [
-    path('createtransaction', CreateTransaction.as_view()),
     path('transactiondetails', TransactionDetails.as_view()),
 ]
 

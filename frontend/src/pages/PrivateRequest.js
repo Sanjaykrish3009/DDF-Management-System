@@ -10,21 +10,37 @@ function PrivateRequest() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [fundAmount, setFundAmount] = useState("");
+  const [documents, setDocuments] = useState(null);
   const [redirect, setRedirect] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null); 
 
+
+
+  const [errorMessage, setErrorMessage] = useState(null); 
 
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    axios.post(`http://localhost:8000/request/createprivaterequest`,{
-      'request_title':title,
-      'request_description':description,
-      'request_amount':fundAmount,
-     
-    },{
+    const formData = new FormData();
+    const reader = new FileReader();
+    formData.append('request_title',title);
+    formData.append('request_description',description);
+    formData.append('request_amount',fundAmount);  
+    formData.append('file',documents);
+
+    // reader.readAsDataURL(documents);
+    // reader.onload=(readerEvent)=>{
+    //   formData.append("file",readerEvent.target.result);
+    // }
+    console.log(documents);
+    console.log(formData);
+    console.log(formData.get('request_title'));
+
+    axios.post(`http://localhost:8000/request/createprivaterequest`,
+      formData
+    ,{
       headers:{
-        'X-CSRFToken' :Cookies.get('csrftoken')
+        'X-CSRFToken' :Cookies.get('csrftoken'),
+        'Content-Type':'multipart/form-data',
       }
     })
     .then(response =>{
@@ -43,6 +59,11 @@ function PrivateRequest() {
 
     })
     
+  };
+
+  const handleFileUpload = (event) => {
+    const uploadedFile = event.target.files[0];
+    setDocuments(uploadedFile);
   };
 
   if (redirect) {
@@ -83,6 +104,15 @@ function PrivateRequest() {
             id="fundAmount"
             value={fundAmount}
             onChange={(event) => setFundAmount(event.target.value)}
+            required
+          />
+        </div>
+        <div className="title">
+          <label htmlFor="documents">Upload Documents *</label>
+          <input
+            type="file"
+            id="documents"
+            onChange={handleFileUpload}
             required
           />
         </div>

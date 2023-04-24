@@ -13,30 +13,19 @@ class FacultyUser(CustomUser):
         PendingRequests = PendingRequestStrategy()
         pending_requests = PendingRequests.view_requests(self)
 
-
-        # pending_requests = FundRequest.objects.filter((Q(committee_approval_status = 'Pending') | 
-        #                                     Q(committee_approval_status = 'Approved', hod_approval_status = 'Pending')), user=self)
-        # pending_requests = FundRequest.objects.filter((Q(committee_approval_status = 'Pending') | 
-        #                                     Q(committee_approval_status = 'Approved', hod_approval_status = 'Pending')), user=self)
         return self.fetch_requests_data(pending_requests)
     
     def view_previous_requests(self):
-
         PreviousRequests = PreviousRequestStrategy()
         previous_requests = PreviousRequests.view_requests(self)
 
-        # previous_requests = FundRequest.objects.filter((Q(hod_approval_status = 'Approved') | Q(committee_approval_status = 'Disapproved') | 
-        #                                                 Q(hod_approval_status = 'Disapproved')), user=self)
-        # previous_requests = FundRequest.objects.filter((Q(hod_approval_status = 'Approved') | Q(committee_approval_status = 'Disapproved') | 
-        #                                                 Q(hod_approval_status = 'Disapproved')), user=self)
         return self.fetch_requests_data(previous_requests)
     
     def view_public_requests(self):
 
         PublicRequests = PublicRequestStrategy()
         public_requests = PublicRequests.view_requests(self)
-        # public_requests = FundRequest.objects.filter(request_type='PublicRequest')
-        # public_requests = FundRequest.objects.filter(request_type='PublicRequest')
+       
         return self.fetch_requests_data(public_requests)
 
 
@@ -44,7 +33,9 @@ class FacultyUser(CustomUser):
         data_list = []
         
         for request_obj in requests:
-            request_dict = request_obj.get_request_details()
+            request_dict = request_obj.get_request_data()
             data_list.append(request_dict)
 
-        return data_list
+        sorted_data_list = sorted(data_list, key=lambda x:x['request_date'], reverse=True)
+        return sorted_data_list
+    

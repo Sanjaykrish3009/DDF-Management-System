@@ -1,3 +1,4 @@
+import json
 from django.db import models
 from authentication.models import CustomUser
 from django.utils import timezone
@@ -32,7 +33,7 @@ class FundRequest(models.Model):
     committee_review_date = models.DateTimeField(auto_now_add=False, blank=True, null=True)
     hod_review = models.CharField(max_length=3000, blank=True, null=True)
     hod_review_date = models.DateTimeField(auto_now_add=False, blank=True, null=True)
-    upload = models.FileField(upload_to ='uploads/')
+    upload = models.FileField(upload_to = '', default='')
 
     def get_request_amount(self):
         return self.request_amount
@@ -61,18 +62,21 @@ class FundRequest(models.Model):
         self.committee_review_date = timezone.now()
         self.save()
 
-    def get_request_details(self):
+    def get_request_details(self):    
         if self.upload != '':
             request_dict = model_to_dict(self)
-            upload_dict = {
-                'url': request_dict['upload'].url,
-                'path': request_dict['upload'].path
-            }
-            request_dict['upload'] = upload_dict
+            request_dict['upload'] = request_dict['upload'].url
         else:
             request_dict = model_to_dict(self, exclude=['upload'])
-            
+
+    
         request_dict['user'] = model_to_dict(self.user, fields=['email'])
         request_dict['request_date'] = timezone.localtime(self.request_date).strftime('%Y-%m-%d %H:%M:%S')
 
         return request_dict
+    
+    def get_request_data(self):
+        request_dict = model_to_dict(self, fields=['id', 'request_title', 'committee_approval_status', 'hod_approval_status'])    
+        request_dict['request_date'] = timezone.localtime(self.request_date).strftime('%Y-%m-%d %H:%M:%S')   
+        return request_dict
+       

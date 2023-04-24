@@ -65,7 +65,7 @@ class FundRequest(models.Model):
     def get_request_details(self):    
         if self.upload != '':
             request_dict = model_to_dict(self)
-            request_dict['upload'] = request_dict['upload'].url
+            request_dict['upload'] = request_dict['upload'].name
         else:
             request_dict = model_to_dict(self, exclude=['upload'])
 

@@ -36,12 +36,12 @@ const BudgetTransactions= () => {
         ):(
           <div>
             <div>
-                  Request_id,Amount,Type,Requested By,Balance
+                  Transaction_id,Request_id,Amount,Type,Requested By,Date and Time,Remaining Balance
             </div>
             <div>
             
               {data.map((item)=> ( !item.status &&
-                <div>{item.id},{item.request.request_amount},{item.request.transaction_type},{item.request.user.first_name},{item.remaining_budget}</div>
+                <div>{item.id},{item.request.id},{item.request.request_amount},{item.request.transaction_type},{item.request.user.email},{item.transaction_date},{item.remaining_budget}</div>
 
               ))}
             </div>

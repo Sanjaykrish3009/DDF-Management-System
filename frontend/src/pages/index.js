@@ -17,8 +17,9 @@ import CommitteeRequestDetails from "./CommitteeRequestDetails";
 import HodRequestDetails from "./HodRequestDetails";
 import RequestDetails from "./RequestDetails";
 import Transactions from "./Transactions";
+import FileDetails from "./FileDetails";
 
 export {SignUp, ForgotPassword, OTP, Resetpwd, 
     Inbox,FacultyDashboard, CommitteeDashboard, HodDashboard,
     ChangePassword, CreateRequest, PrivateRequest, PublicRequest, Profile,
-    BudgetRequest, BudgetTransactions, CommitteeRequestDetails, HodRequestDetails, RequestDetails, Transactions};
+    BudgetRequest, BudgetTransactions, CommitteeRequestDetails, HodRequestDetails, RequestDetails, Transactions, FileDetails};

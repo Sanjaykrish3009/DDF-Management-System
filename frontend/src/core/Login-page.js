@@ -4,7 +4,7 @@ import React, { useState,useContext } from "react";
 import { Link, Navigate,useNavigate } from "react-router-dom";
 import { CSRFToken } from "../components";
 import { AuthContext} from "./AuthContext";
-
+import {ErrorDisplay} from "../components";
 export default function LoginPage() {
 
   const [email, setEmail] = useState("");
@@ -14,17 +14,28 @@ export default function LoginPage() {
 
   const [errorMessage, setErrorMessage] = useState(null); 
 
+  // const handleSubmit = async(event) => {
+  //   event.preventDefault();
+
+  //   try {
+  //     await loggingIn({ email, password });
+  //     console.log('Login Successful')
+  //   } catch (error) {
+  //     console.log(error);
+  //     setErrorMessage("Invalid email or password"); 
+  //   }
+  // };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-
     loggingIn({ email, password })
-      .then(() => {
-        console.log('Login Successful')
-      })
-      .catch((error) => {
-        console.log(error);
-        setErrorMessage("Invalid email or password"); 
-      });
+    .then(() => {
+      console.log('Login Successful')
+    })
+     .catch ((error) =>{
+      console.log(error);
+      setErrorMessage("Invalid email or password"); 
+    });
   };
 
   if(isAuthenticated)
@@ -47,39 +58,41 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="login-page">
-      <form onSubmit={handleSubmit} className="login-form">
-          <div className="login-title">Welcome! </div>
-          <div className="error-message">{errorMessage}</div> 
-        
-        <div className="login_details">
-          <label htmlFor="email" >Email: </label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div className="login_details">
-          <label htmlFor="password" >Password: </label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassw(e.target.value)}
-          />
-        </div>
-        <CSRFToken/>
-        <div className="login_forgot-Password">
-          <Link to='/forgotpassword'> Forgot Password?</Link>
-        </div>
-        <div>
-          <button type="submit" className="submit" >LOG IN</button>
-        </div>
+    <div>
+      <ErrorDisplay errormessage={errorMessage} seterrormessage={setErrorMessage}/>        
 
-        <div className="signup-link"> 
-          <Link to='/SignUp'> Register or SignUp</Link>
-        </div>
-      </form>
+      <div className="login-page">
+        <form onSubmit={handleSubmit} className="login-form">
+            <div className="login-title">Welcome! </div>
+          <div className="login_details">
+            <label htmlFor="email" >Email: </label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div className="login_details">
+            <label htmlFor="password" >Password: </label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassw(e.target.value)}
+            />
+          </div>
+          <CSRFToken/>
+          <div className="login_forgot-Password">
+            <Link to='/forgotpassword'> Forgot Password?</Link>
+          </div>
+          <div>
+            <button type="submit" className="submit" >LOG IN</button>
+          </div>
+
+          <div className="signup-link"> 
+            <Link to='/SignUp'> Register or SignUp</Link>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

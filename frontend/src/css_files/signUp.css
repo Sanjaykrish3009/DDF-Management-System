@@ -82,4 +82,10 @@ body {
     border: 2px solid #1d201d;
     border-radius: 20px;
   }
+
+  .error-message {
+    color: red;
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+  }
   

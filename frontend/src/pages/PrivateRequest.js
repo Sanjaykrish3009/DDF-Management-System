@@ -2,6 +2,7 @@ import React,{useState} from 'react'
 import { Navigate } from 'react-router';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { ErrorDisplay } from "../components";
 
 import '../css_files/publicrequest.css';
 
@@ -10,6 +11,8 @@ function PrivateRequest() {
   const [description, setDescription] = useState("");
   const [fundAmount, setFundAmount] = useState("");
   const [redirect, setRedirect] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null); 
+
 
 
   const handleSubmit = (event) => {
@@ -31,11 +34,13 @@ function PrivateRequest() {
         setRedirect(true);
       }
       else{
-        console.log("Creating Private Fund Request Failed");
+        setErrorMessage(response.data.error);
+
       }
     })
     .catch(error =>{
-      console.log(error.response.data);
+      setErrorMessage(error.message);
+
     })
     
   };
@@ -46,6 +51,8 @@ function PrivateRequest() {
 
   return (
     <div className="request-page">
+      <ErrorDisplay errormessage={errorMessage} seterrormessage={setErrorMessage}/> 
+
       <form onSubmit={handleSubmit} className="request-form">
           Public Request
         <div className="title">

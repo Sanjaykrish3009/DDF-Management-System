@@ -4,6 +4,7 @@ import { Navigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { AuthContext } from "../core";
+import { ErrorDisplay } from "../components";
 
 import '../css_files/login.css';
 
@@ -14,13 +15,19 @@ const Resetpwd = () => {
     const [confirmNewPassword, setConfirmNewPassword] = useState("");
     const [passwordChange,setPasswordChange]=useState(false);
     const {logout} = useContext(AuthContext);
+    const [errorMessage, setErrorMessage] = useState(null); 
+    const [confirmPasswordError, setConfirmPasswordError] = useState("");
+    const [passwordError, setPasswordError] = useState("");
+
   
     const handleSubmit = (e) => {
       e.preventDefault();
-      if (newPassword !== confirmNewPassword) {
-        alert("New password and confirm password fields should match.");
-      } else if (newPassword.length < 6) {
-        alert("Password should have at least 6 characters.");
+      setConfirmPasswordError("");
+      setPasswordError("");
+      if (newPassword.length < 6) {
+        setPasswordError("Password should have at least 6 characters.");
+      } else if (newPassword !== confirmNewPassword) {
+        setConfirmPasswordError("New password and confirm password fields should match.");
       } else {
         axios.post(`http://localhost:8000/authentication/resetpassword`,{
         'new_password':newPassword,
@@ -38,11 +45,14 @@ const Resetpwd = () => {
           {
             setPasswordChange(true);
           }
+          else{
+            setErrorMessage(response.data.error);
+          }
           
         })
         .catch(error =>{
-          console.log(error.response.data);
-          
+          setErrorMessage(error.message);
+
         });
       
       }
@@ -55,7 +65,8 @@ const Resetpwd = () => {
   
     return (
       <div className="login-page">
-          
+      <ErrorDisplay errormessage={errorMessage} seterrormessage={setErrorMessage}/> 
+
       <form onSubmit={handleSubmit}  className="login-form">
       <div className="login-title">Reset Password </div>
           
@@ -67,6 +78,8 @@ const Resetpwd = () => {
               onChange={(e) => setNewPassword(e.target.value)}
             />
           </div>
+          {passwordError && <p className='error-message'>{passwordError}</p>}
+
           <div className="login_details">
             <label>Confirm New Password</label>
             <input
@@ -75,6 +88,8 @@ const Resetpwd = () => {
               onChange={(e) => setConfirmNewPassword(e.target.value)}
             />
           </div>
+          {confirmPasswordError && <p className='error-message'>{confirmPasswordError}</p>}
+
           <div>
           <button type="submit" className="submit">Submit</button>
           </div>

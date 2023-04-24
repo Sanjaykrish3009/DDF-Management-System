@@ -4,24 +4,35 @@ import axios from 'axios';
 import { AuthContext } from '../core';
 import React, { useContext } from 'react'
 import { Loader } from "../components";
-
+import {ErrorDisplay} from '../components';
 
 const BudgetTransactions= () => {
   const [data, setData] = useState([]);
   const {user_type}=useContext(AuthContext);
+  const [errorMessage, setErrorMessage] = useState(null); 
 
   useEffect(() => {
     console.log(user_type);
     axios.get('http://localhost:8000/'+user_type+'/alltransactions')
-      .then(response => setData(response.data.data))
-      .catch(error => console.log(error));
+      .then(response => 
+        {
+        if(response.data.success){
+          setData(response.data.data);
+        }
+        else{
+         
+          setErrorMessage(response.data.error);
+        }
+        })
+      .catch(error => setErrorMessage(error.message));
   }, []);
   return (
     <div className='dashboard'>
+      <ErrorDisplay errormessage={errorMessage} seterrormessage={setErrorMessage}/> 
       {data ? (
         <div classname="dash"> 
         { data.length===0?(
-        <h3>No pending Requests</h3>
+        <h3>No Transactions</h3>
         ):(
           <div>
             <div>

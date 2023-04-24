@@ -1,10 +1,10 @@
+import mimetypes
 import os
-from django.http import FileResponse, Http404
+from django.http import FileResponse, Http404, HttpResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from DDF.settings import MEDIA_ROOT
 from .models import FundRequest
-
     
 class CreatePrivateFundRequest(APIView):
     def post(self,request,format=None):
@@ -74,11 +74,18 @@ class RequestDetails(APIView):
 
 class FileDetails(APIView):
     def get(self, request, format=None):
-        data = self.request.data
+        data = self.request.query_params
         file_path = data['file_path']
         file_path = os.path.join(MEDIA_ROOT, file_path)
         
         if os.path.exists(file_path):
-            return FileResponse(open(file_path, 'rb'), content_type='application/pdf')
+            file_type, _ = mimetypes.guess_type(file_path)
+            if file_type is None:
+                return HttpResponse(status=500)
+            file = open(file_path, 'rb')
+            response = FileResponse(file)
+            response['Content-Type'] = file_type
+            response['Content-Disposition'] = 'attachment; filename="{}"'.format(file_path.split('/')[-1])
+            return response
         else:
             raise Http404("File not found")

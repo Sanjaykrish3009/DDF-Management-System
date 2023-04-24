@@ -34,6 +34,27 @@ const RequestDetails = () => {
       .catch(error => console.log(error));
   }, []);
 
+  const handleFile =(file)=>{
+    axios.get('http://localhost:8000/request/filedetails',
+    {
+      params: {
+        file_path: file
+      },
+      headers: {
+        'X-CSRFToken': Cookies.get('csrftoken')
+      },
+      responseType: 'arraybuffer'
+    }).then(response => {
+      // window.location.href = pdfUrl;
+      const fileBlob = new Blob([response.data], { type: response.headers['content-type']});
+      const fileUrl = URL.createObjectURL(fileBlob);
+      window.open(fileUrl, '_blank');
+
+    }).catch(error => console.log(error));
+
+    
+  }
+
   return (
     <div>
       {data ? (
@@ -52,7 +73,7 @@ const RequestDetails = () => {
           <div>HOD Decision Status: {data.hod_approval_status}</div>
           <div>HOD Remarks: {data.hod_review}, Time: {data.hod_review_date}</div>
           <div>
-              Uploads: <Link to = '/filedetails'> {data.upload} </Link>
+              Uploads: <Link onClick={()=>handleFile(data.upload)}> {data.upload} </Link>
           </div>
         </div>
       </div>

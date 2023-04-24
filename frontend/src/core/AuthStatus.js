@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { AuthContext } from './AuthContext';
 import {Header, FacultySubheader, CommitteeSubheader, HodSubheader} from './header';
-import { CreateRequest, FacultyDashboard, Inbox, Transactions, Profile, ChangePassword,ForgotPassword,SignUp,RequestDetails,PublicRequest,PrivateRequest,OTP, Resetpwd,BudgetRequest,BudgetTransactions,CommitteeDashboard,CommitteeRequestDetails, HodRequestDetails, HodDashboard  } from '../pages';
+import { CreateRequest, FacultyDashboard, Inbox, Transactions, Profile, ChangePassword,ForgotPassword,SignUp,RequestDetails,PublicRequest,PrivateRequest,OTP, Resetpwd,BudgetRequest,BudgetTransactions,CommitteeDashboard,CommitteeRequestDetails, HodRequestDetails, HodDashboard,FileDetails  } from '../pages';
 import Loginpage from './Login-page';
 import {Route, Routes} from 'react-router-dom';
 import {FacultyPrivateRoute, CommitteePrivateRoute, HodPrivateRoute} from "../components/PrivateRoute";
@@ -58,6 +58,7 @@ const AuthStatus =() => {
           <Route path = "history/requests/:id" element = {<RequestDetails/>}/>
           <Route path = "makerequest/publicrequest" element={<PublicRequest/>}/>
           <Route path = "makerequest/privaterequest" element={<PrivateRequest/>}/>
+          <Route path = "filedetails" element={<FileDetails/>}/>
         </Route>
       </Route>
 

@@ -56,6 +56,13 @@ class Approval(APIView):
         user = self.request.user
         email = user.email
         data = self.request.data
+
+        if 'request_id' not in data:
+            return Response({'error': 'Request ID field must be set'})
+        
+        if 'hod_review' not in data:
+            return Response({'error': 'HOD Review field must be set'})
+        
         request_id = data['request_id']
         hod_review = data['hod_review']
 
@@ -73,6 +80,13 @@ class Disapproval(APIView):
         user = self.request.user
         email = user.email
         data = self.request.data
+
+        if 'request_id' not in data:
+            return Response({'error': 'Request ID field must be set'})
+        
+        if 'hod_review' not in data:
+            return Response({'error': 'HOD Review field must be set'})
+        
         request_id = data['request_id']
         hod_review = data['hod_review']
         try:

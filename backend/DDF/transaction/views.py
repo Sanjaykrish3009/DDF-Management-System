@@ -5,6 +5,10 @@ from .models import Transaction
 class TransactionDetails(APIView):
     def get(self, request, format=None):
         data = self.request.data
+
+        if 'transaction_id' not in data:
+            return Response({'error': 'Transaction ID field must be set'})
+        
         transaction_id = data['transaction_id']
 
         try:

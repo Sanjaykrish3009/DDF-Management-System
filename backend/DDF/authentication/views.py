@@ -11,7 +11,6 @@ from django.utils import timezone
 from datetime import timedelta
 import json, random, string, datetime
     
-
 @method_decorator(ensure_csrf_cookie,name='dispatch')
 class GetCSRFToken(APIView):
     permission_classes = (permissions.AllowAny,)
@@ -21,10 +20,8 @@ class GetCSRFToken(APIView):
     
 
 class CheckAuthenticatedView(APIView):
-    
     def get(self,request,format=None):
         user = self.request.user
-        
         try:
             isAuthenticated = user.is_authenticated
             user_profile = UserProfile.objects.get(user=user)
@@ -43,6 +40,12 @@ class LoginView(APIView):
     
     def post(self,request,format=None):
         data = self.request.data
+
+        if 'email' not in data:
+            return Response({'error': 'Email field must be set'})
+        if 'password' not in data:
+            return Response({'error': 'Password field must be set'})
+        
         email = data['email']
         password = data['password']
 
@@ -73,19 +76,20 @@ class LogoutView(APIView):
 class ForgotPasswordView(APIView):
     permission_classes = (permissions.AllowAny, )
 
-    def generate_otp(self):
-        otp = ''.join(random.choices(string.digits, k=6))
-        return f'{otp}'
-
     def post(self, request, format=None):
         data = self.request.data
+
+        if 'email' not in data:
+            return Response({'error': 'Email field must be set'})
+        
         email = data['email']
+        
         try:
             user = CustomUser.objects.get(email=email)
         except:
             return Response({'error': 'User doesnot exist with given email'})
         else:
-            otp = self.generate_otp()
+            otp = ''.join(random.choices(string.digits, k=6))
             otp_created_at = timezone.now()
             otp_data = {'otp': otp, 'otp_created_at': otp_created_at}
             otp_data_json = json.dumps(otp_data, default=str)
@@ -106,6 +110,10 @@ class CheckOtpView(APIView):
 
     def post(self, request, format=None):
         data = self.request.data
+
+        if 'entered_otp' not in data:
+            return Response({'error': 'OTP field must be set'})
+        
         entered_otp = data['entered_otp']
         otp_data_json = request.session.get('reset_otp_data')
         otp_data = json.loads(otp_data_json)
@@ -131,6 +139,13 @@ class ResetPasswordView(APIView):
         data = self.request.data
         email = request.session['reset_email']
         user = CustomUser.objects.get(email=email)
+
+        if 'new_password' not in data:
+            return Response({'error': 'New Password field must be set'})
+        
+        if 're_new_password' not in data:
+            return Response({'error': 'Re New Password field must be set'})
+        
         new_password = data['new_password']
         re_new_password = data['re_new_password']
 

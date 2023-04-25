@@ -75,7 +75,8 @@ class CommitteeUser(CustomUser):
             transaction_dict = transaction_obj.get_transaction_details()
             data_list.append(transaction_dict)
 
-        return data_list
+        sorted_data_list = sorted(data_list, key=lambda x:x['request_date'], reverse=True)
+        return sorted_data_list
     
     
     

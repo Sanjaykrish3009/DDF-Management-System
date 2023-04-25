@@ -87,8 +87,16 @@ WSGI_APPLICATION = 'DDF.wsgi.application'
 
 DATABASES = {
     'default': {
-	'ENGINE': 'django.db.backends.postgresql_psycopg2',
+	    'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'ddf_swe', 
+        'USER': 'sammy', 
+        'PASSWORD': 'pa$$word',
+        'HOST': '127.0.0.1', 
+        'PORT': '5432',
+    },
+    'test': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'test_ddf_swe', 
         'USER': 'sammy', 
         'PASSWORD': 'pa$$word',
         'HOST': '127.0.0.1', 

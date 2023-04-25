@@ -4,20 +4,31 @@ import axios from 'axios';
 import {Card} from '../components';
 import '../css_files/dashboard.css';
 import { Loader } from "../components";
-
+import {ErrorDisplay} from '../components';
 
 const CommitteeDashboard = () => {
 
+  const [errorMessage, setErrorMessage] = useState(null); 
   const [data, setData] = useState([]);
-
+  
   useEffect(() => {
     axios.get('http://localhost:8000/committee/pendingrequests')
-      .then(response => setData(response.data.data))
-      .catch(error => console.log(error));
+      .then(response =>{ setData(response.data.data)
+      
+        if(response.data.success){
+          setData(response.data.data);
+        }
+        else{
+          setErrorMessage(response.data.error);
+        }
+      })
+      .catch(error => setErrorMessage(error.message));
+      
   }, []);
 
   return (
     <div className='dashboard'>
+      <ErrorDisplay errormessage={errorMessage} seterrormessage={setErrorMessage}/> 
       {data ? (
         <div classname="dash"> 
         { data.length===0?(

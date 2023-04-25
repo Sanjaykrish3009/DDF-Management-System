@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { Navigate } from "react-router-dom";
-
+import { BeatLoader } from 'react-spinners';
+import {ErrorDisplay} from "../components";
 
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -12,8 +13,9 @@ import { Loader } from "../components";
 const ForgotPassword = () => {
   const [otpverify, setOtpVerify] = useState(false);
   const [email,setEmail] =useState("");
-  const {setEmailID} = useContext(AuthContext);
+  const {setEmailID,setValid} = useContext(AuthContext);
   const [isLoading,setIsLoading]=useState(false);
+  const [errorMessage, setErrorMessage] = useState(null); 
 
 
   const handleSubmit = (event) => {
@@ -34,15 +36,18 @@ const ForgotPassword = () => {
         {
           setOtpVerify(true);
         }
+        else{
+          setErrorMessage(response.data.error)
+        }
       })
       .catch(error =>{
-        console.log(error.response.data);
-        
+        setErrorMessage(error.message);
       });
   };
 
   if(otpverify)
   {
+    setValid(true);
     return <Navigate to = "/otpverification"/>
   }
 
@@ -52,6 +57,10 @@ const ForgotPassword = () => {
       // <div className="forgot_Loading">Loading...</div>
       <Loader/>
     ):(
+    <div>
+
+    <ErrorDisplay errormessage={errorMessage} seterrormessage={setErrorMessage}/>        
+
     <div className="forgot_login-page">
       <form onSubmit={handleSubmit} className="forgot_login-form">
         <label htmlFor="email" className="forgotlogin_email">Forgot Password</label>
@@ -62,8 +71,10 @@ const ForgotPassword = () => {
         <button type="submit" className="forgot_signUp">Reset Password</button>
       </form>
     </div>
+    </div>
     )}
     </div>
+    
   );
 };
 

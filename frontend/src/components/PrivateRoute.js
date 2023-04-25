@@ -18,4 +18,14 @@ const HodPrivateRoute = () => {
   return isAuthenticated && user_type==='hod'? <Outlet/> : <Navigate to="/" />;
 };
 
-export {FacultyPrivateRoute,CommitteePrivateRoute,HodPrivateRoute};
+const SecurePrivateRoute = () =>{
+  const {isValid} = useContext(AuthContext);
+  return isValid? <Outlet/> : <Navigate to="/" />;
+}
+
+const SecurePasswordPrivateRoute = () =>{
+  const {isValidOtp} = useContext(AuthContext);
+  return isValidOtp? <Outlet/> : <Navigate to="/" />;
+}
+
+export {FacultyPrivateRoute,CommitteePrivateRoute,HodPrivateRoute,SecurePrivateRoute,SecurePasswordPrivateRoute};

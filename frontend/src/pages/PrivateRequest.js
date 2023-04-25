@@ -2,6 +2,7 @@ import React,{useState} from 'react'
 import { Navigate } from 'react-router';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { ErrorDisplay } from "../components";
 
 import '../css_files/publicrequest.css';
 
@@ -12,7 +13,10 @@ function PrivateRequest() {
   const [documents, setDocuments] = useState(null);
   const [redirect, setRedirect] = useState(false);
 
- 
+
+
+  const [errorMessage, setErrorMessage] = useState(null); 
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -46,11 +50,13 @@ function PrivateRequest() {
         setRedirect(true);
       }
       else{
-        console.log("Creating Private Fund Request Failed");
+        setErrorMessage(response.data.error);
+
       }
     })
     .catch(error =>{
-      console.log(error.response.data);
+      setErrorMessage(error.message);
+
     })
     
   };
@@ -66,9 +72,11 @@ function PrivateRequest() {
 
   return (
     <div className="request-page">
-      <form onSubmit={handleSubmit} className="request-form" encType='multipart/form-data'>
-          Public Request
-        <div className="title">
+      <ErrorDisplay errormessage={errorMessage} seterrormessage={setErrorMessage}/> 
+
+      <form onSubmit={handleSubmit} className="request-form">
+          Private Request
+        <div className="pr_title">
           <label htmlFor="title">Title *</label>
           <input
             type="text"
@@ -78,7 +86,7 @@ function PrivateRequest() {
             required
           />
         </div>
-        <div className="title">
+        <div className="pr_title">
           <label htmlFor="reason">Description *</label>
           <textarea
             type="text"
@@ -89,7 +97,7 @@ function PrivateRequest() {
           />
         </div>
 
-        <div className="title">
+        <div className="pr_title">
           <label htmlFor="fundAmount">Fund amount *</label>
           <input
             type="number"
@@ -99,7 +107,7 @@ function PrivateRequest() {
             required
           />
         </div>
-        <div className="title">
+        <div className="pr_title">
           <label htmlFor="documents">Upload Documents *</label>
           <input
             type="file"

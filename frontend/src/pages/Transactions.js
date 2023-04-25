@@ -5,19 +5,34 @@ import axios from 'axios';
 import { AuthContext } from '../core';
 import "../css_files/RequestDetails.css"
 import { Loader } from "../components";
+import { ErrorDisplay } from "../components";
 
 
 
 const Transactions = () => {
   const [data, setData] = useState([]);
+  const [errorMessage, setErrorMessage] = useState(null); 
+
   useEffect(() => {
     axios.get('http://localhost:8000/faculty/publicrequests')
-      .then(response => setData(response.data.data))
-      .catch(error => console.log(error));
+      .then(response => 
+        {
+          if(response.data.success)
+          {
+            setData(response.data.data)
+
+          }
+          else{
+            setErrorMessage(response.data.error);
+          }
+        })
+      .catch(error => setErrorMessage(error.message));
   }, []);
 
   return (
     <div className='publicrequests'>
+      <ErrorDisplay errormessage={errorMessage} seterrormessage={setErrorMessage}/> 
+
       {data ? (
         <div classname="dash"> 
         { data.length===0?(

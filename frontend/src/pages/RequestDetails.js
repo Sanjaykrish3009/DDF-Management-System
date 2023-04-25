@@ -60,7 +60,7 @@ const RequestDetails = () => {
       {data ? (
     <div className='page'>
       <div className='mainbody'>
-        <div className='titl'>RequestDetails: </div>
+        <div className='titl'>RequestDetails</div>
         <div className='bod'>
           <div className='requesttype'>This is a {data.request_type}</div>
 
@@ -69,9 +69,11 @@ const RequestDetails = () => {
           <div>Requested Amount: {data.request_amount}</div>
           <div>Requested on :{data.request_date}</div>
           <div>Committee Decision Status: {data.committee_approval_status}</div>
-          <div>Committee Remarks: {data.committee_review}, Time: {data.committee_review_date}</div>
+          <div>Committee Remarks: {data.committee_review} </div>
+          <div>Time: {data.committee_review_date}</div>
           <div>HOD Decision Status: {data.hod_approval_status}</div>
-          <div>HOD Remarks: {data.hod_review}, Time: {data.hod_review_date}</div>
+          <div>HOD Remarks: {data.hod_review}</div>
+          <div>Time: {data.hod_review_date}</div>
           <div>
               Uploads: <Link onClick={()=>handleFile(data.upload)}> {data.upload} </Link>
           </div>

@@ -63,7 +63,8 @@ class ProfileView(APIView):
             user = self.request.user
             user_profile = UserProfile.objects.get(user=user)
             profile = user_profile.get_user_profile()
-            return Response({'profile':profile})
+            print(profile)
+            return Response({'success':'Profile retrieved Succesfully','profile':profile})
         except:
             return Response({'error':'Something went wrong while retrieving Profile'})
            

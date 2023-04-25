@@ -65,8 +65,9 @@ class CommitteeUser(CustomUser):
         for request_obj in requests:
             request_dict = request_obj.get_request_data()
             data_list.append(request_dict)
+        sorted_data_list = sorted(data_list, key=lambda x:x['request_date'], reverse=True)
 
-        return data_list
+        return sorted_data_list
     
     def fetch_transactions_data(self, transactions):
         data_list = []

@@ -5,12 +5,17 @@ import Cookies from "js-cookie";
 import { AuthContext } from '../core';
 
 import '../css_files/otp.css';
+import { ErrorDisplay } from '../components';
+import {Loader} from '../components';
 
 
 const OTP = () => {
   const [otp, setOtp] = useState('');
   const [verify,setverify] = useState(false);
-  const {emailID} =useContext(AuthContext);
+  const {emailID,setValidOtp} =useContext(AuthContext);
+  const [errorMessage, setErrorMessage] = useState(null); 
+  const [isLoading,setIsLoading]=useState(false);
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -28,14 +33,19 @@ const OTP = () => {
         {
           setverify(true);
         }
+        else{
+          setErrorMessage(response.data.error);
+        }
       })
       .catch(error =>{
-        console.log(error.response.data);
+          setErrorMessage(error.message);
         
       });
   }
 
   const handleResend =()=>{
+    setIsLoading(true);
+    setOtp("");
     axios.post(`http://localhost:8000/authentication/forgotpassword`,{
       'email':emailID,
     },{
@@ -46,18 +56,37 @@ const OTP = () => {
       .then(response =>{
         console.log(response.data);
 
+        if(response.data.success)
+        {
+          setErrorMessage(response.data.success);
+        }
+        else{
+          setErrorMessage(response.data.error);
+        }
+        setIsLoading(false);
+
       })
       .catch(error =>{
-        console.log(error.response.data);
-        
+          setErrorMessage(error.message);
+        setIsLoading(false);
       });
+      
   }
 
   if(verify)
   {
+    setValidOtp(true);
     return (<Navigate to = "/resetpassword" />);
   }
   return (
+    <div>
+    {isLoading?(
+      // <div className="forgot_Loading">Loading...</div>
+      <Loader/>
+    ):(
+    <div>
+    <ErrorDisplay errormessage={errorMessage} seterrormessage={setErrorMessage}/>        
+
     <div className="otp_login-page">
       <form onSubmit={handleSubmit} className="otp_login-form">
         <label htmlFor="otp">Enter your 6-digit OTP</label>
@@ -83,6 +112,9 @@ const OTP = () => {
           </button>
         </div>
       </form>
+  </div>
+  </div>
+  )}
   </div>
 
   );

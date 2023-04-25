@@ -16,3 +16,5 @@
 /transaction/viewtransactions/__pycache__
 /DDF/__pycache__
 /uploads
+/authentication/tests/__pycache__
+/request/tests/__pycache__

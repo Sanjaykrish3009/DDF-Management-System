@@ -10,11 +10,22 @@ class CreatePrivateFundRequest(APIView):
     def post(self,request,format=None):
         data = self.request.data
         user = self.request.user
-        request_type = "PrivateRequest"
+
+        if 'request_title' not in data:
+            return Response({'error': 'Request Title field must be set'})
+        
+        if 'request_description' not in data:
+            return Response({'error': 'Request Description field must be set'})
+        
+        if 'request_amount' not in data:
+            return Response({'error': 'Request Amount field must be set'})
+        
+        request_type = "PrivateRequest"        
         request_title = data['request_title']
         request_description = data['request_description']
         request_amount = data['request_amount']
         file = self.request.FILES.get('file')
+        
         try:
             fund_request = FundRequest(user=user, request_type=request_type, request_title=request_title, 
                             request_description=request_description, request_amount=request_amount,upload=file)
@@ -28,11 +39,24 @@ class CreatePublicFundRequest(APIView):
     def post(self,request,format=None):
         data = self.request.data
         user = self.request.user
+        
+        if 'request_title' not in data:
+            return Response({'error': 'Request Title field must be set'})
+        
+        if 'request_description' not in data:
+            return Response({'error': 'Request Description field must be set'})
+        
+        if 'request_amount' not in data:
+            return Response({'error': 'Request Amount field must be set'})
+        
         request_type = "PublicRequest"
         request_title = data['request_title']
         request_description = data['request_description']
         request_amount = data['request_amount']
         file = self.request.FILES.get('file')
+
+        if file is None:
+            return Response({'error': 'File must be uploaded for public request'})
 
         try:
             fund_request = FundRequest(user=user, request_type=request_type, request_title=request_title, 
@@ -46,15 +70,26 @@ class CreateBudgetRequest(APIView):
     def post(self,request,format=None):
         data = self.request.data
         user = self.request.user
+
+        if 'request_title' not in data:
+            return Response({'error': 'Request Title field must be set'})
+        
+        if 'request_description' not in data:
+            return Response({'error': 'Request Description field must be set'})
+        
+        if 'request_amount' not in data:
+            return Response({'error': 'Request Amount field must be set'})
+
         request_type = "PrivateRequest"
         request_title = data['request_title']
         request_description = data['request_description']
         request_amount = data['request_amount']
         transaction_type = "Credit"
+        file = self.request.FILES.get('file')
 
         try:
             fund_request = FundRequest(user=user, request_type=request_type, request_title=request_title, 
-                            request_description=request_description, request_amount=request_amount, transaction_type=transaction_type,committee_approval_status='Approved')
+                            request_description=request_description, request_amount=request_amount, transaction_type=transaction_type,committee_approval_status='Approved', upload=file)
             fund_request.save()
             return Response({'success':'Budget Request created successfully'})
         except:
@@ -63,6 +98,10 @@ class CreateBudgetRequest(APIView):
 class RequestDetails(APIView):
     def post(self, request, format=None):
         data = self.request.data
+
+        if 'request_id' not in data:
+            return Response({'error': 'Request ID field must be set'})
+        
         request_id = data['request_id']
 
         try:
@@ -75,6 +114,10 @@ class RequestDetails(APIView):
 class FileDetails(APIView):
     def get(self, request, format=None):
         data = self.request.query_params
+
+        if 'file_path' not in data:
+            return Response({'error': 'File Path field must be set'})
+        
         file_path = data['file_path']
         file_path = os.path.join(MEDIA_ROOT, file_path)
         

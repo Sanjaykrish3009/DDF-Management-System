@@ -5,7 +5,7 @@ import {Header, FacultySubheader, CommitteeSubheader, HodSubheader} from './head
 import { CreateRequest, FacultyDashboard, Inbox, Transactions, Profile, ChangePassword,ForgotPassword,SignUp,RequestDetails,PublicRequest,PrivateRequest,OTP, Resetpwd,BudgetRequest,BudgetTransactions,CommitteeDashboard,CommitteeRequestDetails, HodRequestDetails, HodDashboard,FileDetails  } from '../pages';
 import Loginpage from './Login-page';
 import {Route, Routes} from 'react-router-dom';
-import {FacultyPrivateRoute, CommitteePrivateRoute, HodPrivateRoute} from "../components/PrivateRoute";
+import {FacultyPrivateRoute, CommitteePrivateRoute, HodPrivateRoute, SecurePrivateRoute, SecurePasswordPrivateRoute} from "../components/PrivateRoute";
 import { Loader } from '../components';
 
 const AuthStatus =() => {
@@ -42,9 +42,13 @@ const AuthStatus =() => {
       <Route path ="/" element={<Loginpage/>}/>
       <Route path ="/signup" element={<SignUp/>}/>
       <Route path ="/forgotpassword" element={<ForgotPassword/>}/>
+      <Route element= {<SecurePrivateRoute/>}>
       <Route path ="/otpverification" element={<OTP/>}/>
+      </Route>
+      <Route element={<SecurePasswordPrivateRoute/>}>
       <Route path = "/resetpassword" element={<Resetpwd/>}/>
-
+      </Route>
+      
       <Route path = "/faculty" element= {<FacultySubheader/>}>
         <Route element={<FacultyPrivateRoute/>}>
           <Route path = "dashboard" element={<FacultyDashboard/>}/>

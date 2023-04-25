@@ -1,0 +1,38 @@
+.error-message-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  border: 1px dotted red;
+  background-color: #F0E3AF;
+  padding: 10px;
+  position: relative;
+}
+
+.error-message {
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.close-button {
+  position: absolute;
+  top: 50%;
+  right: 795px;
+
+  transform: translateY(-50%);
+  background-color: #fff;
+  border: 1px solid #f2b5ae;
+  border-radius: 50%;
+  padding: 4px;
+  font-size: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 18px;
+  width: 18px;
+}
+

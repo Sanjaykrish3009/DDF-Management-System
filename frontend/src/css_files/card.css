@@ -45,10 +45,22 @@
 }
 
 .status-dot {
-  width: 12px;
-  height: 12px;
   border-radius: 50%;
+  height: 15px;
   margin-right: 10px;
+  position: relative;
+  width: 20px;
+}
+.status-dot::before {
+  border: solid #fff;
+    border-width: 0 2px 2px 0;
+    content: "";
+    height: 9px;
+    left: 60%;
+    position: absolute;
+    top: 45%;
+    transform: translate(-50%,-50%) rotate(45deg);
+    width: 2px;
 }
 
 .green {

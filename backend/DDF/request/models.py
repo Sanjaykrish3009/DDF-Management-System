@@ -1,4 +1,3 @@
-import json
 from django.db import models
 from authentication.models import CustomUser
 from django.utils import timezone
@@ -53,13 +52,13 @@ class FundRequest(models.Model):
     def set_hod_approval(self, hod_review):
         self.hod_approval_status = 'Approved'
         self.hod_review = hod_review
-        self.committee_review_date = timezone.now()
+        self.hod_review_date = timezone.now()
         self.save()
 
     def set_hod_disapproval(self, hod_review):
         self.hod_approval_status = 'Disapproved'
         self.hod_review = hod_review
-        self.committee_review_date = timezone.now()
+        self.hod_review_date = timezone.now()
         self.save()
 
     def get_request_details(self):    
@@ -72,6 +71,8 @@ class FundRequest(models.Model):
     
         request_dict['user'] = model_to_dict(self.user, fields=['email'])
         request_dict['request_date'] = timezone.localtime(self.request_date).strftime('%Y-%m-%d %H:%M:%S')
+        request_dict['committee_review_date'] = timezone.localtime(self.committee_review_date).strftime('%Y-%m-%d %H:%M:%S')
+        request_dict['hod_review_date'] = timezone.localtime(self.hod_review_date).strftime('%Y-%m-%d %H:%M:%S')
 
         return request_dict
     

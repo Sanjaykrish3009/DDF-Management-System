@@ -12,7 +12,7 @@ import {Loader} from '../components';
 const OTP = () => {
   const [otp, setOtp] = useState('');
   const [verify,setverify] = useState(false);
-  const {emailID} =useContext(AuthContext);
+  const {emailID,setValidOtp} =useContext(AuthContext);
   const [errorMessage, setErrorMessage] = useState(null); 
   const [isLoading,setIsLoading]=useState(false);
 
@@ -75,6 +75,7 @@ const OTP = () => {
 
   if(verify)
   {
+    setValidOtp(true);
     return (<Navigate to = "/resetpassword" />);
   }
   return (

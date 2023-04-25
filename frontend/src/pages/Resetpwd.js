@@ -14,7 +14,7 @@ const Resetpwd = () => {
     const [newPassword, setNewPassword] = useState("");
     const [confirmNewPassword, setConfirmNewPassword] = useState("");
     const [passwordChange,setPasswordChange]=useState(false);
-    const {logout} = useContext(AuthContext);
+    const {logout,setValid,setValidOtp} = useContext(AuthContext);
     const [errorMessage, setErrorMessage] = useState(null); 
     const [confirmPasswordError, setConfirmPasswordError] = useState("");
     const [passwordError, setPasswordError] = useState("");
@@ -60,6 +60,8 @@ const Resetpwd = () => {
   
     if(passwordChange)
     {
+      setValid(false);
+      setValidOtp(false);
       return <Navigate to = "/"/>
     }
   

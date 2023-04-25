@@ -75,8 +75,8 @@ function PrivateRequest() {
       <ErrorDisplay errormessage={errorMessage} seterrormessage={setErrorMessage}/> 
 
       <form onSubmit={handleSubmit} className="request-form">
-          Public Request
-        <div className="title">
+          Private Request
+        <div className="pr_title">
           <label htmlFor="title">Title *</label>
           <input
             type="text"
@@ -86,7 +86,7 @@ function PrivateRequest() {
             required
           />
         </div>
-        <div className="title">
+        <div className="pr_title">
           <label htmlFor="reason">Description *</label>
           <textarea
             type="text"
@@ -97,7 +97,7 @@ function PrivateRequest() {
           />
         </div>
 
-        <div className="title">
+        <div className="pr_title">
           <label htmlFor="fundAmount">Fund amount *</label>
           <input
             type="number"
@@ -107,7 +107,7 @@ function PrivateRequest() {
             required
           />
         </div>
-        <div className="title">
+        <div className="pr_title">
           <label htmlFor="documents">Upload Documents *</label>
           <input
             type="file"

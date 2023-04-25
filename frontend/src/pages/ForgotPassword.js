@@ -13,7 +13,7 @@ import { Loader } from "../components";
 const ForgotPassword = () => {
   const [otpverify, setOtpVerify] = useState(false);
   const [email,setEmail] =useState("");
-  const {setEmailID} = useContext(AuthContext);
+  const {setEmailID,setValid} = useContext(AuthContext);
   const [isLoading,setIsLoading]=useState(false);
   const [errorMessage, setErrorMessage] = useState(null); 
 
@@ -47,6 +47,7 @@ const ForgotPassword = () => {
 
   if(otpverify)
   {
+    setValid(true);
     return <Navigate to = "/otpverification"/>
   }
 

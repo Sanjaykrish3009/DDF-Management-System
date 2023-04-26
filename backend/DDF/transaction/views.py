@@ -7,7 +7,7 @@ class TransactionDetails(APIView):
         data = self.request.data
 
         if 'transaction_id' not in data:
-            return Response({'error': 'Transaction ID field must be set'})
+            raise ValueError('Transaction ID field must be set')
         
         transaction_id = data['transaction_id']
 

@@ -1,6 +1,5 @@
 from .viewrequests_strategy import ViewRequestsStrategy
 from request.models import FundRequest
-from django.db.models import Q 
 
 class PublicRequestStrategy(ViewRequestsStrategy):
 

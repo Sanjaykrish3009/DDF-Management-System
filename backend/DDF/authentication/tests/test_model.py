@@ -7,10 +7,10 @@ class CustomUserTest(TestCase):
         self.user = CustomUser.objects.create_user(email='test@gmail.com', password='testpassword')
 
     def test_create_user(self):
-        user = CustomUser.objects.get(email='test@gmail.com')
-        self.assertTrue(user.check_password('testpassword'))
-        self.assertTrue(user.is_active)
-        self.assertFalse(user.is_staff)
+        self.assertEqual(self.user.email,'test@gmail.com')
+        self.assertTrue(self.user.check_password('testpassword'))
+        self.assertTrue(self.user.is_active)
+        self.assertFalse(self.user.is_staff)
 
     def test_create_user_without_email(self):
         with self.assertRaises(ValueError):

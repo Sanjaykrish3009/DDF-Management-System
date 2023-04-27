@@ -1,7 +1,5 @@
 from decimal import Decimal
-import json
 from django.db import models
-from django.http import HttpResponse
 import pandas as pd
 from django.core.mail import EmailMessage
 from authentication.models import CustomUser
@@ -42,7 +40,7 @@ class HodUser(CustomUser):
             transaction = Transaction(request=request_obj,remaining_budget=remaining_budget)
             transaction.save()
             
-            return request_obj
+            return transaction
         else:
             return None
     

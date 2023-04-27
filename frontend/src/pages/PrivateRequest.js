@@ -108,12 +108,12 @@ function PrivateRequest() {
           />
         </div>
         <div className="pr_title">
-          <label htmlFor="documents">Upload Documents *</label>
+          <label htmlFor="documents">Upload Documents </label>
           <input
             type="file"
             id="documents"
             onChange={handleFileUpload}
-            required
+            
           />
         </div>
         <button type="submit" className="done">Submit</button>

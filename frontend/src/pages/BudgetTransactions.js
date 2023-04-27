@@ -12,6 +12,10 @@ const BudgetTransactions = () => {
   const { user_type } = useContext(AuthContext);
   const [errorMessage, setErrorMessage] = useState(null);
 
+  const sendEmail = () => {
+
+  }
+
   useEffect(() => {
     console.log(user_type);
     axios
@@ -34,6 +38,7 @@ const BudgetTransactions = () => {
           <h2>Transactions</h2>
         </div>
         {data ? (
+          <div>
           <table className='transaction-table'>
             <thead>
               <tr>
@@ -81,6 +86,9 @@ const BudgetTransactions = () => {
               )}
             </tbody>
           </table>
+          <button onClick={()=>(sendEmail())}> Send To Admin </button>
+
+          </div>
         ) : (
           
             <Loader />

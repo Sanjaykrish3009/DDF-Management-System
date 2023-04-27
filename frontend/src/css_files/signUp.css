@@ -30,6 +30,7 @@ body {
     font-weight: bold;
     flex-wrap: wrap;
     width: 250px;
+    top: 50px;
     justify-content: center;
     align-items: center;
     padding: 10px 30px;
@@ -87,6 +88,6 @@ body {
   .error-message {
     color: red;
     font-size: 0.8rem;
-    margin-top: 0.5rem;
+    margin-top: 2px;
   }
   

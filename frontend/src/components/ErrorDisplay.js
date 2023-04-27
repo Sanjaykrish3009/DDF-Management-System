@@ -6,7 +6,7 @@ const ErrorDisplay = (props) => {
   return (
     errormessage && (
         <div className="error-message-box">
-          <div className="error-message">{errormessage}</div>
+          <div className="Error-Message">{errormessage}</div>
             <button className="close-button" onClick={() => seterrormessage(null)}>
               <span aria-hidden="true">&times;</span>
             </button>

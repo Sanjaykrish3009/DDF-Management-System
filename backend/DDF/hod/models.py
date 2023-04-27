@@ -44,6 +44,10 @@ class HodUser(CustomUser):
         pending_requests = FundRequest.objects.filter(committee_approval_status = 'Approved', hod_approval_status = 'Pending')
         return self.fetch_requests_data(pending_requests)
     
+    def search_view_pending_requests(self,title):
+        pending_requests = FundRequest.objects.filter(committee_approval_status = 'Approved', hod_approval_status = 'Pending',request_title__icontains=title)
+        return self.fetch_requests_data(pending_requests)
+    
     def view_credit_requests(self):
         credit_requests = FundRequest.objects.filter(committee_approval_status = 'Approved', hod_approval_status = 'Pending', transaction_type='Credit')
         return self.fetch_requests_data(credit_requests)
@@ -54,6 +58,11 @@ class HodUser(CustomUser):
     
     def view_previous_requests(self):
         previous_requests = FundRequest.objects.exclude(Q(committee_approval_status = 'Pending') | Q(hod_approval_status = 'Pending', committee_approval_status = 'Approved'))
+        return self.fetch_requests_data(previous_requests)
+    
+    def search_view_previous_requests(self,title):
+        previous_requests = FundRequest.objects.exclude(Q(committee_approval_status = 'Pending') | Q(hod_approval_status = 'Pending', committee_approval_status = 'Approved'))
+        previous_requests = previous_requests.filter(request_title__icontains=title)
         return self.fetch_requests_data(previous_requests)
     
     def view_all_transactions(self):

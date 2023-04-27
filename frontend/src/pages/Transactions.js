@@ -3,17 +3,47 @@ import { useState, useEffect } from 'react';
 import {Card} from '../components';
 import axios from 'axios';
 import { AuthContext } from '../core';
-import "../css_files/RequestDetails.css"
+import "../css_files/dashboard.css"
 import { Loader } from "../components";
-import { ErrorDisplay } from "../components";
+import { ErrorDisplay,SearchBar } from "../components";
 
 
 
 const Transactions = () => {
   const [data, setData] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null); 
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleSearchInputChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleSearchButtonClick = () => {
+    // Perform search with searchTerm
+    // console.log(`Searching for ${searchTerm}...`);
+
+      axios.get('http://localhost:8000/faculty/publicrequests',
+      {
+      params: {
+        title: searchTerm
+      }
+      })
+        .then(response =>{ setData(response.data.data)
+        
+          if(response.data.success){
+            setData(response.data.data);
+          }
+          else{
+            setErrorMessage(response.data.error);
+          }
+        })
+        .catch(error => setErrorMessage(error.message));
+    
+  }
+    
 
   useEffect(() => {
+    setSearchTerm('');
     axios.get('http://localhost:8000/faculty/publicrequests')
       .then(response => 
         {
@@ -30,8 +60,9 @@ const Transactions = () => {
   }, []);
 
   return (
-    <div className='publicrequests'>
+    <div className='dashboardpage'>
       <ErrorDisplay errormessage={errorMessage} seterrormessage={setErrorMessage}/> 
+      <SearchBar handleChange={handleSearchInputChange} handleClick={handleSearchButtonClick} />
 
       {data ? (
         <div classname="dash"> 

@@ -7,4 +7,8 @@ class PublicRequestStrategy(ViewRequestsStrategy):
         requests = FundRequest.objects.filter(request_type='PublicRequest')
         return requests
     
+    def search_view_requests(self,user,title):
+        requests = FundRequest.objects.filter(request_type='PublicRequest',request_title__icontains=title)
+        return requests
+    
 

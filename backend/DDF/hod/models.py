@@ -4,7 +4,6 @@ from authentication.models import CustomUser
 from request.models import FundRequest
 from transaction.models import Transaction
 from django.db.models import Q 
-# from backend.DDF.transaction.viewtransactions.credit_transactions_strategy import ViewTransactions
 from transaction.viewtransactions.all_transactions_strategy import AllTransactionStrategy
 from transaction.viewtransactions.credit_transactions import CreditTransactionsStrategy
 from transaction.viewtransactions.debit_transactions import DebitTransactionsStrategy
@@ -117,4 +116,6 @@ class HodUser(CustomUser):
             transaction_dict = transaction_obj.get_transaction_details()
             data_list.append(transaction_dict)
 
-        return data_list
+        sorted_data_list = sorted(data_list, key=lambda x:x['request_date'], reverse=True)
+
+        return sorted_data_list

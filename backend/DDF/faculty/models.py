@@ -1,7 +1,5 @@
 from django.db import models
 from authentication.models import CustomUser
-from request.models import FundRequest
-from django.db.models import Q 
 from request.viewrequests.pendingrequest_strategy import PendingRequestStrategy
 from request.viewrequests.previousrequest_strategy import PreviousRequestStrategy
 from request.viewrequests.publicrequest_strategy import PublicRequestStrategy

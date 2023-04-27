@@ -40,9 +40,19 @@ class CommitteeUser(CustomUser):
         pending_requests = FundRequest.objects.filter(Q(committee_approval_status = 'Pending') | Q(user=self, hod_approval_status = 'Pending'))
         return self.fetch_requests_data(pending_requests)
     
+    def search_view_pending_requests(self,title):
+        pending_requests = FundRequest.objects.filter(Q(committee_approval_status = 'Pending') | Q(user=self, hod_approval_status = 'Pending'),request_title__icontains=title)
+        return self.fetch_requests_data(pending_requests)
+    
     def view_previous_requests(self):
         previous_requests = FundRequest.objects.exclude(Q(committee_approval_status = 'Pending') | Q(user=self, hod_approval_status = 'Pending'))
         return self.fetch_requests_data(previous_requests)
+    
+    def search_view_previous_requests(self,title):
+        previous_requests = FundRequest.objects.exclude(Q(committee_approval_status = 'Pending') | Q(user=self, hod_approval_status = 'Pending'))
+        previous_requests = previous_requests.filter(request_title__icontains=title)
+        return self.fetch_requests_data(previous_requests)
+
 
     def view_all_transactions(self):
         AllTransactions = AllTransactionStrategy()

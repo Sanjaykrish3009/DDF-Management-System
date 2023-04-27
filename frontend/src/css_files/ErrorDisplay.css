@@ -7,6 +7,9 @@
   background-color: #F0E3AF;
   padding: 10px;
   position: relative;
+  margin-bottom: 50px;
+  z-index: 9;
+  top: 50px;
 }
 
 .error-message {

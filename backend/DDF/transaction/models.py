@@ -21,5 +21,4 @@ class Transaction(models.Model):
         user_dict = model_to_dict(self.request.user, fields=['email'])
         request_dict['user'] = user_dict
         transaction_dict['request'] =  request_dict
-        print(transaction_dict)
         return transaction_dict

@@ -19,19 +19,20 @@ class SignupView(APIView):
         data = self.request.data
 
         if 'first_name' not in data:
-            return Response({'error': 'First Name field must be set'})
+            raise ValueError('First Name field must be set')
         
         if 'last_name' not in data:
-            return Response({'error': 'Last Name field must be set'})
+            raise ValueError('Last Name field must be set')
         
         if 'email' not in data:
-            return Response({'error': 'Email field must be set'})
+            raise ValueError('Email field must be set')
         
         if 'password' not in data:
-            return Response({'error': 'Password field must be set'})
+            raise ValueError('Password field must be set')
         
         if 're_password' not in data:
-            return Response({'error': 'Re Password field must be set'})
+            raise ValueError('Re Password field must be set')
+
         
         first_name = data['first_name']
         last_name = data['last_name']
@@ -63,7 +64,6 @@ class ProfileView(APIView):
             user = self.request.user
             user_profile = UserProfile.objects.get(user=user)
             profile = user_profile.get_user_profile()
-            print(profile)
             return Response({'success':'Profile retrieved Succesfully','profile':profile})
         except:
             return Response({'error':'Something went wrong while retrieving Profile'})
@@ -73,13 +73,13 @@ class ChangePasswordView(APIView):
         data = self.request.data
 
         if 'old_password' not in data:
-            return Response({'error': 'Old Password field must be set'})
+            raise ValueError('Old Password field must be set')
         
         if 'new_password' not in data:
-            return Response({'error': 'New Password field must be set'})
+            raise ValueError('New Password field must be set')
         
         if 're_new_password' not in data:
-            return Response({'error': 'Re New Password field must be set'})
+            raise ValueError('Re New Password field must be set')
         
         old_password = data['old_password']
         new_password = data['new_password']

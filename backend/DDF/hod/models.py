@@ -1,5 +1,7 @@
 from decimal import Decimal
 from django.db import models
+import pandas as pd
+from django.core.mail import EmailMessage
 from authentication.models import CustomUser
 from request.models import FundRequest
 from transaction.models import Transaction
@@ -38,12 +40,10 @@ class HodUser(CustomUser):
             transaction = Transaction(request=request_obj,remaining_budget=remaining_budget)
             transaction.save()
             
-            return request_obj
+            return transaction
         else:
             return None
-        
-
-
+    
     def disapprove_request(self, request_id, hod_review):
         fund_request = FundRequest.objects.get(id=request_id)
         fund_request.set_hod_disapproval(hod_review)
@@ -116,6 +116,32 @@ class HodUser(CustomUser):
             transaction_dict = transaction_obj.get_transaction_details()
             data_list.append(transaction_dict)
 
-        sorted_data_list = sorted(data_list, key=lambda x:x['request_date'], reverse=True)
+        sorted_data_list = sorted(data_list, key=lambda x:x['transaction_date'], reverse=False)
 
         return sorted_data_list
+    
+    def send_excel(self):
+        transactions_list = self.view_all_transactions()
+        df = pd.DataFrame(transactions_list)
+               
+        df = pd.DataFrame({'ID': transaction['id'],
+                            'Request ID': transaction['request']['id'],
+                            'Amount': transaction['request']['request_amount'],
+                            'Type': transaction['request']['transaction_type'],
+                            'Requested By': transaction['request']['user']['email'],
+                            'Date and Time': transaction['transaction_date'],
+                            'Balance': str(transaction['remaining_budget'])
+                        } for transaction in transactions_list)
+                
+        excel_file = pd.ExcelWriter('ddf-transactions.xlsx')
+        df.to_excel(excel_file, index=False)
+        excel_file.save()
+
+        subject = 'DDF Account Transactions Update'
+        message = f'Please find attached the Transactions Data Excel sheet.'
+        from_email = 'ddf.cse.iith@gmail.com' 
+        recipient_list = ['cs19btech11022@iith.ac.in']
+        email = EmailMessage(subject, message, from_email, recipient_list)
+        email.attach_file('ddf-transactions.xlsx')
+        email.send()
+       

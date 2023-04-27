@@ -11,7 +11,7 @@ class ForgotPasswordTestCase(TestCase):
 
     @patch('authentication.models.CustomUser.objects.get')
     def test_forgot_password(self, mock_get_user):
-        data = {'email': 'test@gmail.com', 'password': 'testpassword'}
+        data = {'email': 'test@gmail.com'}
         mock_get_user.return_value = self.user  
         response = self.client.post(self.url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -19,7 +19,7 @@ class ForgotPasswordTestCase(TestCase):
     
     @patch('authentication.models.CustomUser.objects.get')
     def test_invalid_forgot_password(self, mock_get_user):
-        data = {'email': 'testinvalid@gmail.com', 'password': 'testpassword'}
+        data = {'email': 'testinvalid@gmail.com'}
         mock_get_user.side_effect = CustomUser.DoesNotExist
         response = self.client.post(self.url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)

@@ -1,6 +1,8 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import HodUser
+from email.message import EmailMessage
+from os import sendfile
 
 class PendingRequests(APIView):
     def get(self, request, format=None):
@@ -154,3 +156,21 @@ class Balance(APIView):
             return Response({'success':'Balance viewed successfully', 'data':balance})
         except:
             return Response({'error':'Something went wrong while viewing balance'})
+        
+
+class SendExcelSheet(APIView):    
+    def post(self,request,format=None): 
+        user = self.request.user
+        email = user.email
+        try:
+            hod_user = HodUser.objects.get(email=email)
+            hod_user.send_excel()
+            return Response({'success':'Excel Sheet sent to admin'})
+        except:
+            return Response({'error':'Something went wrong while sending excel sheet to admin'})
+
+
+  
+
+                
+    

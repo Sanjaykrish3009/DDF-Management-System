@@ -1,8 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import HodUser
-from email.message import EmailMessage
-from os import sendfile
 
 class PendingRequests(APIView):
     def get(self, request, format=None):

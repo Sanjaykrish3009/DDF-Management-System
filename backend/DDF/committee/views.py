@@ -6,10 +6,15 @@ class PendingRequests(APIView):
     def get(self, request, format=None):
         user = self.request.user
         email = user.email
-  
+        data = self.request.query_params
+
         try:
             committee_user = CommitteeUser.objects.get(email=email)
-            pending_requests = committee_user.view_pending_requests()
+            if 'title' in data:
+                pending_requests = committee_user.search_view_pending_requests(data['title'])
+
+            else:
+                pending_requests = committee_user.view_pending_requests()
             return Response({'success':'Pending requests of committee retrieved successfully', 'data':pending_requests})
         except:
             return Response({'error':'Something went wrong while retrieving the pending requests of the committee'})
@@ -19,9 +24,15 @@ class PreviousRequests(APIView):
         user = self.request.user
         email = user.email
   
+        data = self.request.query_params
+
         try:
             committee_user = CommitteeUser.objects.get(email=email)
-            previous_requests = committee_user.view_previous_requests()
+            if 'title' in data:
+                previous_requests = committee_user.search_view_previous_requests(data['title'])
+
+            else:
+                previous_requests = committee_user.view_previous_requests()
             return Response({'success':'Previous requests of committee retrieved successfully', 'data':previous_requests})
         except:
             return Response({'error':'Something went wrong while retrieving the previous requests of the committee'})

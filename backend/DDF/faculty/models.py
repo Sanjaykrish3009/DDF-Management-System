@@ -13,9 +13,21 @@ class FacultyUser(CustomUser):
 
         return self.fetch_requests_data(pending_requests)
     
+    def search_view_pending_requests(self,title):
+        PendingRequests = PendingRequestStrategy()
+        pending_requests = PendingRequests.search_view_requests(self,title)
+
+        return self.fetch_requests_data(pending_requests)
+    
     def view_previous_requests(self):
         PreviousRequests = PreviousRequestStrategy()
         previous_requests = PreviousRequests.view_requests(self)
+
+        return self.fetch_requests_data(previous_requests)
+
+    def search_view_previous_requests(self,title):
+        PreviousRequests = PreviousRequestStrategy()
+        previous_requests = PreviousRequests.search_view_requests(self,title)
 
         return self.fetch_requests_data(previous_requests)
     
@@ -23,6 +35,13 @@ class FacultyUser(CustomUser):
 
         PublicRequests = PublicRequestStrategy()
         public_requests = PublicRequests.view_requests(self)
+       
+        return self.fetch_requests_data(public_requests)
+    
+    def search_view_public_requests(self,title):
+
+        PublicRequests = PublicRequestStrategy()
+        public_requests = PublicRequests.search_view_requests(self,title)
        
         return self.fetch_requests_data(public_requests)
 

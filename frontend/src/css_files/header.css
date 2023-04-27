@@ -10,7 +10,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
+  position: fixed;
+  top:0;
+  right:0;
+  left:0;
+
   z-index: 9;
 }
 
@@ -27,6 +31,10 @@
   align-items: center;
   padding: 0 20px;
   position: relative;
+  position: fixed;
+  top:50px;
+  right:0;
+  left:0;
   z-index: 9;
   
 }
@@ -71,4 +79,12 @@
 
 .link:hover{
   color: #1047fc;
+}
+
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: center;
+  }
+
 }

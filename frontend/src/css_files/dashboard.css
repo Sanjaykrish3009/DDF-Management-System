@@ -3,9 +3,13 @@ h3{
     display: flex;
     justify-content: center;
 }
-.dash{
-    overflow: scroll;
+.dashboardpage{
+    /* overflow: scroll; */
+    top:150px;
+    position:relative;
+
 }
+
 
 .request{
     background: grey;

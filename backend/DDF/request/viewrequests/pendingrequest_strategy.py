@@ -10,4 +10,10 @@ class PendingRequestStrategy(ViewRequestsStrategy):
         
         return requests
     
+    def search_view_requests(self,user,title):
+        requests = FundRequest.objects.filter((Q(committee_approval_status = 'Pending') | 
+                                            Q(committee_approval_status = 'Approved', hod_approval_status = 'Pending')), user=user,request_title__icontains=title)
+        
+        return requests
+    
 

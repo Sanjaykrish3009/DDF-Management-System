@@ -123,7 +123,7 @@ class HodUser(CustomUser):
                             'Balance': str(transaction['remaining_budget'])
                         } for transaction in transactions_list)
                 
-        excel_file = pd.ExcelWriter('ddf-transactions.xlsx')
+        excel_file = pd.ExcelWriter('DDF-transactions.xlsx')
         df.to_excel(excel_file, index=False)
         excel_file.save()
 
@@ -134,4 +134,6 @@ class HodUser(CustomUser):
         email = EmailMessage(subject, message, from_email, recipient_list)
         email.attach_file('ddf-transactions.xlsx')
         email.send()
+
+        return True
        

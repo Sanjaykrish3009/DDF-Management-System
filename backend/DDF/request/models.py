@@ -42,24 +42,28 @@ class FundRequest(models.Model):
         self.committee_review = committee_review
         self.committee_review_date = timezone.now()
         self.save()
+        return self
 
     def set_committee_disapproval(self, committee_review):
         self.committee_approval_status = 'Disapproved'
         self.committee_review = committee_review
         self.committee_review_date = timezone.now()
         self.save()
+        return self
 
     def set_hod_approval(self, hod_review):
         self.hod_approval_status = 'Approved'
         self.hod_review = hod_review
         self.hod_review_date = timezone.now()
         self.save()
+        return self
 
     def set_hod_disapproval(self, hod_review):
         self.hod_approval_status = 'Disapproved'
         self.hod_review = hod_review
         self.hod_review_date = timezone.now()
         self.save()
+        return self
 
     def get_request_details(self):    
         if self.upload != '':

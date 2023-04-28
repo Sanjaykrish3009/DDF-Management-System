@@ -1,3 +1,4 @@
+from django.db import IntegrityError
 from django.test import TestCase
 from request.models import FundRequest
 from authentication.models import CustomUser
@@ -14,10 +15,10 @@ class CustomUserTest(TestCase):
         self.assertEqual(self.fundrequest.request_description, 'This request is created for testing')
         self.assertEqual(self.fundrequest.request_amount, 11.00)
     
-    # def test_create_invalid_fundrequest(self):
-    #     with self.assertRaises(ValueError):
-    #         fundrequest = FundRequest(user=self.user, request_type='InvalidRequest', request_title='Testing', request_description='This request is created for testing', request_amount=11.00)
-    #         fundrequest.save()
+    def test_create_fundrequest_without_user(self):
+        with self.assertRaises(IntegrityError):
+            fundrequest = FundRequest(request_type='PublicRequest', request_title='Testing', request_description='This request is created for testing', request_amount=11.00)
+            fundrequest.save()
 
     def test_get_request_amount(self):
         request_amount = self.fundrequest.get_request_amount()

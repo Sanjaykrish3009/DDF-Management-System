@@ -1,16 +1,10 @@
 from django.test import TestCase
 from django.urls import reverse
-from rest_framework.test import APIClient
 from faculty.models import FacultyUser
-from committee.models import CommitteeUser
-from hod.models import HodUser
 from unittest.mock import patch
 from request.models import FundRequest
-from transaction.models import Transaction
 from rest_framework import status
 from django.forms.models import model_to_dict
-
-
 
 class FacultyPendingRequestsTest(TestCase):
     def setUp(self):

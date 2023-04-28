@@ -1,3 +1,4 @@
+from django.db import IntegrityError
 from django.test import TestCase
 from user.models import UserProfile
 from authentication.models import CustomUser
@@ -13,8 +14,10 @@ class UserProfileTest(TestCase):
         self.assertEqual(self.userprofile.last_name,'lastname')
         self.assertEqual(self.userprofile.user_type,'faculty')
 
-    # def test_create_userprofile_without_user(self):
-    #     userprofile = UserProfile(first_name='firstname',last_name='lastname',user_type='faculty')
+    def test_create_userprofile_without_user(self):
+        with self.assertRaises(IntegrityError):
+            userprofile = UserProfile(first_name='firstname',last_name='lastname',user_type='faculty')
+            userprofile.save()
 
     def test_get_user_profile(self):
         userprofile = self.userprofile.get_user_profile()

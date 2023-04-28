@@ -12,7 +12,7 @@ export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [emailID,setEmailID] =useState('');
   const [user_type,setUser_type] =useState('');
-  
+  const [isValidEmail,setValidEmail] = useState(false);
 
   const login = () => {
     setIsAuthenticated(true);
@@ -86,7 +86,7 @@ export const AuthContextProvider = ({ children }) => {
   
   
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout, setIsAuthenticated, user, setUser, loggingIn, signingUp, emailID, setEmailID, user_type,setUser_type,isValid,setValid,isValidOtp,setValidOtp }}>
+    <AuthContext.Provider value={{ isAuthenticated, login, logout, setIsAuthenticated, user, setUser, loggingIn, signingUp, emailID, setEmailID, user_type,setUser_type,isValid,setValid,isValidOtp,setValidOtp,isValidEmail,setValidEmail }}>
       {children}
     </AuthContext.Provider>
   );

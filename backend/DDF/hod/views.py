@@ -12,7 +12,7 @@ class PendingRequests(APIView):
 
         try:
             hod_user = HodUser.objects.get(email=email)
-            if 'title' in data:
+            if 'title' in data and data['title'].isspace==False:
                 pending_requests = hod_user.search_view_pending_requests(data['title'])
 
             else:
@@ -73,7 +73,7 @@ class Approval(APIView):
         if 'request_id' not in data:
             return Response({'error': 'Request ID field must be set'})
         
-        if 'hod_review' not in data:
+        if 'hod_review' not in data or data['hod_review']=='':
             return Response({'error': 'HOD Review field must be set'})
         
         request_id = data['request_id']
@@ -97,7 +97,7 @@ class Disapproval(APIView):
         if 'request_id' not in data:
             return Response({'error': 'Request ID field must be set'})
         
-        if 'hod_review' not in data:
+        if 'hod_review' not in data or data['committee_review']=='':
             return Response({'error': 'HOD Review field must be set'})
         
         request_id = data['request_id']
@@ -162,6 +162,8 @@ class SendExcelSheet(APIView):
     def post(self,request,format=None): 
         user = self.request.user
         email = user.email
+        print(email)
+        hod_user = HodUser.objects.get(email=email)
         try:
             hod_user = HodUser.objects.get(email=email)
             hod_user.send_excel()

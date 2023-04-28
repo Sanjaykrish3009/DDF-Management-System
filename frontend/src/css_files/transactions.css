@@ -12,7 +12,13 @@
     top:150px;
     position: relative;
   }
-  
+  .Excel{
+    background-image: linear-gradient(to right top,#40ebf2,#00d4ff,#00b5ff,#5c89ff,#dab0e3);
+    border: 2px solid #1d201d;
+    cursor: pointer;
+    margin-left: 50%;
+    padding: 10px 10px;
+  }
   .transactions-wrapper {
     display: flex;
     flex-direction: column;

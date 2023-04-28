@@ -184,6 +184,11 @@ const HodRequestDetails = () => {
                 <div className="col-body">{data.request_date}</div>
               </div>
               <div className="row">
+                <div className="col-head">Requested By</div>
+                <div className="colon">:</div>
+                <div className="col-body">{data.user.email}</div>
+              </div>
+              <div className="row">
                 <div className="col-head">Committee Decision Status</div>
                 <div className="colon">:</div>
                 <div className="col-body">{data.committee_approval_status}</div>
@@ -221,9 +226,9 @@ const HodRequestDetails = () => {
                 </div>
               </div> 
               <div className="row">
-                <div className="col-head">Remarks</div>
+                <div className="col-head">Remarks *</div>
                 <div className="col-bod">
-                  <input type="Text" value={remarks} onChange={handleRemarksChange} />
+                  <input type="Text" value={remarks} onChange={handleRemarksChange} required/>
                 </div>
               </div>  
           {/* <label className="committee_title">

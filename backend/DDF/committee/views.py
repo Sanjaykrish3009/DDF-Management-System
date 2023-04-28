@@ -46,11 +46,12 @@ class Approval(APIView):
         if 'request_id' not in data:
             return Response({'error': 'Request ID field must be set'})
         
-        if 'committee_review' not in data:
+        if 'committee_review' not in data or data['committee_review']=='':
             return Response({'error': 'Committee Review field must be set'})
         
         request_id = data['request_id']
         committee_review = data['committee_review']
+        
 
         try:
             committee_user = CommitteeUser.objects.get(email=email)
@@ -70,7 +71,7 @@ class Disapproval(APIView):
         if 'request_id' not in data:
             return Response({'error': 'Request ID field must be set'})
         
-        if 'committee_review' not in data:
+        if 'committee_review' not in data or data['committee_review']=='':
             return Response({'error': 'Committee Review field must be set'})
         
         request_id = data['request_id']

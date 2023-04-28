@@ -132,13 +132,13 @@ class HodUser(CustomUser):
                             'Date and Time': transaction['transaction_date'],
                             'Balance': str(transaction['remaining_budget'])
                         } for transaction in transactions_list)
-                
+
         excel_file = pd.ExcelWriter('ddf-transactions.xlsx')
         df.to_excel(excel_file, index=False)
         excel_file.save()
-
+       
         subject = 'DDF Account Transactions Update'
-        message = f'Please find attached the Transactions Data Excel sheet.'
+        message = f'Please find the attached Transactions Data Excel sheet.'
         from_email = 'ddf.cse.iith@gmail.com' 
         recipient_list = ['cs19btech11022@iith.ac.in']
         email = EmailMessage(subject, message, from_email, recipient_list)

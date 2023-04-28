@@ -58,8 +58,7 @@ const CommitteeRequestDetails = () => {
 
   const [remarks,setRemarks]=useState('');
   const [redirect, setRedirect] = useState(false);
-  const [errorMessage1, setErrorMessage1] = useState(null); 
-  const [errorMessage2, setErrorMessage2] = useState(null); 
+  const [errorMessage, seterrorMessage] = useState(null); 
   const {user_type} = useContext(AuthContext);
   const handleRemarksChange = (event) => {
     setRemarks(event.target.value);
@@ -74,8 +73,8 @@ const CommitteeRequestDetails = () => {
     })
     .catch((error) => {
       console.log(error);
-      setErrorMessage1(error.message); 
-      console.log(errorMessage1);
+      seterrorMessage(error.message); 
+      console.log(errorMessage);
     });
   }
 
@@ -115,8 +114,8 @@ const CommitteeRequestDetails = () => {
     })
     .catch((error) => {
       console.log(error);
-      setErrorMessage2(error.message); 
-      console.log(errorMessage2);
+      seterrorMessage(error.message); 
+      console.log(errorMessage);
     });
   }
 
@@ -154,8 +153,7 @@ const CommitteeRequestDetails = () => {
 
   return (
     <div>
-    <ErrorDisplay errormessage={errorMessage1} seterrormessage={setErrorMessage1}/> 
-    <ErrorDisplay errormessage={errorMessage2} seterrormessage={setErrorMessage2}/> 
+    <ErrorDisplay errormessage={errorMessage} seterrormessage={seterrorMessage}/> 
     <div>
 
         
@@ -184,6 +182,11 @@ const CommitteeRequestDetails = () => {
                 <div className="col-head">Requested on</div>
                 <div className="colon">:</div>
                 <div className="col-body">{data.request_date}</div>
+              </div>
+              <div className="row">
+                <div className="col-head">Requested By</div>
+                <div className="colon">:</div>
+                <div className="col-body">{data.user.email}</div>
               </div>
               {/* <div className="row">
                 <div className="col-head">Committee Decision Status</div>
@@ -223,9 +226,9 @@ const CommitteeRequestDetails = () => {
                 </div>
               </div>
               <div className="row">
-                <div className="col-head">Remarks</div>
+                <div className="col-head">Remarks *</div>
                 <div className="col-bod">
-                  <input type="Text" value={remarks} onChange={handleRemarksChange} />
+                  <input type="Text" value={remarks} onChange={handleRemarksChange} required />
                 </div>
               </div>  
           {/* <label className="committee_title">

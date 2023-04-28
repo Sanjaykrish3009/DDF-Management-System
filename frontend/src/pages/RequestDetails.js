@@ -85,6 +85,11 @@ const RequestDetails = () => {
                 <div className="col-body">{data.request_date}</div>
               </div>
               <div className="row">
+                <div className="col-head">Requested By</div>
+                <div className="colon">:</div>
+                <div className="col-body">{data.user.email}</div>
+              </div>
+              <div className="row">
                 <div className="col-head">Committee Decision Status</div>
                 <div className="colon">:</div>
                 <div className="col-body">{data.committee_approval_status}</div>

@@ -42,24 +42,28 @@ class FundRequest(models.Model):
         self.committee_review = committee_review
         self.committee_review_date = timezone.now()
         self.save()
+        return self
 
     def set_committee_disapproval(self, committee_review):
         self.committee_approval_status = 'Disapproved'
         self.committee_review = committee_review
         self.committee_review_date = timezone.now()
         self.save()
+        return self
 
     def set_hod_approval(self, hod_review):
         self.hod_approval_status = 'Approved'
         self.hod_review = hod_review
         self.hod_review_date = timezone.now()
         self.save()
+        return self
 
     def set_hod_disapproval(self, hod_review):
         self.hod_approval_status = 'Disapproved'
         self.hod_review = hod_review
         self.hod_review_date = timezone.now()
         self.save()
+        return self
 
     def get_request_details(self):    
         if self.upload != '':
@@ -77,7 +81,10 @@ class FundRequest(models.Model):
         return request_dict
     
     def get_request_data(self):
-        request_dict = model_to_dict(self, fields=['id', 'request_title', 'committee_approval_status', 'hod_approval_status'])    
+        request_dict = model_to_dict(self, fields=['id', 'request_title', 'committee_approval_status', 'hod_approval_status', 'transaction_type'])    
         request_dict['request_date'] = timezone.localtime(self.request_date).strftime('%Y-%m-%d %H:%M:%S')   
         return request_dict
+    
+    def get_transaction_type(self):
+        return self.transaction_type
        

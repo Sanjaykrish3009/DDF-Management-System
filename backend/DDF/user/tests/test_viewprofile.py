@@ -1,5 +1,4 @@
 from django.test import TestCase
-from rest_framework.test import APIClient
 from unittest.mock import patch
 from faculty.models import FacultyUser
 from user.models import UserProfile

@@ -16,34 +16,24 @@ class HodUser(CustomUser):
     def approve_request(self, request_id, hod_review):
         request_obj = FundRequest.objects.get(id=request_id)
         request_amount = request_obj.get_request_amount()
-        
-        if Transaction.objects.exists():
-            latest_transaction = Transaction.objects.latest('transaction_date')
-            remaining_budget =  latest_transaction.get_remaining_budget()
-        else:
-            remaining_budget = 0.00
-        
-        if  request_obj.transaction_type=='Credit' or remaining_budget >= request_amount:
-            request_obj.set_hod_approval(hod_review)
+        transaction_type = request_obj.get_transaction_type()   
+        remaining_budget = self.view_balance()
 
-            if Transaction.objects.exists()==False:
-                remaining_budget = Decimal(0.00)
-            else:
-                latest_transaction = Transaction.objects.latest('transaction_date')
-                remaining_budget = latest_transaction.get_remaining_budget()
-            
-            if request_obj.transaction_type == 'Debit':
-                remaining_budget -= request_amount
-            else:
-                remaining_budget += request_amount
-
-            transaction = Transaction(request=request_obj,remaining_budget=remaining_budget)
-            transaction.save()
-            
-            return transaction
-        else:
+        if  transaction_type =='Debit' and remaining_budget < request_amount:
             return None
-    
+
+        request_obj.set_hod_approval(hod_review)
+
+        if transaction_type == 'Debit':
+            remaining_budget -= request_amount
+        else:
+            remaining_budget += request_amount
+
+        transaction = Transaction(request=request_obj,remaining_budget=remaining_budget)
+        transaction.save()
+        
+        return transaction
+
     def disapprove_request(self, request_id, hod_review):
         fund_request = FundRequest.objects.get(id=request_id)
         fund_request.set_hod_disapproval(hod_review)
@@ -96,7 +86,7 @@ class HodUser(CustomUser):
             remaining_budget =  latest_transaction.get_remaining_budget()
             return remaining_budget
         else:
-            return 0.00
+            return Decimal(0.00)
     
     def fetch_requests_data(self,requests):
         data_list = []
@@ -133,7 +123,7 @@ class HodUser(CustomUser):
                             'Balance': str(transaction['remaining_budget'])
                         } for transaction in transactions_list)
                 
-        excel_file = pd.ExcelWriter('ddf-transactions.xlsx')
+        excel_file = pd.ExcelWriter('DDF-transactions.xlsx')
         df.to_excel(excel_file, index=False)
         excel_file.save()
 
@@ -144,4 +134,6 @@ class HodUser(CustomUser):
         email = EmailMessage(subject, message, from_email, recipient_list)
         email.attach_file('ddf-transactions.xlsx')
         email.send()
+
+        return True
        

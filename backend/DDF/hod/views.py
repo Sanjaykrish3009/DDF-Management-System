@@ -1,8 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import HodUser
-from email.message import EmailMessage
-from os import sendfile
 
 class PendingRequests(APIView):
     def get(self, request, format=None):
@@ -11,10 +9,9 @@ class PendingRequests(APIView):
         data = self.request.query_params
 
         try:
-            hod_user = HodUser.objects.get(email=email)
+            hod_user = HodUser.objects.filter(email=email)[0]
             if 'title' in data:
                 pending_requests = hod_user.search_view_pending_requests(data['title'])
-
             else:
                 pending_requests = hod_user.view_pending_requests()
             return Response({'success':'Pending requests of hod retrieved successfully', 'data':pending_requests})
@@ -27,7 +24,7 @@ class CreditRequests(APIView):
         email = user.email
   
         try:
-            hod_user = HodUser.objects.get(email=email)
+            hod_user = HodUser.objects.filter(email=email)[0]
             credit_requests = hod_user.view_credit_requests()
             return Response({'success':'Credit requests retrieved successfully', 'data':credit_requests})
         except:
@@ -39,7 +36,7 @@ class DebitRequests(APIView):
         email = user.email
   
         try:
-            hod_user = HodUser.objects.get(email=email)
+            hod_user = HodUser.objects.filter(email=email)[0]
             debit_requests = hod_user.view_debit_requests()
             return Response({'success':'Debit requests of hod retrieved successfully', 'data':debit_requests})
         except:
@@ -53,10 +50,9 @@ class PreviousRequests(APIView):
         data = self.request.query_params
 
         try:
-            hod_user = HodUser.objects.get(email=email)
+            hod_user = HodUser.objects.filter(email=email)[0]
             if 'title' in data:
                 previous_requests = hod_user.search_view_previous_requests(data['title'])
-
             else:
                 previous_requests = hod_user.view_previous_requests()
             return Response({'success':'Previous requests of hod retrieved successfully', 'data':previous_requests})
@@ -71,17 +67,18 @@ class Approval(APIView):
         data = self.request.data
 
         if 'request_id' not in data:
-            return Response({'error': 'Request ID field must be set'})
+            raise ValueError('Request ID field must be set')
         
         if 'hod_review' not in data:
-            return Response({'error': 'HOD Review field must be set'})
+            return ValueError('HOD Review field must be set')
         
         request_id = data['request_id']
         hod_review = data['hod_review']
 
         try:
-            hod_user = HodUser.objects.get(email=email)
-            if hod_user.approve_request(request_id, hod_review):
+            hod_user = HodUser.objects.filter(email=email)[0]
+            transaction = hod_user.approve_request(request_id, hod_review)
+            if transaction:
                 return Response({'success':'Fund request approved by the hod successfully'})
             else:
                 return Response({'error': 'Request amount more than remaining budget'})
@@ -103,7 +100,7 @@ class Disapproval(APIView):
         request_id = data['request_id']
         hod_review = data['hod_review']
         try:
-            hod_user = HodUser.objects.get(email=email)
+            hod_user = HodUser.objects.filter(email=email)[0]
             hod_user.disapprove_request(request_id,hod_review)
             return Response({'success':'Fund request disapproved by the hod successfully'})
         except:
@@ -115,7 +112,7 @@ class AllTransactions(APIView):
         email = user.email
   
         try:
-            hod_user = HodUser.objects.get(email=email)
+            hod_user = HodUser.objects.filter(email=email)[0]
             all_transactions = hod_user.view_all_transactions()
             return Response({'success':'All transactions retrieved successfully by the hod', 'data':all_transactions})
         except:
@@ -127,7 +124,7 @@ class CreditTransactions(APIView):
         email = user.email
   
         try:
-            hod_user = HodUser.objects.get(email=email)
+            hod_user = HodUser.objects.filter(email=email)[0]
             credit_transactions = hod_user.view_credit_transactions()
             return Response({'success':'Credit transactions retrieved successfully by the hod', 'data':credit_transactions})
         except:
@@ -139,7 +136,7 @@ class DebitTransactions(APIView):
         email = user.email
   
         try:
-            hod_user = HodUser.objects.get(email=email)
+            hod_user = HodUser.objects.filter(email=email)[0]
             debit_transactions = hod_user.view_debit_transactions()
             return Response({'success':'Debit transactions retrieved successfully by the hod', 'data':debit_transactions})
         except:
@@ -151,7 +148,7 @@ class Balance(APIView):
         email = user.email
   
         try:
-            hod_user = HodUser.objects.get(email=email)
+            hod_user = HodUser.objects.filter(email=email)[0]
             balance = hod_user.view_balance()
             return Response({'success':'Balance viewed successfully', 'data':balance})
         except:
@@ -163,7 +160,7 @@ class SendExcelSheet(APIView):
         user = self.request.user
         email = user.email
         try:
-            hod_user = HodUser.objects.get(email=email)
+            hod_user = HodUser.objects.filter(email=email)[0]
             hod_user.send_excel()
             return Response({'success':'Excel Sheet sent to admin'})
         except:

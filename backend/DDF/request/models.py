@@ -84,4 +84,7 @@ class FundRequest(models.Model):
         request_dict = model_to_dict(self, fields=['id', 'request_title', 'committee_approval_status', 'hod_approval_status', 'transaction_type'])    
         request_dict['request_date'] = timezone.localtime(self.request_date).strftime('%Y-%m-%d %H:%M:%S')   
         return request_dict
+    
+    def get_transaction_type(self):
+        return self.transaction_type
        

@@ -2,10 +2,10 @@ import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { AuthContext } from './AuthContext';
 import {Header, FacultySubheader, CommitteeSubheader, HodSubheader} from './header';
-import { CreateRequest, FacultyDashboard, Inbox, Transactions, Profile, ChangePassword,ForgotPassword,SignUp,RequestDetails,PublicRequest,PrivateRequest,OTP, Resetpwd,BudgetRequest,BudgetTransactions,CommitteeDashboard,CommitteeRequestDetails, HodRequestDetails, HodDashboard,FileDetails  } from '../pages';
+import { CreateRequest, FacultyDashboard, Inbox, Transactions, Profile, ChangePassword,ForgotPassword,SignUp,RequestDetails,PublicRequest,PrivateRequest,OTP, Resetpwd,BudgetRequest,BudgetTransactions,CommitteeDashboard,CommitteeRequestDetails, HodRequestDetails, HodDashboard,FileDetails,SignUpOtp  } from '../pages';
 import Loginpage from './Login-page';
 import {Route, Routes} from 'react-router-dom';
-import {FacultyPrivateRoute, CommitteePrivateRoute, HodPrivateRoute, SecurePrivateRoute, SecurePasswordPrivateRoute} from "../components/PrivateRoute";
+import {FacultyPrivateRoute, CommitteePrivateRoute, HodPrivateRoute, SecurePrivateRoute, SecurePasswordPrivateRoute, SecureVerificationPrivateRoute} from "../components/PrivateRoute";
 import { Loader } from '../components';
 
 const AuthStatus =() => {
@@ -47,6 +47,9 @@ const AuthStatus =() => {
       </Route>
       <Route element={<SecurePasswordPrivateRoute/>}>
       <Route path = "/resetpassword" element={<Resetpwd/>}/>
+      </Route>
+      <Route element={<SecureVerificationPrivateRoute/>}>
+      <Route path = "/signupverification" element={<SignUpOtp/>}/>
       </Route>
       
       <Route path = "/faculty" element= {<FacultySubheader/>}>

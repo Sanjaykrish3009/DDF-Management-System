@@ -28,4 +28,9 @@ const SecurePasswordPrivateRoute = () =>{
   return isValidOtp? <Outlet/> : <Navigate to="/" />;
 }
 
-export {FacultyPrivateRoute,CommitteePrivateRoute,HodPrivateRoute,SecurePrivateRoute,SecurePasswordPrivateRoute};
+const SecureVerificationPrivateRoute = () =>{
+  const {isValidEmail} = useContext(AuthContext);
+  return isValidEmail? <Outlet/> : <Navigate to="/" />;
+}
+
+export {FacultyPrivateRoute,CommitteePrivateRoute,HodPrivateRoute,SecurePrivateRoute,SecurePasswordPrivateRoute,SecureVerificationPrivateRoute};

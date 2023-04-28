@@ -18,8 +18,9 @@ import HodRequestDetails from "./HodRequestDetails";
 import RequestDetails from "./RequestDetails";
 import Transactions from "./Transactions";
 import FileDetails from "./FileDetails";
+import SignUpOtp from "./SignUpOtp";
 
 export {SignUp, ForgotPassword, OTP, Resetpwd, 
     Inbox,FacultyDashboard, CommitteeDashboard, HodDashboard,
     ChangePassword, CreateRequest, PrivateRequest, PublicRequest, Profile,
-    BudgetRequest, BudgetTransactions, CommitteeRequestDetails, HodRequestDetails, RequestDetails, Transactions, FileDetails};
+    BudgetRequest, BudgetTransactions, CommitteeRequestDetails, HodRequestDetails, RequestDetails, Transactions, FileDetails, SignUpOtp};

@@ -12,7 +12,9 @@ function PublicRequest() {
   const [description, setDescription] = useState("");
   const [fundAmount, setFundAmount] = useState("");
   const [redirect, setRedirect] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null); 
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [documents, setDocuments] = useState(null);
+
 
 
   const handleSubmit = (event) => {
@@ -42,6 +44,10 @@ function PublicRequest() {
 
     })
     
+  };
+  const handleFileUpload = (event) => {
+    const uploadedFile = event.target.files[0];
+    setDocuments(uploadedFile);
   };
 
   if (redirect) {
@@ -83,6 +89,15 @@ function PublicRequest() {
             onChange={(event) => setFundAmount(event.target.value)}
             required
           />
+        <div className="pr_title">
+          <label htmlFor="documents">Upload Documents *</label>
+          <input
+            type="file"
+            id="documents"
+            onChange={handleFileUpload}
+            required
+          />
+        </div>
         </div>
         <button type="submit" className="done">Submit</button>
       </form>

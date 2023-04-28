@@ -19,6 +19,7 @@ body {
     color: #333;
     background-color: #f5f5f5;
     width: 300px;
+    height: 100px;
   }
   
   .request-page {
@@ -43,7 +44,7 @@ body {
     padding: 18px;
     background-color: #bbb6b6;
     border-radius: 10px;
-    top:150px;
+    top:200px;
     /* margin-bottom: 10px; */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   }

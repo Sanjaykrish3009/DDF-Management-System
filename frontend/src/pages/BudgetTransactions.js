@@ -6,11 +6,42 @@ import React, { useContext } from 'react';
 import { Loader } from '../components';
 import { ErrorDisplay } from '../components';
 import '../css_files/transactions.css';
+import Cookies from 'js-cookie';
+
 
 const BudgetTransactions = () => {
   const [data, setData] = useState([]);
   const { user_type } = useContext(AuthContext);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [loader,setloader] = useState(true);
+
+  const sendEmail = () => {
+    setloader(false);
+    axios.post(`http://localhost:8000/hod/sendexcelsheet`,{
+
+    }
+    ,
+    {
+      headers:{
+        'X-CSRFToken' :Cookies.get('csrftoken'),
+      }
+    })
+    .then((response) => {
+      setloader(true);
+      if (response.data.success) {
+       
+        setErrorMessage(response.data.success);
+      } else {
+        setErrorMessage(response.data.error);
+      }
+    })
+    .catch((error) =>
+    {
+      setloader(true);
+      setErrorMessage(error.message)}
+      );
+    
+  }
 
   useEffect(() => {
     console.log(user_type);
@@ -18,7 +49,9 @@ const BudgetTransactions = () => {
       .get('http://localhost:8000/' + user_type + '/alltransactions')
       .then((response) => {
         if (response.data.success) {
+         
           setData(response.data.data);
+         
         } else {
           setErrorMessage(response.data.error);
         }
@@ -28,12 +61,15 @@ const BudgetTransactions = () => {
   
   return (
     <div className='dashboard'>
+      <button className='Excel' onClick={()=>(sendEmail())}> Send To Admin </button>
+
       <ErrorDisplay errormessage={errorMessage} seterrormessage={setErrorMessage} />
       <div className='transactions-wrapper'>
         <div className='transactions-header'>
           <h2>Transactions</h2>
         </div>
-        {data ? (
+        {data && loader? (
+          <div>
           <table className='transaction-table'>
             <thead>
               <tr>
@@ -81,6 +117,8 @@ const BudgetTransactions = () => {
               )}
             </tbody>
           </table>
+
+          </div>
         ) : (
           
             <Loader />

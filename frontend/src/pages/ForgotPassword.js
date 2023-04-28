@@ -40,6 +40,7 @@ const ForgotPassword = () => {
         }
       })
       .catch(error =>{
+        setIsLoading(false);
         setErrorMessage(error.message);
       });
   };

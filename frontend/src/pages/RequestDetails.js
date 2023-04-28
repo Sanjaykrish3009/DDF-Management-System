@@ -61,23 +61,73 @@ const RequestDetails = () => {
     <div className='page'>
       <div className='mainbody'>
         <div className='titl'>RequestDetails</div>
-        <div className='bod'>
-          <div className='requesttype'>This is a {data.request_type}</div>
+          <div className='bod'>
+            <div className='requesttype'>This is a {data.request_type}</div>
 
-          <div>Title:{data.request_title}</div>
-          <div>Description:{data.request_description}</div>
-          <div>Requested Amount: {data.request_amount}</div>
-          <div>Requested on :{data.request_date}</div>
-          <div>Committee Decision Status: {data.committee_approval_status}</div>
-          <div>Committee Remarks: {data.committee_review} </div>
-          <div>Time: {data.committee_review_date}</div>
-          <div>HOD Decision Status: {data.hod_approval_status}</div>
-          <div>HOD Remarks: {data.hod_review}</div>
-          <div>Time: {data.hod_review_date}</div>
-          <div>
-              Uploads: <Link onClick={()=>handleFile(data.upload)}> {data.upload} </Link>
-          </div>
-        </div>
+              <div className="row">
+                <div className="col-head">Title</div>
+                <div className="colon">:</div>
+                <div className="col-body">{data.request_title}</div>
+              </div>
+              <div className="row">
+                <div className="col-head">Description</div>
+                <div className="colon">:</div>
+                <div className="col-body">{data.request_description}</div>
+              </div>
+              <div className="row">
+                <div className="col-head">Requested Amount</div>
+                <div className="colon">:</div>
+                <div className="col-body">{data.request_amount}</div>
+              </div>
+              <div className="row">
+                <div className="col-head">Requested on</div>
+                <div className="colon">:</div>
+                <div className="col-body">{data.request_date}</div>
+              </div>
+              <div className="row">
+                <div className="col-head">Requested By</div>
+                <div className="colon">:</div>
+                <div className="col-body">{data.user.email}</div>
+              </div>
+              <div className="row">
+                <div className="col-head">Committee Decision Status</div>
+                <div className="colon">:</div>
+                <div className="col-body">{data.committee_approval_status}</div>
+              </div>
+              <div className="row">
+                <div className="col-head">Committee Remarks</div>
+                <div className="colon">:</div>
+                <div className="col-body">{data.committee_review}</div>
+              </div>
+              <div className="row">
+                <div className="col-head">Time</div>
+                <div className="colon">:</div>
+                <div className="col-body">{data.committee_review_date}</div>
+              </div>
+              <div className="row">
+                <div className="col-head">HOD Decision Status</div>
+                <div className="colon">:</div>
+                <div className="col-body">{data.hod_approval_status}</div>
+              </div>
+              <div className="row">
+                <div className="col-head">HOD Remarks</div>
+                <div className="colon">:</div>
+                <div className="col-body">{data.hod_review}</div>
+              </div>
+              <div className="row">
+                <div className="col-head">Time</div>
+                <div className="colon">:</div>
+                <div className="col-body">{data.hod_review_date}</div>
+              </div>
+              <div className="row">
+                <div className="col-head">Uploads</div>
+                <div className="colon">:</div>
+                <div className="col-body">
+                  <Link onClick={() => handleFile(data.upload)}>{data.upload}</Link>
+                </div>
+              </div>  
+
+            </div>
       </div>
     </div>
      ) : (

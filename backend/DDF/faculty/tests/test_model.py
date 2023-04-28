@@ -1,3 +1,5 @@
+# from unittest.mock import patch
+from unittest.mock import patch
 from django.test import TestCase
 from authentication.models import CustomUser
 from hod.models import HodUser

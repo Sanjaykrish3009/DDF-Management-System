@@ -12,7 +12,6 @@ class PendingRequests(APIView):
             committee_user = CommitteeUser.objects.get(email=email)
             if 'title' in data:
                 pending_requests = committee_user.search_view_pending_requests(data['title'])
-
             else:
                 pending_requests = committee_user.view_pending_requests()
             return Response({'success':'Pending requests of committee retrieved successfully', 'data':pending_requests})

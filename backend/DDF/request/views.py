@@ -98,7 +98,6 @@ class CreateBudgetRequest(APIView):
 class RequestDetails(APIView):
     def post(self, request, format=None):
         data = self.request.data
-
         if 'request_id' not in data:
             return Response({'error': 'Request ID field must be set'})
         

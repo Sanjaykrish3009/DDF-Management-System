@@ -3,45 +3,53 @@ from authentication.models import CustomUser
 from request.viewrequests.pendingrequest_strategy import PendingRequestStrategy
 from request.viewrequests.previousrequest_strategy import PreviousRequestStrategy
 from request.viewrequests.publicrequest_strategy import PublicRequestStrategy
+from request.viewrequests.context import ContextRequest
 
 class FacultyUser(CustomUser):
     faculty_id = models.CharField(max_length=30)
 
     def view_pending_requests(self):
-        PendingRequests = PendingRequestStrategy()
-        pending_requests = PendingRequests.view_requests(self)
+        
+        context = ContextRequest(PendingRequestStrategy())
+        pending_requests= context.view_requests(self)
 
         return self.fetch_requests_data(pending_requests)
     
     def search_view_pending_requests(self,title):
-        PendingRequests = PendingRequestStrategy()
-        pending_requests = PendingRequests.search_view_requests(self,title)
+ 
+        context = ContextRequest(PendingRequestStrategy())
+        pending_requests= context.view_requests(self)
+        pending_requests = pending_requests.filter(request_title__icontains=title)
 
         return self.fetch_requests_data(pending_requests)
     
     def view_previous_requests(self):
-        PreviousRequests = PreviousRequestStrategy()
-        previous_requests = PreviousRequests.view_requests(self)
+
+        context = ContextRequest(PreviousRequestStrategy())
+        previous_requests= context.view_requests(self)
 
         return self.fetch_requests_data(previous_requests)
 
     def search_view_previous_requests(self,title):
-        PreviousRequests = PreviousRequestStrategy()
-        previous_requests = PreviousRequests.search_view_requests(self,title)
+
+        context = ContextRequest(PreviousRequestStrategy())
+        previous_requests= context.view_requests(self)
+        previous_requests = previous_requests.filter(request_title__icontains=title)
 
         return self.fetch_requests_data(previous_requests)
     
     def view_public_requests(self):
 
-        PublicRequests = PublicRequestStrategy()
-        public_requests = PublicRequests.view_requests(self)
+        context = ContextRequest(PublicRequestStrategy())
+        public_requests= context.view_requests(self)
        
         return self.fetch_requests_data(public_requests)
     
     def search_view_public_requests(self,title):
 
-        PublicRequests = PublicRequestStrategy()
-        public_requests = PublicRequests.search_view_requests(self,title)
+        context = ContextRequest(PublicRequestStrategy())
+        public_requests= context.view_requests(self)
+        public_requests= public_requests.filter(request_title__icontains=title)
        
         return self.fetch_requests_data(public_requests)
 

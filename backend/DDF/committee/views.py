@@ -10,7 +10,7 @@ class PendingRequests(APIView):
 
         try:
             committee_user = CommitteeUser.objects.get(email=email)
-            if 'title' in data:
+            if 'title' in data and data['title'].isspace()==False:
                 pending_requests = committee_user.search_view_pending_requests(data['title'])
 
             else:
@@ -28,7 +28,7 @@ class PreviousRequests(APIView):
 
         try:
             committee_user = CommitteeUser.objects.get(email=email)
-            if 'title' in data:
+            if 'title' in data and data['title'].isspace()==False:
                 previous_requests = committee_user.search_view_previous_requests(data['title'])
 
             else:
@@ -42,7 +42,7 @@ class Approval(APIView):
         user = self.request.user
         email = user.email
         data = self.request.data
-
+        print(data)
         if 'request_id' not in data:
             return Response({'error': 'Request ID field must be set'})
         

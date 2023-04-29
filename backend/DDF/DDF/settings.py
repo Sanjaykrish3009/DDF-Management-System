@@ -170,7 +170,6 @@ AUTH_USER_MODEL = 'authentication.CustomUser'
 
 AUTHENTICATION_BACKENDS = ['authentication.backends.FacultyUserBackend', 'authentication.backends.CommitteeUserBackend', 'authentication.backends.HodUserBackend', 'django.contrib.auth.backends.ModelBackend', ]
 
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587

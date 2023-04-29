@@ -18,7 +18,7 @@ class CommitteeUser(CustomUser):
         remaining_budget = self.view_balance()
         
         if remaining_budget >= request_amount:
-            request_obj.set_committee_approval(committee_review)
+            request_obj = request_obj.set_committee_approval(committee_review)
             return request_obj
         else:
             return None

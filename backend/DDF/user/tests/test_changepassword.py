@@ -20,10 +20,10 @@ class ChangePasswordTestCase(TestCase):
 
     def test_changepassword_without_oldpassword(self):
         self.client.login(email='test@gmail.com', password='testpassword')
-        data = {'new_password':'tesingpassword','re_new_password':'testingpassword'}
-        with self.assertRaises(ValueError):
-            self.client.post(self.url, data, format='json')
-        self.client.logout()
+        data = {'re_new_password':'testingpassword'}
+        response = self.client.post(self.url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['error'],'Old Password field must be set')
         
     def test_changepassword_invalid_password(self):
         self.client.login(email='test@gmail.com', password='testpassword')

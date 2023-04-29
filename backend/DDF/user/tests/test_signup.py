@@ -24,9 +24,9 @@ class SignupTestCase(TestCase):
         mocK_create_userprofile.return_value = self.userprofile
         response = self.client.post(self.url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data['success'],'User created successfully')
+        self.assertEqual(response.data['success'],'OTP sent for email verification')
 
-    @patch('faculty.models.FacultyUser.objects.filter')
+    @patch('authentication.models.CustomUser.objects.filter')
     def test_unsuccessful_signup(self,mock_user_already_exists):
         data= {'first_name':'facultyname','last_name':'cse','email':'facuty@gmail.com','password':'faculty123','re_password':'faculty123'}
         mock_user_already_exists.return_value.exists.return_value = True
@@ -45,11 +45,7 @@ class SignupTestCase(TestCase):
 
     def test_signup_without_email(self):
         data= {'first_name':'facultyname','last_name':'cse','password':'faculty123','re_password':'faculty123'}
-        with self.assertRaises(ValueError):
-            self.client.post(self.url, data, format='json')
-
-
-
-
-
-
+        response = self.client.post(self.url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['error'],'Email field must be set')       
+        

@@ -1,38 +1,48 @@
-from unittest.mock import patch
 from django.test import TestCase
 from django.urls import reverse
-from transaction.models import Transaction
-from request.models import FundRequest
+from faculty.models import FacultyUser
 from committee.models import CommitteeUser
-# from rest_framework.test import APIClient
+from unittest.mock import patch
+from request.models import FundRequest
+from rest_framework import status
+from django.forms.models import model_to_dict
 
-class PendingRequestsTest(TestCase):
+
+class CommitteePendingRequestsTest(TestCase):
     def setUp(self):
-        self.Comittee_user = CommitteeUser.objects.create_user(email = 'test@gmail.com',password ='testpassword')
-        self.fundrequest = FundRequest(user=self.Comittee_user, request_type='PrivateRequest', request_title='Testing', request_description='This request is created for testing', request_amount=11.00)
+        self.faculty_user = FacultyUser.objects.create_user(email='testing@gmail.com', password='testingpassword')
+        self.user = CommitteeUser.objects.create_user(email='test@gmail.com', password='testpassword')
+        self.fundrequest = FundRequest(user=self.faculty_user, request_type='PrivateRequest', request_title='Testing', request_description='This request is created for testing', request_amount=11.00, committee_approval_status="Pending", hod_approval_status="Pending")
         self.fundrequest.save()
-        self.approvedfundrequest = FundRequest(user=self.Comittee_user, request_type='PrivateRequest', request_title='Testing', request_description='This request is created for testing', request_amount=11.00, committee_approval_status = "Approved")
-        self.approvedfundrequest.save()
-        self.latest_fundrequest =  FundRequest(user=self.Comittee_user, request_type='PrivateRequest', request_title='Testing', request_description='This request is created for testing', request_amount=111.00, transaction_type = 'Credit')
-        self.latest_fundrequest.save()
-        self.transaction = Transaction(request=self.fundrequest, remaining_budget=100.00)
-        self.transaction.save()
-        self.latest_transaction = Transaction(request=self.latest_fundrequest, remaining_budget=111.00)
-        self.latest_transaction.save()
+        self.request_dict = model_to_dict(self.fundrequest,exclude=['upload'])
         self.url = reverse('committee:pendingrequests')
 
-    @patch('committee.models.CommitteeUser.objects.get')
-    @patch('committee.models.CommitteeUser.search_view_pending_requests')
     @patch('committee.models.CommitteeUser.view_pending_requests')
+    @patch('committee.models.CommitteeUser.objects.filter')    
+    def test_view_pending_requests(self,mock_committee_object,mock_committee_pending_requests):
+        self.client.login(email='test@gmail.com', password='testpassword')
+        mock_committee_object.return_value = [self.user]
+        mock_committee_pending_requests.return_value = [self.request_dict]
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['success'], 'Pending requests of committee retrieved successfully')
+        self.assertEqual(response.data['data'],[self.request_dict])
+        self.client.logout()
+   
+    def test_view_pending_requests_failed(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
-    def test_pending_requests(self,mock_view_pending_requests,mock_search_view_pending_requests,mock_get_committee_object):
-        self.data = {'title':'Test'}
-        mock_get_committee_object.return_value = self.Comittee_user
-        mock_search_view_pending_requests.return_value = [{self.fundrequest}]
-        mock_view_pending_requests.return_value = [{self.fundrequest}]
-        self.client.login(email='test@gmail.com',password='testpassword')
-        response = self.client.get(self.url,self.data,format = 'json')
-        self.assertEqual(response.data['success'],'Pending requests of committee retrieved successfully')
 
-
-        
+    @patch('committee.models.CommitteeUser.search_view_pending_requests')
+    @patch('committee.models.CommitteeUser.objects.filter')    
+    def test_view_pending_requests_search(self,mock_committee_object,mock_committee_search_pending_requests):
+        self.client.login(email='test@gmail.com', password='testpassword')
+        data={'title':'Test'}
+        mock_committee_object.return_value = [self.user]
+        mock_committee_search_pending_requests.return_value = [self.request_dict]
+        response = self.client.get(self.url,data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['success'], 'Pending requests of committee retrieved successfully')
+        self.assertEqual(response.data['data'],[self.request_dict])
+        self.client.logout()

@@ -23,26 +23,26 @@ class SignupView(APIView):
         data = self.request.data
 
         if 'first_name' not in data:
-            raise ValueError('First Name field must be set')
+            return Response({'error':'First Name field must be set'})
         
         if 'last_name' not in data:
-            raise ValueError('Last Name field must be set')
+            return Response({'error':'Last Name field must be set'})
         
         if 'email' not in data:
-            raise ValueError('Email field must be set')
+            return Response({'error':'Email field must be set'})
 
         if 'password' not in data:
-            raise ValueError('Password field must be set')
+            return Response({'error':'Password field must be set'})
         
         if 're_password' not in data:
-            raise ValueError('Re Password field must be set')
+            return Response({'error':'Re Password field must be set'})
         
         email = data['email']        
         password = data['password']
         re_password = data['re_password']
 
-        # if email.endswith("@iith.ac.in")==False:
-        #     return Response({'error':'Email should end with @iith.ac.in'})
+        # if email.endswith("@cse.iith.ac.in")==False:
+        #     return Response({'error':'Email should end with @cse.iith.ac.in'})
         
         try:
             if password == re_password:
@@ -63,7 +63,7 @@ class SignupView(APIView):
                         from_email = 'ddf.cse.iith@gmail.com' 
                         recipient_list = [email]
                         send_mail(subject, message, from_email, recipient_list)   
-                        return Response({'success':'OTP sent for email verification'})
+                        return Response({'success':'OTP sent for email verification', 'otp': otp, 'otp_created_at': otp_created_at})
             else:
                 return Response({'error':'Passwords do not match'})
         except:
@@ -130,13 +130,13 @@ class ChangePasswordView(APIView):
         data = self.request.data
 
         if 'old_password' not in data:
-            raise ValueError('Old Password field must be set')
+            return Response({'error':'Old Password field must be set'})
         
         if 'new_password' not in data:
-            raise ValueError('New Password field must be set')
+            return Response({'error':'New Password field must be set'})
         
         if 're_new_password' not in data:
-            raise ValueError('Re New Password field must be set')
+            return Response({'error':'Re Enter New Password field must be set'})
         
         old_password = data['old_password']
         new_password = data['new_password']

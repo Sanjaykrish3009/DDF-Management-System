@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'committee',
     'hod',
     'request',
-    'transaction'
+    'transaction',
+    'django.test'
 ]
 
 MIDDLEWARE = [
@@ -176,3 +177,5 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'ddf.cse.iith@gmail.com'  
 EMAIL_HOST_PASSWORD = 'czfdefueigazdoyp'  
+
+TEST_RUNNER = 'django.test.runner.DiscoverRunner'

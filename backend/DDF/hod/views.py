@@ -50,7 +50,7 @@ class PreviousRequests(APIView):
 
         try:
             hod_user = HodUser.objects.filter(email=email)[0]
-            if 'title' in data:
+            if 'title' in data and data['title'].isspace()==False:
                 previous_requests = hod_user.search_view_previous_requests(data['title'])
             else:
                 previous_requests = hod_user.view_previous_requests()
@@ -158,8 +158,6 @@ class SendExcelSheet(APIView):
     def get(self,request,format=None): 
         user = self.request.user
         email = user.email
-        hod_user = HodUser.objects.filter(email=email)[0]
-        
         try:
             hod_user = HodUser.objects.filter(email=email)[0]
             hod_user.send_excel()

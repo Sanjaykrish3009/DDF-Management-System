@@ -9,6 +9,7 @@ from django.db.models import Q
 from transaction.viewtransactions.all_transactions_strategy import AllTransactionStrategy
 from transaction.viewtransactions.credit_transactions import CreditTransactionsStrategy
 from transaction.viewtransactions.debit_transactions import DebitTransactionsStrategy
+from transaction.viewtransactions.context import ContextTransaction
 
 class HodUser(CustomUser):
     hod_id = models.CharField(max_length=30)
@@ -66,18 +67,18 @@ class HodUser(CustomUser):
         return self.fetch_requests_data(previous_requests)
     
     def view_all_transactions(self):
-        AllTransactions = AllTransactionStrategy()
-        all_transactions = AllTransactions.view_transactions()
+        context = ContextTransaction(AllTransactionStrategy())
+        all_transactions = context.view_transactions()
         return self.fetch_transactions_data(all_transactions)
     
     def view_credit_transactions(self):
-        CreditTransactions = CreditTransactionsStrategy()
-        credit_transactions = CreditTransactions.view_transactions()
+        context = ContextTransaction(CreditTransactionsStrategy())
+        credit_transactions = context.view_transactions()
         return self.fetch_transactions_data(credit_transactions)
     
     def view_debit_transactions(self):
-        Debit_transactions = DebitTransactionsStrategy()
-        debit_transactions = Debit_transactions.view_transactions()
+        context = ContextTransaction(DebitTransactionsStrategy())
+        debit_transactions = context.view_transactions()
         return self.fetch_transactions_data(debit_transactions)
     
     def view_balance(self):

@@ -1,19 +1,23 @@
 import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { AuthContext } from './AuthContext';
-import {Header, FacultySubheader, CommitteeSubheader, HodSubheader} from './header';
-import { CreateRequest, FacultyDashboard, Inbox, Transactions, Profile, ChangePassword,ForgotPassword,SignUp,RequestDetails,PublicRequest,PrivateRequest,OTP, Resetpwd,BudgetRequest,BudgetTransactions,CommitteeDashboard,CommitteeRequestDetails, HodRequestDetails, HodDashboard,FileDetails,SignUpOtp  } from '../pages';
-import Loginpage from './Login-page';
+import Header from './header';
 import {Route, Routes} from 'react-router-dom';
 import {FacultyPrivateRoute, CommitteePrivateRoute, HodPrivateRoute, SecurePrivateRoute, SecurePasswordPrivateRoute, SecureVerificationPrivateRoute} from "../components/PrivateRoute";
 import { Loader } from '../components';
+import { FacultyDashboard, FacultyInbox , FacultyPublicRequests, CreateRequest, PrivateRequest, PublicRequest, FacultyRequestDetails, FacultySubheader} from '../pages/faculty';
+import { CommitteeDashboard, CommitteeInbox, CommitteeTransactions, CreateBudgetRequest, CommitteeRequestDetails, CommitteeSubheader  } from '../pages/committee';
+import { HodDashboard, HodInbox, HodTransactions, HodRequestDetails, HodSubheader } from '../pages/hod';
+import { Profile, ChangePassword,ForgotPassword,SignUp,OTP, Resetpwd,SignUpOtp ,LoginPage } from '../pages';
+import ApiUrls from '../components/ApiUrls';
 
-const AuthStatus =() => {
-  const {isAuthenticated, setIsAuthenticated, setUser_type} = useContext(AuthContext);
+
+const RoutePaths =() => {
+  const {setIsAuthenticated, setUser_type} = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-        axios.get(`http://localhost:8000/authentication/authenticated`)
+        axios.get(ApiUrls.AUTHENTICATION_AUTHENTICATED_URL)
         .then(response => {
           setIsLoading(true);
           if(response.data.isAuthenticated==='success')
@@ -27,7 +31,7 @@ const AuthStatus =() => {
         .finally(()=>{
           setIsLoading(false);}
         );    
-  }, [setIsAuthenticated]);
+  }, [setIsAuthenticated,setUser_type]);
 
   return (
     <div>    
@@ -39,58 +43,57 @@ const AuthStatus =() => {
     
     <Routes>
       
-      <Route path ="/" element={<Loginpage/>}/>
+      <Route path ="/" element={<LoginPage/>}/>
       <Route path ="/signup" element={<SignUp/>}/>
       <Route path ="/forgotpassword" element={<ForgotPassword/>}/>
       <Route element= {<SecurePrivateRoute/>}>
-      <Route path ="/otpverification" element={<OTP/>}/>
+        <Route path ="/otpverification" element={<OTP/>}/>
       </Route>
       <Route element={<SecurePasswordPrivateRoute/>}>
-      <Route path = "/resetpassword" element={<Resetpwd/>}/>
+        <Route path = "/resetpassword" element={<Resetpwd/>}/>
       </Route>
       <Route element={<SecureVerificationPrivateRoute/>}>
-      <Route path = "/signupverification" element={<SignUpOtp/>}/>
+        <Route path = "/signupverification" element={<SignUpOtp/>}/>
       </Route>
       
       <Route path = "/faculty" element= {<FacultySubheader/>}>
         <Route element={<FacultyPrivateRoute/>}>
           <Route path = "dashboard" element={<FacultyDashboard/>}/>
-          <Route path = "inbox" element={<Inbox/>}/>
-          <Route path = "history" element = {<Transactions/>}/>
+          <Route path = "inbox" element={<FacultyInbox/>}/>
+          <Route path = "history" element = {<FacultyPublicRequests/>}/>
           <Route path = "makerequest" element = {<CreateRequest/>}/>
           <Route path = "viewprofile" element = {<Profile/>}/>
           <Route path = "changepassword" element = {<ChangePassword/>}/>
-          <Route path = "dashboard/requests/:id" element = {<RequestDetails/>}/>
-          <Route path = "inbox/requests/:id" element = {<RequestDetails/>}/>
-          <Route path = "history/requests/:id" element = {<RequestDetails/>}/>
+          <Route path = "dashboard/requests/:id" element = {<FacultyRequestDetails/>}/>
+          <Route path = "inbox/requests/:id" element = {<FacultyRequestDetails/>}/>
+          <Route path = "history/requests/:id" element = {<FacultyRequestDetails/>}/>
           <Route path = "makerequest/publicrequest" element={<PublicRequest/>}/>
           <Route path = "makerequest/privaterequest" element={<PrivateRequest/>}/>
-          <Route path = "filedetails" element={<FileDetails/>}/>
         </Route>
       </Route>
 
       <Route path = "/committee" element= {<CommitteeSubheader/>}>
         <Route element={<CommitteePrivateRoute/>}>
           <Route path = "dashboard" element={<CommitteeDashboard/>}/>
-          <Route path = "inbox" element={<Inbox/>}/>
-          <Route path = "transactions" element = {<BudgetTransactions/>}/>
-          <Route path = "budgetrequest" element = {<BudgetRequest/>}/>
+          <Route path = "inbox" element={<CommitteeInbox/>}/>
+          <Route path = "transactions" element = {<CommitteeTransactions/>}/>
+          <Route path = "budgetrequest" element = {<CreateBudgetRequest/>}/>
           <Route path = "viewprofile" element = {<Profile/>}/>
           <Route path = "changepassword" element = {<ChangePassword/>}/>
           <Route path = "dashboard/requests/:id" element = {<CommitteeRequestDetails/>}/>
-          <Route path = "inbox/requests/:id" element = {<RequestDetails/>}/>
+          <Route path = "inbox/requests/:id" element = {<FacultyRequestDetails/>}/>
         </Route>
       </Route>
 
       <Route path = "/hod" element= {<HodSubheader/>}>
           <Route element={<HodPrivateRoute/>}>
             <Route path = "dashboard" element={<HodDashboard/>}/>
-            <Route path = "inbox" element={<Inbox/>}/>
-            <Route path = "transactions" element = {<BudgetTransactions/>}/>
+            <Route path = "inbox" element={<HodInbox/>}/>
+            <Route path = "transactions" element = {<HodTransactions/>}/>
             <Route path = "viewprofile" element = {<Profile/>}/>
             <Route path = "changepassword" element = {<ChangePassword/>}/>
             <Route path = "dashboard/requests/:id" element = {<HodRequestDetails/>}/>
-            <Route path = "inbox/requests/:id" element = {<RequestDetails/>}/>
+            <Route path = "inbox/requests/:id" element = {<FacultyRequestDetails/>}/>
           </Route>
       </Route>
       
@@ -101,4 +104,4 @@ const AuthStatus =() => {
   );
 }
 
-export default AuthStatus;
+export default RoutePaths;

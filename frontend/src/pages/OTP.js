@@ -7,6 +7,7 @@ import { AuthContext } from '../core';
 import '../css_files/otp.css';
 import { ErrorDisplay } from '../components';
 import {Loader} from '../components';
+import ApiUrls from '../components/ApiUrls';
 
 
 const OTP = () => {
@@ -19,8 +20,7 @@ const OTP = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(`Submitting OTP: ${otp}`);
-    axios.post(`http://localhost:8000/authentication/checkotp`,{
+    axios.post(ApiUrls.AUTHENTICATION_CHECKOTP_URL,{
       'entered_otp':otp,
     },{
       headers:{
@@ -46,7 +46,7 @@ const OTP = () => {
   const handleResend =()=>{
     setIsLoading(true);
     setOtp("");
-    axios.post(`http://localhost:8000/authentication/forgotpassword`,{
+    axios.post(ApiUrls.AUTHENTICATION_FORGOTPASSWORD_URL,{
       'email':emailID,
     },{
       headers:{

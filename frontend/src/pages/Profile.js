@@ -4,7 +4,7 @@ import axios from 'axios';
 import '../css_files/profile.css';
 import { Loader } from "../components";
 import { ErrorDisplay } from "../components";
-
+import ApiUrls from '../components/ApiUrls';
 
 
 const Profile = () => {
@@ -12,7 +12,7 @@ const Profile = () => {
   const [errorMessage, setErrorMessage] = useState(null); 
 
   useEffect(() => {
-    axios.get('http://localhost:8000/user/profile')
+    axios.get(ApiUrls.USER_PROFILE_URL)
       .then(response => 
         {
           if(response.data.success)
@@ -26,7 +26,7 @@ const Profile = () => {
           }
         })
       .catch(error => setErrorMessage(error.message));
-  }, []);
+  }, [setUser]);
 
 
   return (

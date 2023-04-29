@@ -7,14 +7,10 @@ import { AuthContext } from "../core";
 import {ErrorDisplay,Loader} from '../components';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import ApiUrls from '../components/ApiUrls';
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassw] = useState("");
-  const [re_password,setRePassw] =useState("");
   const [OtpSent,setOtpSent] = useState(false);
-  const [firstname,setFirstname] = useState("");
-  const [lastname,setLastname] = useState("");
   const { isAuthenticated,setValidEmail} = useContext(AuthContext);
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
@@ -48,15 +44,7 @@ export default function LoginPage() {
     }
 
     setIsLoading(true);
-    axios.post(`http://localhost:8000/user/register`,formData
-    // {
-      // 'first_name':firstname,
-      // 'last_name':lastname,
-      // 'email':email,
-      // 'password':password,
-      // 're_password':re_password,
-
-    // }
+    axios.post(ApiUrls.USER_REGISTER_URL,formData
     ,{
       headers:{
         'X-CSRFToken' :Cookies.get('csrftoken')
@@ -80,16 +68,6 @@ export default function LoginPage() {
         setIsLoading(false);
         setErrorMessage(error.message); 
       });
-
-    // signingUp({firstname,lastname,email,password,re_password,setAccountCreated})
-    // .then((response) => {
-      
-
-    // })
-    // .catch((error) => {
-    //   console.log(error);
-    //   setErrorMessage(error.message); 
-    // });
   };
 
   function handleInputChange(event) {

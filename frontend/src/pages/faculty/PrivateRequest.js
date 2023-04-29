@@ -2,31 +2,33 @@ import React,{useState} from 'react'
 import { Navigate } from 'react-router';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { ErrorDisplay } from "../components";
+import { ErrorDisplay } from "../../components";
+import ApiUrls from '../../components/ApiUrls';
+import '../../css_files/publicrequest.css';
 
-import '../css_files/publicrequest.css';
-
-
-function PublicRequest() {
+function PrivateRequest() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [fundAmount, setFundAmount] = useState("");
-  const [redirect, setRedirect] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null);
   const [documents, setDocuments] = useState(null);
-
+  const [redirect, setRedirect] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null); 
 
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    axios.post(`http://localhost:8000/request/createpublicrequest`,{
-      'request_title':title,
-      'request_description':description,
-      'request_amount':fundAmount,
-     
-    },{
+    const formData = new FormData();
+    formData.append('request_title',title);
+    formData.append('request_description',description);
+    formData.append('request_amount',fundAmount);  
+    formData.append('file',documents);
+
+    axios.post(ApiUrls.REQUEST_CREATEPRIVATEREQUEST_URL,
+      formData
+    ,{
       headers:{
-        'X-CSRFToken' :Cookies.get('csrftoken')
+        'X-CSRFToken' :Cookies.get('csrftoken'),
+        'Content-Type':'multipart/form-data',
       }
     })
     .then(response =>{
@@ -41,10 +43,9 @@ function PublicRequest() {
     })
     .catch(error =>{
       setErrorMessage(error.message);
-
     })
-    
   };
+
   const handleFileUpload = (event) => {
     const uploadedFile = event.target.files[0];
     setDocuments(uploadedFile);
@@ -59,11 +60,11 @@ function PublicRequest() {
       <ErrorDisplay errormessage={errorMessage} seterrormessage={setErrorMessage}/> 
 
       <form onSubmit={handleSubmit} className="request-form">
-          Public Request
+          Private Request
         <div className="pr_title">
           <label htmlFor="title">Title *</label>
           <input
-            type="Text"
+            type="text"
             id="title"
             value={title}
             onChange={(event) => setTitle(event.target.value)}
@@ -73,7 +74,7 @@ function PublicRequest() {
         <div className="pr_title">
           <label htmlFor="reason">Description *</label>
           <textarea
-            type="Text"
+            type="text"
             id="reason"
             value={description}
             onChange={(event) => setDescription(event.target.value)}
@@ -89,15 +90,14 @@ function PublicRequest() {
             onChange={(event) => setFundAmount(event.target.value)}
             required
           />
+        </div>
         <div className="pr_title">
-          <label htmlFor="documents">Upload Documents *</label>
+          <label htmlFor="documents">Upload Documents </label>
           <input
             type="file"
             id="documents"
-            onChange={handleFileUpload}
-            required
+            onChange={handleFileUpload}           
           />
-        </div>
         </div>
         <button type="submit" className="done">Submit</button>
       </form>
@@ -105,5 +105,4 @@ function PublicRequest() {
   );
 }
 
-
-export default PublicRequest
+export default PrivateRequest

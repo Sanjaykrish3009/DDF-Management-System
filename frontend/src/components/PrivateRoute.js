@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Route, Redirect, Navigate ,Outlet} from "react-router-dom";
+import {  Navigate ,Outlet} from "react-router-dom";
 import { AuthContext } from "../core";
 
 

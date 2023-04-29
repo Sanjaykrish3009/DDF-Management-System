@@ -2,9 +2,9 @@ import React,{useState} from 'react'
 import { Navigate } from 'react-router';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { ErrorDisplay } from "../components";
-
-import '../css_files/publicrequest.css';
+import { ErrorDisplay } from "../../components";
+import ApiUrls from '../../components/ApiUrls';
+import '../../css_files/publicrequest.css';
 
 function PrivateRequest() {
   const [title, setTitle] = useState("");
@@ -12,30 +12,18 @@ function PrivateRequest() {
   const [fundAmount, setFundAmount] = useState("");
   const [documents, setDocuments] = useState(null);
   const [redirect, setRedirect] = useState(false);
-
-
-
   const [errorMessage, setErrorMessage] = useState(null); 
 
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData();
-    const reader = new FileReader();
     formData.append('request_title',title);
     formData.append('request_description',description);
     formData.append('request_amount',fundAmount);  
     formData.append('file',documents);
 
-    // reader.readAsDataURL(documents);
-    // reader.onload=(readerEvent)=>{
-    //   formData.append("file",readerEvent.target.result);
-    // }
-    console.log(documents);
-    console.log(formData);
-    console.log(formData.get('request_title'));
-
-    axios.post(`http://localhost:8000/request/createprivaterequest`,
+    axios.post(ApiUrls.REQUEST_CREATEPUBLICREQUEST_URL,
       formData
     ,{
       headers:{
@@ -51,14 +39,11 @@ function PrivateRequest() {
       }
       else{
         setErrorMessage(response.data.error);
-
       }
     })
     .catch(error =>{
       setErrorMessage(error.message);
-
     })
-    
   };
 
   const handleFileUpload = (event) => {
@@ -75,7 +60,7 @@ function PrivateRequest() {
       <ErrorDisplay errormessage={errorMessage} seterrormessage={setErrorMessage}/> 
 
       <form onSubmit={handleSubmit} className="request-form">
-          Private Request
+          Public Request
         <div className="pr_title">
           <label htmlFor="title">Title *</label>
           <input
@@ -96,7 +81,6 @@ function PrivateRequest() {
             required
           />
         </div>
-
         <div className="pr_title">
           <label htmlFor="fundAmount">Fund amount *</label>
           <input
@@ -108,12 +92,12 @@ function PrivateRequest() {
           />
         </div>
         <div className="pr_title">
-          <label htmlFor="documents">Upload Documents </label>
+          <label htmlFor="documents">Upload Documents *</label>
           <input
             type="file"
             id="documents"
             onChange={handleFileUpload}
-            
+            required           
           />
         </div>
         <button type="submit" className="done">Submit</button>

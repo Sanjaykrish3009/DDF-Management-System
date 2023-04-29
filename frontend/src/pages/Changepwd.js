@@ -4,7 +4,8 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { AuthContext } from "../core";
 import '../css_files/login.css'
-import { ErrorDisplay } from "../components";
+import { ErrorDisplay,Loader } from "../components";
+import ApiUrls from "../components/ApiUrls";
 
 function ChangePassword() {
   const [oldPassword, setOldPassword] = useState("");
@@ -15,6 +16,7 @@ function ChangePassword() {
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const {logout} = useContext(AuthContext);
   const [errorMessage, setErrorMessage] = useState(null); 
+  const [isLoading,setIsLoading]=useState(false);
 
 
   const handleSubmit = (e) => {
@@ -26,7 +28,8 @@ function ChangePassword() {
     } else if (newPassword !== confirmNewPassword) {
       setConfirmPasswordError("New password and confirm password fields should match.");
     } else {
-      axios.post(`http://localhost:8000/user/changepassword`,{
+      setIsLoading(true);
+      axios.post(ApiUrls.USER_CHANGEPASSWORD_URL,{
       'old_password':oldPassword,
       'new_password':newPassword,
       're_new_password':confirmNewPassword,
@@ -38,7 +41,8 @@ function ChangePassword() {
     })
   
       .then(response =>{
-        console.log(response.data);
+        setIsLoading(false);
+
         if(response.data.success)
         {
           logout();
@@ -47,13 +51,11 @@ function ChangePassword() {
         }
         else{
           setErrorMessage(response.data.error);
-        }
-        
+        }  
       })
       .catch(error =>{
+        setIsLoading(false);
         setErrorMessage(error.message);
-
-        
       });
     
     }
@@ -65,6 +67,11 @@ function ChangePassword() {
   }
 
   return (
+    <div>
+    {isLoading?(
+      // <div className="forgot_Loading">Loading...</div>
+      <Loader/>
+    ):(
     <div>
     <ErrorDisplay errormessage={errorMessage} seterrormessage={setErrorMessage}/> 
 
@@ -105,6 +112,8 @@ function ChangePassword() {
       </form>
     </div>
     </div>
+     )}
+     </div>
   );
 }
 

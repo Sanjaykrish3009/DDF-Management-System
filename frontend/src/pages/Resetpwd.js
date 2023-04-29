@@ -4,8 +4,8 @@ import { Navigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { AuthContext } from "../core";
-import { ErrorDisplay } from "../components";
-
+import { ErrorDisplay,Loader } from "../components";
+import ApiUrls from "../components/ApiUrls";
 import '../css_files/login.css';
 
 
@@ -14,11 +14,11 @@ const Resetpwd = () => {
     const [newPassword, setNewPassword] = useState("");
     const [confirmNewPassword, setConfirmNewPassword] = useState("");
     const [passwordChange,setPasswordChange]=useState(false);
-    const {logout,setValid,setValidOtp} = useContext(AuthContext);
+    const {setValid,setValidOtp} = useContext(AuthContext);
     const [errorMessage, setErrorMessage] = useState(null); 
     const [confirmPasswordError, setConfirmPasswordError] = useState("");
     const [passwordError, setPasswordError] = useState("");
-
+    const [isLoading,setIsLoading] =useState(false);
   
     const handleSubmit = (e) => {
       e.preventDefault();
@@ -29,7 +29,8 @@ const Resetpwd = () => {
       } else if (newPassword !== confirmNewPassword) {
         setConfirmPasswordError("New password and confirm password fields should match.");
       } else {
-        axios.post(`http://localhost:8000/authentication/resetpassword`,{
+        setIsLoading(true);
+        axios.post(ApiUrls.AUTHENTICATION_RESETPASSWORD_URL,{
         'new_password':newPassword,
         're_new_password':confirmNewPassword,
       }
@@ -40,7 +41,7 @@ const Resetpwd = () => {
       })
     
         .then(response =>{
-          console.log(response.data);
+          
           if(response.data.success)
           {
             setPasswordChange(true);
@@ -48,9 +49,10 @@ const Resetpwd = () => {
           else{
             setErrorMessage(response.data.error);
           }
-          
+          setIsLoading(false);
         })
         .catch(error =>{
+          setIsLoading(false);
           setErrorMessage(error.message);
 
         });
@@ -66,6 +68,11 @@ const Resetpwd = () => {
     }
   
     return (
+      <div>
+      {isLoading?(
+        // <div className="forgot_Loading">Loading...</div>
+        <Loader/>
+      ):(
       <div className="login-page">
       <ErrorDisplay errormessage={errorMessage} seterrormessage={setErrorMessage}/> 
 
@@ -97,6 +104,8 @@ const Resetpwd = () => {
           </div>
         </form>
       </div>
+       )}
+       </div>
     );
 }
 

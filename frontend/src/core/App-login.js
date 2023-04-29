@@ -1,15 +1,16 @@
 import { BrowserRouter} from 'react-router-dom'
 import { AuthContextProvider } from './AuthContext';
-import AuthStatus from './AuthStatus';
+import RoutePaths from './RoutePaths';
 
 const AppLogin = () => {
   return (
     <>
       <AuthContextProvider>
       <BrowserRouter>
-          <AuthStatus />
+          <RoutePaths />
       </BrowserRouter>
       </AuthContextProvider>
+      
     </>
   )
 }

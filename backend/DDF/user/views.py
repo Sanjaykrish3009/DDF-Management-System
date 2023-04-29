@@ -21,7 +21,6 @@ class SignupView(APIView):
     def post(self,request,format=None):
 
         data = self.request.data
-        print(data)
 
         if 'first_name' not in data:
             raise ValueError('First Name field must be set')
@@ -77,7 +76,6 @@ class CheckEmailView(APIView):
 
     def post(self, request, format=None):
         data = self.request.data
-        print(data)
         if 'entered_otp' not in data:
             return Response({'error': 'OTP field must be set'})
         

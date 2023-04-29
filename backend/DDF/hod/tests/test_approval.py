@@ -48,6 +48,8 @@ class HodUserApprovalTest(TestCase):
     def test_approval_failed_without_request(self):
         self.client.login(email='test@gmail.com', password='testpassword')
         data = {'hod_review':'Approving'}
-        with self.assertRaises(ValueError):
-            self.client.post(self.url, data, format='json')
+        response = self.client.post(self.url,data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['error'], 'Request ID field must be set')
+
 

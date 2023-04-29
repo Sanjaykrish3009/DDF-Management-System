@@ -9,9 +9,8 @@ class PendingRequests(APIView):
         data = self.request.query_params
 
         try:
-
-            hod_user = HodUser.objects.get(email=email)
-            if 'title' in data and data['title'].isspace==False:
+            hod_user = HodUser.objects.filter(email=email)[0]
+            if 'title' in data and data['title'].isspace()==False:
                 pending_requests = hod_user.search_view_pending_requests(data['title'])
             else:
                 pending_requests = hod_user.view_pending_requests()
@@ -47,7 +46,6 @@ class PreviousRequests(APIView):
     def get(self, request, format=None):
         user = self.request.user
         email = user.email
-  
         data = self.request.query_params
 
         try:
@@ -68,7 +66,7 @@ class Approval(APIView):
         data = self.request.data
 
         if 'request_id' not in data:
-            raise ValueError('Request ID field must be set')
+            return Response({'error':'Request ID field must be set'})
         
         if 'hod_review' not in data or data['hod_review']=='':
             return Response({'error': 'HOD Review field must be set'})
@@ -95,7 +93,7 @@ class Disapproval(APIView):
         if 'request_id' not in data:
             return Response({'error': 'Request ID field must be set'})
         
-        if 'hod_review' not in data or data['committee_review']=='':
+        if 'hod_review' not in data or data['committee_review'].isspace():
             return Response({'error': 'HOD Review field must be set'})
         
         request_id = data['request_id']
@@ -157,11 +155,11 @@ class Balance(APIView):
         
 
 class SendExcelSheet(APIView):    
-    def post(self,request,format=None): 
+    def get(self,request,format=None): 
         user = self.request.user
         email = user.email
-        print(email)
-        hod_user = HodUser.objects.get(email=email)
+        hod_user = HodUser.objects.filter(email=email)[0]
+        
         try:
             hod_user = HodUser.objects.filter(email=email)[0]
             hod_user.send_excel()

@@ -38,6 +38,7 @@ class CommitteeUserTest(TestCase):
         mock_set_committee_approval.return_value = self.approvedfundrequest
         request_obj = self.committee_user.approve_request(1,"approving")
         self.assertEqual(request_obj.committee_approval_status, 'Approved')
+        self.assertEqual(request_obj, self.approvedfundrequest)
 
     @patch('request.models.FundRequest.objects.get')
     @patch('request.models.FundRequest.get_request_amount')

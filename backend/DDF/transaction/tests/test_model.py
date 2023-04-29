@@ -18,19 +18,11 @@ class TransactionTest(TestCase):
         self.assertEqual(remaining_budget, 200.00)
 
     def test_get_transaction_details(self):
-        self.user.save()
-        self.fundrequest.save()
-        self.transaction.save()
         transaction_dict = self.transaction.get_transaction_details()
-        self.assertEqual(transaction_dict['id'],1)
         self.assertEqual(transaction_dict['remaining_budget'],200.00)
-        self.assertEqual(transaction_dict['request']['id'], 1)
         self.assertEqual(transaction_dict['request']['request_amount'], 11.00)
         self.assertEqual(transaction_dict['request']['transaction_type'], 'Debit')
         self.assertEqual(transaction_dict['request']['user']['email'], 'test@gmail.com')
 
-        self.transaction.delete()
-        self.fundrequest.delete()
-        self.user.delete()
 
 

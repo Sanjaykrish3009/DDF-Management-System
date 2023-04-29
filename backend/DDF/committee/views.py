@@ -9,7 +9,7 @@ class PendingRequests(APIView):
         data = self.request.query_params
 
         try:
-            committee_user = CommitteeUser.objects.get(email=email)
+            committee_user = CommitteeUser.objects.filter(email=email)[0]
             if 'title' in data:
                 pending_requests = committee_user.search_view_pending_requests(data['title'])
             else:
@@ -26,7 +26,7 @@ class PreviousRequests(APIView):
         data = self.request.query_params
 
         try:
-            committee_user = CommitteeUser.objects.get(email=email)
+            committee_user = CommitteeUser.objects.filter(email=email)[0]
             if 'title' in data:
                 previous_requests = committee_user.search_view_previous_requests(data['title'])
 
@@ -53,7 +53,7 @@ class Approval(APIView):
         
 
         try:
-            committee_user = CommitteeUser.objects.get(email=email)
+            committee_user = CommitteeUser.objects.filter(email=email)[0]
             if committee_user.approve_request(request_id, committee_review):
                 return Response({'success':'Fund request approved by the committee successfully'})
             else:
@@ -76,7 +76,7 @@ class Disapproval(APIView):
         request_id = data['request_id']
         committee_review = data['committee_review']
         try:
-            committee_user = CommitteeUser.objects.get(email=email)
+            committee_user = CommitteeUser.objects.filter(email=email)[0]
             committee_user.disapprove_request(request_id,committee_review)
             return Response({'success':'Fund request disapproved by the committee successfully'})
         except:
@@ -88,7 +88,7 @@ class AllTransactions(APIView):
         email = user.email
   
         try:
-            committee_user = CommitteeUser.objects.get(email=email)
+            committee_user = CommitteeUser.objects.filter(email=email)[0]
             all_transactions = committee_user.view_all_transactions()
             return Response({'success':'All transactions retrieved successfully by the committee', 'data':all_transactions})
         except:
@@ -100,7 +100,7 @@ class CreditTransactions(APIView):
         email = user.email
   
         try:
-            committee_user = CommitteeUser.objects.get(email=email)
+            committee_user = CommitteeUser.objects.filter(email=email)[0]
             credit_transactions = committee_user.view_credit_transactions()
             return Response({'success':'Credit transactions retrieved successfully by the hod', 'data':credit_transactions})
         except:
@@ -112,7 +112,7 @@ class DebitTransactions(APIView):
         email = user.email
   
         try:
-            committee_user = CommitteeUser.objects.get(email=email)
+            committee_user = CommitteeUser.objects.filter(email=email)[0]
             debit_transactions = committee_user.view_debit_transactions()
             return Response({'success':'Debit transactions retrieved successfully by the hod', 'data':debit_transactions})
         except:
@@ -124,7 +124,7 @@ class Balance(APIView):
         email = user.email
   
         try:
-            committee_user = CommitteeUser.objects.get(email=email)
+            committee_user = CommitteeUser.objects.filter(email=email)[0]
             balance = committee_user.view_balance()
             return Response({'success':'Balance viewed successfully', 'data':balance})
         except:

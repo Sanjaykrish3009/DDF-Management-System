@@ -1,42 +1,31 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Navigate } from 'react-router-dom';
-import { AuthContext } from '../core';
-import { ErrorDisplay } from '../components';
-import "../css_files/RequestDetails.css"
-import { useParams,useLocation, Link } from 'react-router-dom';
-import { Loader } from '../components';
+import { ErrorDisplay } from '../../components';
+import "../../css_files/RequestDetails.css"
+import { useParams, Link } from 'react-router-dom';
+import { Loader } from '../../components';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-
-const CommitteeRequestDetails = () => {
+import ApiUrls from '../../components/ApiUrls';
+import ApiCallPost from '../../components/ApiCallPost';
+const HodRequestDetails = () => {
 
   
   const {id}=useParams();
-  const location=useLocation();
-  // const data=location.state;
   const [data,setData] = useState(null);
+  const [remarks,setRemarks]=useState('');
+  const [redirect, setRedirect] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null); 
 
   useEffect(() => {
-    axios.post('http://localhost:8000/request/requestdetails',
-    {
-      'request_id':id,
-    },{
-      headers:{
-        'X-CSRFToken' :Cookies.get('csrftoken')
-      }
-    })
-      .then(response => {
-        
-        if(response.data.success)
-        {
-          setData(response.data.data)
-        }
-      })
-      .catch(error => console.log(error));
-  }, []);
+    const senddata ={};
+    senddata.request_id=id;
+    const api_url = ApiUrls.REQUEST_REQUESTDETAILS_URL;
+    ApiCallPost({api_url,setData,setErrorMessage,senddata})
+  },[id]);
 
   const handleFile =(file)=>{
-    axios.get('http://localhost:8000/request/filedetails',
+    axios.get(ApiUrls.REQUEST_FILEDETAILS_URL,
     {
       params: {
         file_path: file
@@ -56,32 +45,18 @@ const CommitteeRequestDetails = () => {
     
   }
 
-  const [remarks,setRemarks]=useState('');
-  const [redirect, setRedirect] = useState(false);
-  const [errorMessage, seterrorMessage] = useState(null); 
-  const {user_type} = useContext(AuthContext);
+
   const handleRemarksChange = (event) => {
     setRemarks(event.target.value);
   };
 
 
-    const RequestApproval = (id) =>{
-    
-    ApproveRequest({id})
-    .then(() => {
-      console.log('Approval Successful')
-    })
-    .catch((error) => {
-      console.log(error);
-      seterrorMessage(error.message); 
-      console.log(errorMessage);
-    });
-  }
+   
 
-  const ApproveRequest = ({id})=>{
-    const response=axios.post('http://localhost:8000/'+user_type+'/approve',{
+  const ApproveRequest = ()=>{
+axios.post(ApiUrls.HOD_APPROVE_URL,{
       'request_id':id,
-       'committee_review':remarks,
+       'hod_review':remarks,
      
     },{
       headers:{
@@ -95,34 +70,20 @@ const CommitteeRequestDetails = () => {
         setRedirect(true);
       }
       else{
-        throw new Error(response.data.error);
+         setErrorMessage(response.data.error);
       }
     })
     .catch(error =>{
-      throw error;
+      setErrorMessage(error.message);
     })
-    return response;
 
   }
 
 
-  const RequestDisApproval = (id) =>{
-    
-    DisapproveRequest({id})
-    .then(() => {
-      console.log('Approval UnSuccessful')
-    })
-    .catch((error) => {
-      console.log(error);
-      seterrorMessage(error.message); 
-      console.log(errorMessage);
-    });
-  }
-
-  const DisapproveRequest = ({id})=>{
-    const response=axios.post('http://localhost:8000/'+user_type+'/disapprove',{
+  const DisapproveRequest = ()=>{
+axios.post(ApiUrls.HOD_DISAPPROVE_URL,{
       'request_id':id,
-       'committee_review':remarks,
+       'hod_review':remarks,
      
     },{
       headers:{
@@ -137,33 +98,30 @@ const CommitteeRequestDetails = () => {
       }
       else{
         // console.log("Disapproving Request Failed");
-        throw new Error(response.data.error);
+        setErrorMessage(response.data.error);
       }
     })
     .catch(error =>{
-      throw error;
+      setErrorMessage(error.message);
     })
-    return response;
   }
 
 
   if (redirect) {
-    return <Navigate to="/committee/dashboard" />;
+    return <Navigate to="/hod/dashboard" />;
 }
 
   return (
     <div>
-    <ErrorDisplay errormessage={errorMessage} seterrormessage={seterrorMessage}/> 
+    <ErrorDisplay errormessage={errorMessage} seterrormessage={setErrorMessage}/> 
     <div>
-
-        
        {data ? (
     <div className='page'>
       <div className='mainbody'>
         <div className='titl'>RequestDetails: </div>
         <div className='bod'>
           <div className='requesttype'>This is a {data.request_type}</div>
-          <div className="row">
+              <div className="row">
                 <div className="col-head">Title</div>
                 <div className="colon">:</div>
                 <div className="col-body">{data.request_title}</div>
@@ -188,7 +146,7 @@ const CommitteeRequestDetails = () => {
                 <div className="colon">:</div>
                 <div className="col-body">{data.user.email}</div>
               </div>
-              {/* <div className="row">
+              <div className="row">
                 <div className="col-head">Committee Decision Status</div>
                 <div className="colon">:</div>
                 <div className="col-body">{data.committee_approval_status}</div>
@@ -203,7 +161,7 @@ const CommitteeRequestDetails = () => {
                 <div className="colon">:</div>
                 <div className="col-body">{data.committee_review_date}</div>
               </div>
-              <div className="row">
+              {/* <div className="row">
                 <div className="col-head">HOD Decision Status</div>
                 <div className="colon">:</div>
                 <div className="col-body">{data.hod_approval_status}</div>
@@ -224,19 +182,19 @@ const CommitteeRequestDetails = () => {
                 <div className="col-body">
                   <Link onClick={() => handleFile(data.upload)}>{data.upload}</Link>
                 </div>
-              </div>
+              </div> 
               <div className="row">
                 <div className="col-head">Remarks *</div>
                 <div className="col-bod">
-                  <input type="Text" value={remarks} onChange={handleRemarksChange} required />
+                  <input type="Text" value={remarks} onChange={handleRemarksChange} required/>
                 </div>
               </div>  
           {/* <label className="committee_title">
               Remarks:
               <textarea value={remarks} onChange={handleRemarksChange} />
             </label> */}
-          <button onClick={()=>RequestApproval(data.id)} className="committee_approve">Approve</button>
-          <button onClick={()=>RequestDisApproval(data.id)} className="committee_disapprove">Disapprove</button>
+          <button onClick={()=>ApproveRequest()} className="committee_approve">Approve</button>
+          <button onClick={()=>DisapproveRequest()} className="committee_disapprove">Disapprove</button>
         </div>
       </div>
     </div>
@@ -248,4 +206,4 @@ const CommitteeRequestDetails = () => {
   )
 }
 
-export default CommitteeRequestDetails;
+export default HodRequestDetails;

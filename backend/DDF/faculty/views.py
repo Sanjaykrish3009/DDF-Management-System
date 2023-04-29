@@ -11,7 +11,7 @@ class PendingRequests(APIView):
         try:
             faculty_user = FacultyUser.objects.filter(email=email)[0]
 
-            if 'title' in data:
+            if 'title' in data and data['title'].isspace()==False:
                 pending_requests = faculty_user.search_view_pending_requests(data['title'])
             else:
                 pending_requests = faculty_user.view_pending_requests()
@@ -29,7 +29,7 @@ class PreviousRequests(APIView):
         try:
             faculty_user = FacultyUser.objects.filter(email=email)[0]
 
-            if 'title' in data:
+            if 'title' in data and data['title'].isspace()==False:
                 previous_requests = faculty_user.search_view_previous_requests(data['title'])
             else:
                 previous_requests = faculty_user.view_previous_requests()
@@ -46,7 +46,7 @@ class PublicRequests(APIView):
   
         try:
             faculty_user = FacultyUser.objects.filter(email=email)[0]
-            if 'title' in data:
+            if 'title' in data and data['title'].isspace()==False:
                 public_requests = faculty_user.search_view_public_requests(data['title'])
 
             else:

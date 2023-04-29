@@ -1,41 +1,45 @@
 import "../css_files/login.css"
 
 import React, { useState,useContext } from "react";
-import { Link, Navigate,useNavigate } from "react-router-dom";
+import { Link, Navigate} from "react-router-dom";
 import { CSRFToken } from "../components";
-import { AuthContext} from "./AuthContext";
+import { AuthContext} from "../core/AuthContext";
 import {ErrorDisplay} from "../components";
-export default function LoginPage() {
+import ApiUrls from "../components/ApiUrls";
+import Cookies from "js-cookie";
+import axios from "axios";
+const LoginPage = () =>{
 
   const [email, setEmail] = useState("");
   const [password, setPassw] = useState("");
-  const { isAuthenticated, loggingIn, user_type } = useContext(AuthContext);
-  const history=useNavigate();
+  const { isAuthenticated, user_type, setIsAuthenticated, setUser_type } = useContext(AuthContext);
 
   const [errorMessage, setErrorMessage] = useState(null); 
-
-  // const handleSubmit = async(event) => {
-  //   event.preventDefault();
-
-  //   try {
-  //     await loggingIn({ email, password });
-  //     console.log('Login Successful')
-  //   } catch (error) {
-  //     console.log(error);
-  //     setErrorMessage("Invalid email or password"); 
-  //   }
-  // };
-
+ 
   const handleSubmit = (event) => {
     event.preventDefault();
-    loggingIn({ email, password })
-    .then(() => {
-      console.log('Login Successful')
+    axios.post(ApiUrls.AUTHENTICATION_LOGIN_URL,{
+      'email':email,
+      'password':password,
+    },{
+      headers:{
+        'X-CSRFToken' :Cookies.get('csrftoken')
+      }
     })
-     .catch ((error) =>{
-      console.log(error);
-      setErrorMessage("Invalid email or password"); 
-    });
+      .then(response =>{
+        console.log(response.data);
+        
+        if(response.data.success){
+          setIsAuthenticated(true);
+          setUser_type(response.data.user_type);
+        }
+        else{
+          setErrorMessage(response.data.error); 
+        }
+      })
+      .catch(error =>{
+        setErrorMessage(error.message);
+      })
   };
 
   if(isAuthenticated)
@@ -96,3 +100,5 @@ export default function LoginPage() {
     </div>
   );
 }
+
+export default LoginPage;

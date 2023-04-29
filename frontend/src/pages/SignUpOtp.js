@@ -5,7 +5,7 @@ import { Navigate,useLocation } from 'react-router-dom';
 import axios from "axios";
 import Cookies from "js-cookie";
 import { AuthContext } from '../core';
-
+import ApiUrls from '../components/ApiUrls';
 import '../css_files/otp.css';
 import { ErrorDisplay } from '../components';
 import {Loader} from '../components';
@@ -14,7 +14,7 @@ import {Loader} from '../components';
 const SignUpOtp = () => {
   const [otp, setOtp] = useState('');
   const [verify,setverify] = useState(false);
-  const {emailID,setValidEmail} =useContext(AuthContext);
+  const {setValidEmail} =useContext(AuthContext);
   const [errorMessage, setErrorMessage] = useState(null); 
   const [isLoading,setIsLoading]=useState(false);
   const location=useLocation();
@@ -23,9 +23,8 @@ const SignUpOtp = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(`Submitting OTP: ${otp}`);
     data.entered_otp =otp;
-    axios.post(`http://localhost:8000/user/checkemail`,
+    axios.post(ApiUrls.USER_CHECKEMAIL_URL,
       data,
     {
       headers:{

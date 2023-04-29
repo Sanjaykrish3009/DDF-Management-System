@@ -1,41 +1,32 @@
-import React, { useState } from 'react'
-import { useParams,useLocation, Link } from 'react-router-dom';
-import "../css_files/RequestDetails.css"
-import { Loader } from '../components';
+import React, { useState, useEffect } from 'react'
+import { Navigate,useParams, Link } from 'react-router-dom';
+import { ErrorDisplay,Loader  } from '../../components';
+import "../../css_files/RequestDetails.css"
 import axios from 'axios';
 import Cookies from 'js-cookie';
-
-import { useEffect } from 'react';
-
-const RequestDetails = () => {
+import ApiUrls from '../../components/ApiUrls';
+import ApiCallPost from '../../components/ApiCallPost'
+const CommitteeRequestDetails = () => {
 
   
   const {id}=useParams();
-  const location=useLocation();
-  // const data=location.state;
   const [data,setData] = useState(null);
+  const [remarks,setRemarks]=useState('');
+  const [redirect, setRedirect] = useState(false);
+  const [errorMessage, seterrorMessage] = useState(null); 
 
   useEffect(() => {
-    axios.post('http://localhost:8000/request/requestdetails',
-    {
-      'request_id':id,
-    },{
-      headers:{
-        'X-CSRFToken' :Cookies.get('csrftoken')
-      }
-    })
-      .then(response => {
-        
-        if(response.data.success)
-        {
-          setData(response.data.data)
-        }
-      })
-      .catch(error => console.log(error));
-  }, []);
+
+    const senddata ={};
+    senddata.request_id=id;
+    const api_url = ApiUrls.REQUEST_REQUESTDETAILS_URL;
+    ApiCallPost({api_url,setData,seterrorMessage,senddata});
+ 
+  }, [id]);
 
   const handleFile =(file)=>{
-    axios.get('http://localhost:8000/request/filedetails',
+
+    axios.get(ApiUrls.REQUEST_FILEDETAILS_URL,
     {
       params: {
         file_path: file
@@ -49,22 +40,81 @@ const RequestDetails = () => {
       const fileBlob = new Blob([response.data], { type: response.headers['content-type']});
       const fileUrl = URL.createObjectURL(fileBlob);
       window.open(fileUrl, '_blank');
-
     }).catch(error => console.log(error));
+  }
 
-    
+ 
+  const handleRemarksChange = (event) => {
+    setRemarks(event.target.value);
+  };
+
+  const ApproveRequest = ()=>{
+    axios.post(ApiUrls.COMMITTEE_APPROVE_URL,{
+      'request_id':id,
+       'committee_review':remarks,
+     
+    },{
+      headers:{
+        'X-CSRFToken' :Cookies.get('csrftoken')
+      }
+    })
+    .then(response =>{
+      console.log(response.data);
+      
+      if(response.data.success){
+        setRedirect(true);
+      }
+      else{
+        seterrorMessage(response.data.error);      
+      }
+    })
+    .catch(error =>{
+      seterrorMessage(error.message); 
+    })
+  }
+
+
+  const DisapproveRequest = ()=>{
+    axios.post(ApiUrls.COMMITTEE_DISAPPROVE_URL,{
+      'request_id':id,
+       'committee_review':remarks,
+     
+    },{
+      headers:{
+        'X-CSRFToken' :Cookies.get('csrftoken')
+      }
+    })
+    .then(response =>{
+      console.log(response.data);
+      
+      if(response.data.success){
+        setRedirect(true);
+      }
+      else{
+        seterrorMessage(response.data.error); 
+      }
+    })
+    .catch(error =>{
+      seterrorMessage(error.message); 
+    })
+  }
+
+
+  if (redirect) {
+    return <Navigate to="/committee/dashboard" />;
   }
 
   return (
     <div>
-      {data ? (
+    <ErrorDisplay errormessage={errorMessage} seterrormessage={seterrorMessage}/> 
+    <div>
+       {data ? (
     <div className='page'>
       <div className='mainbody'>
-        <div className='titl'>RequestDetails</div>
-          <div className='bod'>
-            <div className='requesttype'>This is a {data.request_type}</div>
-
-              <div className="row">
+        <div className='titl'>RequestDetails: </div>
+        <div className='bod'>
+          <div className='requesttype'>This is a {data.request_type}</div>
+          <div className="row">
                 <div className="col-head">Title</div>
                 <div className="colon">:</div>
                 <div className="col-body">{data.request_title}</div>
@@ -89,7 +139,7 @@ const RequestDetails = () => {
                 <div className="colon">:</div>
                 <div className="col-body">{data.user.email}</div>
               </div>
-              <div className="row">
+              {/* <div className="row">
                 <div className="col-head">Committee Decision Status</div>
                 <div className="colon">:</div>
                 <div className="col-body">{data.committee_approval_status}</div>
@@ -118,23 +168,35 @@ const RequestDetails = () => {
                 <div className="col-head">Time</div>
                 <div className="colon">:</div>
                 <div className="col-body">{data.hod_review_date}</div>
-              </div>
+              </div> */}
               <div className="row">
                 <div className="col-head">Uploads</div>
                 <div className="colon">:</div>
                 <div className="col-body">
                   <Link onClick={() => handleFile(data.upload)}>{data.upload}</Link>
                 </div>
+              </div>
+              <div className="row">
+                <div className="col-head">Remarks *</div>
+                <div className="col-bod">
+                  <input type="Text" value={remarks} onChange={handleRemarksChange} required />
+                </div>
               </div>  
-
-            </div>
+          {/* <label className="committee_title">
+              Remarks:
+              <textarea value={remarks} onChange={handleRemarksChange} />
+            </label> */}
+          <button onClick={()=>ApproveRequest()} className="committee_approve">Approve</button>
+          <button onClick={()=>DisapproveRequest()} className="committee_disapprove">Disapprove</button>
+        </div>
       </div>
     </div>
      ) : (
         <Loader/>
     )}
   </div>
+  </div>
   )
 }
 
-export default RequestDetails;
+export default CommitteeRequestDetails;

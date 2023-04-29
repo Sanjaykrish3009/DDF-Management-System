@@ -5,7 +5,7 @@ import {ErrorDisplay} from "../components";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { AuthContext } from "../core";
-
+import ApiUrls from "../components/ApiUrls";
 import '../css_files/forgotPassword.css';
 import { Loader } from "../components";
 
@@ -21,7 +21,7 @@ const ForgotPassword = () => {
     event.preventDefault();
     setEmailID(email);
     setIsLoading(true);
-    axios.post(`http://localhost:8000/authentication/forgotpassword`,{
+    axios.post(ApiUrls.AUTHENTICATION_FORGOTPASSWORD_URL,{
       'email':email,
     },{
       headers:{

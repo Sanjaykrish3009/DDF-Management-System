@@ -6,8 +6,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import ApiUrls from '../../components/ApiUrls';
 import { useEffect } from 'react';
-import ApiCallPost from '../../components/ApiCallPost';
-
+import ApiCallGet from '../../components/ApiCallGet';
 const FacultyRequestDetails = () => {
 
   const {id}=useParams();
@@ -18,7 +17,7 @@ const FacultyRequestDetails = () => {
     const senddata ={};
     senddata.request_id=id;
     const api_url = ApiUrls.REQUEST_REQUESTDETAILS_URL;
-    ApiCallPost({api_url,setData,setErrorMessage,senddata});
+    ApiCallGet({api_url,setData,setErrorMessage,senddata});
   }, [id]);
 
   const handleFile =(file)=>{

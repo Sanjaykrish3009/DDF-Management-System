@@ -100,7 +100,7 @@ export default function LoginPage() {
       <form onSubmit={handleSubmit} className="signup-form">
           <h1>Create Account</h1> 
         <div className="signup-details">
-          <label htmlFor="firstname"  >First Name: </label>
+          <label htmlFor="firstname"  >First Name: *</label>
           <input
             type="text"
             // value={firstname}
@@ -108,10 +108,11 @@ export default function LoginPage() {
             name="first_name"
             value={formData.first_name}
             onChange={handleInputChange} 
+            required
           />
         </div>
         <div className="signup-details">
-          <label htmlFor="lastname" >Last Name: </label>
+          <label htmlFor="lastname" >Last Name:* </label>
           <input
             type="text"
             // value={lastname}
@@ -119,10 +120,12 @@ export default function LoginPage() {
             name="last_name"
             value={formData.last_name}
             onChange={handleInputChange} 
+            required
+
           />
         </div>
         <div className="signup-details">
-          <label htmlFor="email" >Email: </label>
+          <label htmlFor="email" >Email: *</label>
           <input
             type="email"
             // value={email}
@@ -130,10 +133,12 @@ export default function LoginPage() {
             name="email"
             value={formData.email}
             onChange={handleInputChange} 
+            required
+
           />
         </div>
         <div className="signup-details">
-          <label htmlFor="password" >Password: </label>
+          <label htmlFor="password" >Password: *</label>
           <input
             type="password"
             // value={password}
@@ -141,11 +146,13 @@ export default function LoginPage() {
             name="password"
             value={formData.password}
             onChange={handleInputChange} 
+            required
+
           />
         </div>
         {passwordError && <p className='error-message'>{passwordError}</p>}
         <div className="signup-details">
-          <label htmlFor="password" >Confirm Password: </label>
+          <label htmlFor="password" >Confirm Password: *</label>
           <input
             type="password"
             // value={re_password}
@@ -153,6 +160,8 @@ export default function LoginPage() {
             name="re_password"
             value={formData.re_password}
             onChange={handleInputChange} 
+            required
+
           />
         </div>
         {confirmPasswordError && <p className='error-message'>{confirmPasswordError}</p>}

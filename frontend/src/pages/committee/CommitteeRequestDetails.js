@@ -5,7 +5,7 @@ import "../../css_files/RequestDetails.css"
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import ApiUrls from '../../components/ApiUrls';
-import ApiCallPost from '../../components/ApiCallPost'
+import ApiCallGet from '../../components/ApiCallGet';
 const CommitteeRequestDetails = () => {
 
   
@@ -20,7 +20,7 @@ const CommitteeRequestDetails = () => {
     const senddata ={};
     senddata.request_id=id;
     const api_url = ApiUrls.REQUEST_REQUESTDETAILS_URL;
-    ApiCallPost({api_url,setData,seterrorMessage,senddata});
+    ApiCallGet({api_url,setData,seterrorMessage,senddata});
  
   }, [id]);
 

@@ -16,15 +16,7 @@ const HodTransactions = () => {
 
   const sendEmail = () => {
     setloader(false);
-    axios.post(ApiUrls.HOD_SENDEXCEL_URL,{
-
-    }
-    ,
-    {
-      headers:{
-        'X-CSRFToken' :Cookies.get('csrftoken'),
-      }
-    })
+    axios.get(ApiUrls.HOD_SENDEXCEL_URL)
     .then((response) => {
       setloader(true);
       if (response.data.success) {

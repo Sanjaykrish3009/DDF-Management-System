@@ -17,27 +17,41 @@ Dashboard, Inbox, View Request details, View Transactions, Send Excel Sheet to A
 
 # Implementation Details
 
-● (i) Number of Lines of Code written - 5792 ( javascript, python, CSS )
+● Number of Lines of Code written - 5792 ( javascript, python, CSS )
 
-● (ii) Language(s) used - Reactjs (frontend), Django (backend), CSS, HTML
+● Language(s) used - Reactjs (frontend), Django (backend), CSS, HTML
 
-● (iii) Number of test cases written - 87
+● Number of test cases written - 87
 
-● (iv) Database systems - Postgresql
+● Database systems - Postgresql
 
-● (v) List of existing tools/plugins/software systems used - None
+● List of existing tools/plugins/software systems used - None
 
 # Project Execution
 
 ## Setting up Database
 Install postgresql in your system and create a database.
 
-Provide the database credentials in ```/backends/DDF/settings.py```
+Provide the database credentials in [settings.py](https://github.com/Sanjaykrish3009/DDF-Management-System/blob/main/backend/DDF/DDF/settings.py)
 
-## Installation of Project
-Download/Clone the repository in your system and run makefile in the root directory.
+## Installation of Virtual Environment
 
-Command to run makefile:
+*	```sudo apt-get install -y virtualenv```
+  
+
+*	```virtualenv --python=$(PYTHON_VERSION) env```
+
+
+To Activate Environment: ```source env/bin/activate```
+
+To Deactivate Environment: ```deactivate```
+
+## Running the project
+
+command to run the project: ```make all```
+
+command to test the project: ```make test```
+
 
 
 ## Authors:

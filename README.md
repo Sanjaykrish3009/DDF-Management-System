@@ -42,10 +42,10 @@ Command to run makefile:
 
 ## Authors:
 
-1. [Sanjay Krishna Ambati](https://github.com/Sanjaykrish3009)
+* [Sanjay Krishna Ambati](https://github.com/Sanjaykrish3009)
 
-2. [SUshma Nalari](https://github.com/Sushma1111)
+* [Sushma Nalari](https://github.com/Sushma1111)
 
-3. [Likitha Langaru](https://github.com/Likitha00)
+* [Likitha Langaru](https://github.com/Likitha00)
 
-4. [Veeramalli Sathwik](https://github.com/sathwik22)
+* [Veeramalli Sathwik](https://github.com/sathwik22)

@@ -96,8 +96,8 @@ class CreateBudgetRequest(APIView):
             return Response({'error':'Something went wrong while creating Private Fund Request'})
 
 class RequestDetails(APIView):
-    def post(self, request, format=None):
-        data = self.request.data
+    def get(self, request, format=None):
+        data = self.request.query_params
         if 'request_id' not in data:
             return Response({'error': 'Request ID field must be set'})
         

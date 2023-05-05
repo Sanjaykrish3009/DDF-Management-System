@@ -32,10 +32,20 @@ Dashboard, Inbox, View Request details, View Transactions, Send Excel Sheet to A
 ## Setting up Database
 Install postgresql in your system and create a database.
 
-Provide the database credentials in '/backends/DDF/settings.py'
+Provide the database credentials in ```/backends/DDF/settings.py```
 
 ## Installation of Project
 Download/Clone the repository in your system and run makefile in the root directory.
 
 Command to run makefile:
 
+
+## Authors:
+
+1. [Sanjay Krishna Ambati](https://github.com/Sanjaykrish3009)
+
+2. [SUshma Nalari](https://github.com/Sushma1111)
+
+3. [Likitha Langaru](https://github.com/Likitha00)
+
+4. [Veeramalli Sathwik](https://github.com/sathwik22)

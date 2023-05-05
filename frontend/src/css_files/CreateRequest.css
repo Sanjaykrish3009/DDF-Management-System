@@ -1,0 +1,47 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+    position: relative;
+    top:150px;
+  }
+  
+  .make-request {
+    padding: 10px 20px;
+    background-color: #00bcd4;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    border-radius: 50px;
+    outline: none;
+    cursor: pointer;
+  }
+  
+  .slide-container {
+    position: absolute;
+    top: 70%;
+    left: 46.3%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .private-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-150%, 50%);
+    z-index: 1;
+  }
+  
+  .public-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(150%, 50%);
+    z-index: 1;
+  }
